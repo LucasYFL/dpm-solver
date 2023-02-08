@@ -202,6 +202,19 @@ class EulerMaruyamaPredictor(Predictor):
     x_mean = x + drift * dt
     x = x_mean + diffusion[:, None, None, None] * np.sqrt(-dt) * z
     return x, x_mean
+  
+@register_predictor(name='euler_maruyama_jacobian')
+class EulerMaruyamaPredictor(Predictor):
+  def __init__(self, sde, score_fn, probability_flow=False):
+    super().__init__(sde, score_fn, probability_flow)
+
+  def update_fn(self, x, t):
+    dt = -1. / self.rsde.N
+    z = torch.randn_like(x)
+    drift, diffusion = self.rsde.sde(x, t)
+    x_mean = x + drift * dt
+    x = x_mean + diffusion[:, None, None, None] * np.sqrt(-dt) * z
+    return x, x_mean
 
 
 @register_predictor(name='reverse_diffusion')
@@ -556,3 +569,46 @@ def get_dpm_solver_sampler(sde, shape, inverse_scaler, steps=10, eps=1e-3,
       return inverse_scaler(x), steps
 
   return dpm_solver_sampler
+
+
+
+def get_ode_sampler_jacobian(sde, shape, predictor, inverse_scaler,
+                              probability_flow=False, continuous=False,
+                              denoise=True, eps=1e-3, device='cuda'):
+  """Create a Predictor-Corrector (PC) sampler.
+
+  Args:
+    sde: An `sde_lib.SDE` object representing the forward SDE.
+    shape: A sequence of integers. The expected shape of a single sample.
+    predictor: A subclass of `sampling.Predictor` representing the predictor algorithm.
+    inverse_scaler: The inverse data normalizer.
+    continuous: `True` indicates that the score model was continuously trained.
+    denoise: If `True`, add one-step denoising to the final samples.
+    eps: A `float` number. The reverse-time SDE and ODE are integrated to `epsilon` to avoid numerical issues.
+    device: PyTorch device.
+
+  Returns:
+    A sampling function that returns samples and the number of function evaluations during sampling.
+  """
+  # Create predictor & corrector update functions
+
+  def ode_jacobian_sampler(model):
+    """ The PC sampler funciton.
+
+    Args:
+      model: A score model.
+    Returns:
+      Samples, number of function evaluations.
+    """
+    with torch.no_grad():
+      # Initial sample
+      noise_pred_fn = get_noise_fn(sde, model, train=False, continuous=True)
+      x = sde.prior_sampling(shape).to(device)
+      timesteps = torch.linspace(sde.T, eps, sde.N, device=device)
+
+      for i in range(sde.N):
+        pass
+
+      return inverse_scaler(x), sde.N 
+
+  return ode_jacobian_sampler
