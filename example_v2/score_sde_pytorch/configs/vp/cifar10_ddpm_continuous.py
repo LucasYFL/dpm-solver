@@ -55,7 +55,7 @@ def get_config():
   model.num_res_blocks = 2
   model.attn_resolutions = (16,)
   model.resamp_with_conv = True
-  model.conditional = False
+  model.conditional = True
   
 
   return config

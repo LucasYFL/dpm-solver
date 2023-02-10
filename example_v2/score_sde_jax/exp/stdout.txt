@@ -1,0 +1,6 @@
+INFO - xla_bridge.py - 2023-02-08 09:59:28,690 - Unable to initialize backend 'tpu_driver': NOT_FOUND: Unable to find driver in registry given worker: 
+INFO - xla_bridge.py - 2023-02-08 09:59:28,690 - Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+INFO - xla_bridge.py - 2023-02-08 09:59:28,691 - Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+INFO - xla_bridge.py - 2023-02-08 09:59:28,694 - Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
+INFO - xla_bridge.py - 2023-02-08 09:59:28,694 - Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
+WARNING - xla_bridge.py - 2023-02-08 09:59:28,694 - No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)

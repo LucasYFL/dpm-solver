@@ -625,6 +625,7 @@ class DPM_Solver:
         h = lambda_t - lambda_s
         lambda_s1 = lambda_s + r1 * h
         s1 = ns.inverse_lambda(lambda_s1)
+        #print("{},{},{},".format(s,s1.item(),t))
         log_alpha_s, log_alpha_s1, log_alpha_t = ns.marginal_log_mean_coeff(s), ns.marginal_log_mean_coeff(s1), ns.marginal_log_mean_coeff(t)
         sigma_s, sigma_s1, sigma_t = ns.marginal_std(s), ns.marginal_std(s1), ns.marginal_std(t)
         alpha_s1, alpha_t = torch.exp(log_alpha_s1), torch.exp(log_alpha_t)
@@ -713,6 +714,7 @@ class DPM_Solver:
         lambda_s2 = lambda_s + r2 * h
         s1 = ns.inverse_lambda(lambda_s1)
         s2 = ns.inverse_lambda(lambda_s2)
+        #print("{},{},{},{},".format(s,s1.item(),s2.item(),t))
         log_alpha_s, log_alpha_s1, log_alpha_s2, log_alpha_t = ns.marginal_log_mean_coeff(s), ns.marginal_log_mean_coeff(s1), ns.marginal_log_mean_coeff(s2), ns.marginal_log_mean_coeff(t)
         sigma_s, sigma_s1, sigma_s2, sigma_t = ns.marginal_std(s), ns.marginal_std(s1), ns.marginal_std(s2), ns.marginal_std(t)
         alpha_s1, alpha_s2, alpha_t = torch.exp(log_alpha_s1), torch.exp(log_alpha_s2), torch.exp(log_alpha_t)

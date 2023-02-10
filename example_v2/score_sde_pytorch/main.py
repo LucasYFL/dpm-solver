@@ -37,6 +37,8 @@ tf.config.experimental.set_visible_devices([], "GPU")
 os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
 
 def main(argv):
+  global config_fewer
+  config_fewer = FLAGS.config
   if FLAGS.mode == "train":
     # Create the working directory
     tf.io.gfile.makedirs(FLAGS.workdir)
