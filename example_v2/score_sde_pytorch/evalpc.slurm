@@ -8,7 +8,7 @@
 #SBATCH --account=qingqu1
 #SBATCH --partition=spgpu
 #SBATCH --gpus=a40:1
-#SBATCH --output=eval1_%a.out
+#SBATCH --output=evalpc_%a.out
 #SBATCH --export=ALL,EXP_FEWER_STEPS=0
 echo  $EXP_FEWER_STEPS
 module purge
@@ -17,4 +17,4 @@ eval "$(conda shell.bash hook)"
 conda activate dpm
 cd /home/yifulu/work/dpm-solver/example_v2/score_sde_pytorch
 
-python main.py --config "configs/vp/cifar10_ddpm_continuous.py" --mode eval --workdir experiments/dpm --config.eval.begin_ckpt=$SLURM_ARRAY_TASK_ID --config.eval.end_ckpt=$SLURM_ARRAY_TASK_ID
+python main.py --config "configs/vp/ddpm/cifar10_continuous.py" --mode eval --eval_folder eval_pc --workdir experiments/dpm --config.eval.begin_ckpt=$SLURM_ARRAY_TASK_ID --config.eval.end_ckpt=$SLURM_ARRAY_TASK_ID 

@@ -51,6 +51,7 @@ def main(argv):
     logger = logging.getLogger()
     logger.addHandler(handler)
     logger.setLevel('INFO')
+    logging.info("Conditional: {}".format(FLAGS.config.model.conditional))
     # Run the training pipeline
     run_lib.train(FLAGS.config, FLAGS.workdir)
   elif FLAGS.mode == "eval":

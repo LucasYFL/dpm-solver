@@ -21,7 +21,7 @@ import functools
 import torch
 import numpy as np
 import abc
-
+import logging
 from models.utils import from_flattened_numpy, to_flattened_numpy, get_score_fn, get_noise_fn
 from scipy import integrate
 import sde_lib
@@ -95,6 +95,7 @@ def get_sampling_fn(config, sde, shape, inverse_scaler, eps):
 
   sampler_name = config.sampling.method
   # Probability flow ODE sampling with black-box ODE solvers
+  logging.info(sampler_name.lower())
   if sampler_name.lower() == 'ode':
     sampling_fn = get_ode_sampler(sde=sde,
                                   shape=shape,

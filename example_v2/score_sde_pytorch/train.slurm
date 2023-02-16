@@ -9,6 +9,7 @@
 #SBATCH --partition=spgpu
 #SBATCH --gpus=a40:2
 #SBATCH --output=test1.out
+#SBATCH --export=ALL,EXP_FEWER_STEPS=0
 module purge
 module load cuda/11.3.0 cudnn/11.3-v8.2.1
 eval "$(conda shell.bash hook)"
