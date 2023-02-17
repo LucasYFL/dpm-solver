@@ -110,12 +110,16 @@ def train(config, workdir):
   eval_step_fn = losses.get_step_fn(sde, train=False, optimize_fn=optimize_fn,
                                     reduce_mean=reduce_mean, continuous=continuous,
                                     likelihood_weighting=likelihood_weighting)
-
+  fewer = int(os.environ.get("EXP_FEWER_STEPS",0))
   # Building sampling functions
   if config.training.snapshot_sampling:
+    
     sampling_shape = (config.training.batch_size, config.data.num_channels,
                       config.data.image_size, config.data.image_size)
-    sampling_fn = sampling.get_sampling_fn(config, sde, sampling_shape, inverse_scaler, sampling_eps)
+    if fewer==3:
+      sampling_fn = lambda model: (model(sde.prior_sampling(sampling_shape).to(config.device),t=0.050950001925230026),None)
+    else:
+      sampling_fn = sampling.get_sampling_fn(config, sde, sampling_shape, inverse_scaler, sampling_eps)
 
   num_train_steps = config.training.n_iters
 

@@ -99,7 +99,7 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     score_fn = mutils.get_score_fn(sde, model, train=train, continuous=continuous)
     if fewer==1:
       t = lst_steps.to(batch.device)[torch.randint(lst_steps.shape[0],(batch.shape[0],))]
-    elif fewer==2:
+    elif fewer>=2:
       t = lst_steps.to(batch.device).repeat(batch.shape[0])
     else:
       t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
@@ -109,7 +109,7 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     score = score_fn(perturbed_data, t)
 
     if not likelihood_weighting:
-      if fewer==2:
+      if fewer==3:
         losses = torch.square(score * std[:, None, None, None] + batch)#try to not modify too much code
         losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
       else:
