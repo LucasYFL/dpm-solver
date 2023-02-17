@@ -66,7 +66,7 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
 0.20079998672008514,0.15084998309612274,0.10090000182390213,
 0.050950001925230026,0.0010000000474974513,])
     logging.info("fewer steps set")
-  elif fewer==2:
+  elif fewer>=2:
     lst_steps=torch.tensor([0.050950001925230026])#[0.30069997906684875])
     logging.info("one step set")
     
