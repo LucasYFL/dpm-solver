@@ -8,7 +8,7 @@
 #SBATCH --account=qingqu1
 #SBATCH --partition=spgpu
 #SBATCH --gpus=a40:2
-#SBATCH --output=testOF.out
+#SBATCH --output=testD.out
 #SBATCH --export=ALL,EXP_FEWER_STEPS=3
 
 echo $EXP_FEWER_STEPS
