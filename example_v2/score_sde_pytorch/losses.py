@@ -21,8 +21,8 @@ import torch.optim as optim
 import numpy as np
 from models import utils as mutils
 from sde_lib import VESDE, VPSDE
-
-
+import os
+import logging
 def get_optimizer(config, params):
   """Returns a flax optimizer object based on `config`."""
   if config.optim.optimizer == 'Adam':
@@ -52,7 +52,28 @@ def optimization_manager(config):
   return optimize_fn
 
 
-def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_weighting=True, eps=1e-5):
+def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_weighting=True, eps=1e-5,tl=0):
+  #set environ var EXP_FEWER_STEPS ahead of time
+  logging.info("Sde loss")
+  fewer = int(os.environ.get("EXP_FEWER_STEPS",0))
+  loss_type = int(os.environ.get("LOSS_TYPE",0))
+  logging.info("Fewer: {}".format(fewer))
+  if fewer==1:
+    lst_steps = torch.tensor([1.0,0.950049877166748,0.9000999927520752,0.8501499891281128,
+0.8001999258995056,0.750249981880188,0.7002999782562256,
+0.6503499746322632,0.6003999710083008,0.5504499673843384,
+0.5004999041557312,0.4505499303340912,0.40059995651245117,
+0.35064995288848877,0.30069997906684875,0.25074997544288635,
+0.20079998672008514,0.15084998309612274,0.10090000182390213,
+0.050950001925230026,0.0010000000474974513,])
+    logging.info("fewer steps set")
+  elif fewer>=2:
+    if tl:
+      lst_steps=torch.tensor([tl])#[0.050950001925230026])#[0.30069997906684875])
+    else:
+      lst_steps=torch.tensor([0.9000999927520752])#[0.050950001925230026])#[0.30069997906684875])
+    logging.info("one step set")
+    
   """Create a loss function for training with arbirary SDEs.
 
   Args:
@@ -69,7 +90,6 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     A loss function.
   """
   reduce_op = torch.mean if reduce_mean else lambda *args, **kwargs: 0.5 * torch.sum(*args, **kwargs)
-
   def loss_fn(model, batch):
     """Compute the loss function.
 
@@ -81,15 +101,32 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
       loss: A scalar that represents the average loss value across the mini-batch.
     """
     score_fn = mutils.get_score_fn(sde, model, train=train, continuous=continuous)
-    t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
+    if fewer==1:
+      t = lst_steps.to(batch.device)[torch.randint(lst_steps.shape[0],(batch.shape[0],))]
+    elif fewer>=2:
+      t = lst_steps.to(batch.device).repeat(batch.shape[0])
+    else:
+      t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
     z = torch.randn_like(batch)
     mean, std = sde.marginal_prob(batch, t)
     perturbed_data = mean + std[:, None, None, None] * z
     score = score_fn(perturbed_data, t)
-
+    if not train and loss_type:
+      if fewer==3:
+        losses = torch.square(-(perturbed_data/std[:, None, None, None]+torch.sqrt(1-torch.square(std[:, None, None, None]))*score ) + z)
+        losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
+      elif fewer==2:
+        losses = torch.square(-(std[:, None, None, None]*std[:, None, None, None]*score+perturbed_data)/torch.sqrt(1-torch.square(std[:, None, None, None])) + batch)
+        losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
+      loss = torch.mean(losses)
+      return loss
     if not likelihood_weighting:
-      losses = torch.square(score * std[:, None, None, None] + z)
-      losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
+      if fewer==3:
+        losses = torch.square(score * std[:, None, None, None] + batch)#try to not modify too much code
+        losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
+      else:
+        losses = torch.square(score * std[:, None, None, None] + z)
+        losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
     else:
       g2 = sde.sde(torch.zeros_like(batch), t)[1] ** 2
       losses = torch.square(score + z / std[:, None, None, None])
@@ -148,7 +185,7 @@ def get_ddpm_loss_fn(vpsde, train, reduce_mean=True):
   return loss_fn
 
 
-def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True, likelihood_weighting=False):
+def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True, likelihood_weighting=False,t=0):
   """Create a one-step training/evaluation function.
 
   Args:
@@ -164,7 +201,7 @@ def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True
   """
   if continuous:
     loss_fn = get_sde_loss_fn(sde, train, reduce_mean=reduce_mean,
-                              continuous=True, likelihood_weighting=likelihood_weighting)
+                              continuous=True, likelihood_weighting=likelihood_weighting,tl=t)
   else:
     assert not likelihood_weighting, "Likelihood weighting is not supported for original SMLD/DDPM training."
     if isinstance(sde, VESDE):

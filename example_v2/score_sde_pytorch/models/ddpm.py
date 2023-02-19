@@ -55,6 +55,7 @@ class DDPM(nn.Module):
     AttnBlock = functools.partial(layers.AttnBlock)
     self.conditional = conditional = config.model.conditional
     ResnetBlock = functools.partial(ResnetBlockDDPM, act=act, temb_dim=4 * nf, dropout=dropout)
+    modules = []
     if conditional:
       # Condition on noise levels.
       modules = [nn.Linear(nf, nf * 4)]

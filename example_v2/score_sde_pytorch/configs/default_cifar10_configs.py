@@ -6,9 +6,9 @@ def get_default_configs():
   config = ml_collections.ConfigDict()
   # training
   config.training = training = ml_collections.ConfigDict()
-  config.training.batch_size = 128
+  config.training.batch_size = 256
   training.n_iters = 1300001
-  training.snapshot_freq = 50000
+  training.snapshot_freq = 10000
   training.log_freq = 50
   training.eval_freq = 100
   ## store additional checkpoints for preemption in cloud computing environments
@@ -36,7 +36,8 @@ def get_default_configs():
   evaluate.enable_loss = False
   evaluate.enable_bpd = False
   evaluate.bpd_dataset = 'test'
-
+  #added
+  evaluate.t = 0.0
   # data
   config.data = data = ml_collections.ConfigDict()
   data.dataset = 'CIFAR10'

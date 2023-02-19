@@ -37,6 +37,8 @@ tf.config.experimental.set_visible_devices([], "GPU")
 os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
 
 def main(argv):
+  global config_fewer
+  config_fewer = FLAGS.config
   if FLAGS.mode == "train":
     # Create the working directory
     tf.io.gfile.makedirs(FLAGS.workdir)
@@ -49,6 +51,7 @@ def main(argv):
     logger = logging.getLogger()
     logger.addHandler(handler)
     logger.setLevel('INFO')
+    logging.info("Conditional: {}".format(FLAGS.config.model.conditional))
     # Run the training pipeline
     run_lib.train(FLAGS.config, FLAGS.workdir)
   elif FLAGS.mode == "eval":
