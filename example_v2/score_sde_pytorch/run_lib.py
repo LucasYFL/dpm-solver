@@ -231,7 +231,7 @@ def evaluate(config,
     eval_step = losses.get_step_fn(sde, train=False, optimize_fn=optimize_fn,
                                    reduce_mean=reduce_mean,
                                    continuous=continuous,
-                                   likelihood_weighting=likelihood_weighting)
+                                   likelihood_weighting=likelihood_weighting,t=float(config.eval.t))
 
 
   # Create data loaders for likelihood evaluation. Only evaluate on uniformly dequantized data

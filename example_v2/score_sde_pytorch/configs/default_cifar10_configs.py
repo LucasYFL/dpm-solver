@@ -36,7 +36,8 @@ def get_default_configs():
   evaluate.enable_loss = False
   evaluate.enable_bpd = False
   evaluate.bpd_dataset = 'test'
-
+  #added
+  evaluate.t = 0.0
   # data
   config.data = data = ml_collections.ConfigDict()
   data.dataset = 'CIFAR10'
