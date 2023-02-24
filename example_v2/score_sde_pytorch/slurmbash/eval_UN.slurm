@@ -14,7 +14,7 @@ echo  $EXP_FEWER_STEPS
 module purge
 module load cuda/11.3.0 cudnn/11.3-v8.2.1
 eval "$(conda shell.bash hook)"
-conda activate dpm
+conda activate score_sde_pytorch
 cd /home/yifulu/work/dpm-solver/example_v2/score_sde_pytorch
 
 python main.py --config "configs/vp/cifar10_ddpm_continuous.py" --mode eval --workdir experiments/dpm_one_first --eval_folder noise_loss --config.eval.begin_ckpt=1 --config.eval.end_ckpt=1 --noconfig.eval.enable_sampling --config.eval.enable_loss --config.eval.t=0.050950001925230026
