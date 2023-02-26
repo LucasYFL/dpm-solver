@@ -346,12 +346,14 @@ class DPM_Solver:
     def __init__(
         self,
         model_fn,
+        model_fn_converge,
         noise_schedule,
         algorithm_type="dpmsolver++",
         correcting_x0_fn=None,
         correcting_xt_fn=None,
         thresholding_max_val=1.,
         dynamic_thresholding_ratio=0.995,
+        compare_step = 0
     ):
         """Construct a DPM-Solver. 
 
@@ -410,6 +412,7 @@ class DPM_Solver:
             with deep language understanding. arXiv preprint arXiv:2205.11487, 2022b.
         """
         self.model = lambda x, t: model_fn(x, t.expand((x.shape[0])))
+        self.model_converge = lambda x, t: model_fn_converge(x, t.expand((x.shape[0])))
         self.noise_schedule = noise_schedule
         assert algorithm_type in ["dpmsolver", "dpmsolver++"]
         self.algorithm_type = algorithm_type
@@ -420,6 +423,14 @@ class DPM_Solver:
         self.correcting_xt_fn = correcting_xt_fn
         self.dynamic_thresholding_ratio = dynamic_thresholding_ratio
         self.thresholding_max_val = thresholding_max_val
+        self.compare_step = compare_step
+        self.lst_steps = torch.tensor([1.0,0.950049877166748,0.9000999927520752,0.8501499891281128,
+        0.8001999258995056,0.750249981880188,0.7002999782562256,
+        0.6503499746322632,0.6003999710083008,0.5504499673843384,
+        0.5004999041557312,0.4505499303340912,0.40059995651245117,
+        0.35064995288848877,0.30069997906684875,0.25074997544288635,
+        0.20079998672008514,0.15084998309612274,0.10090000182390213,
+        0.050950001925230026,0.0010000000474974513,])
 
     def dynamic_thresholding_fn(self, x0, t):
         """
@@ -437,6 +448,12 @@ class DPM_Solver:
         Return the noise prediction model.
         """
         return self.model(x, t)
+
+    def noise_prediction_fn_converge(self, x, t):
+        """
+        Return the noise prediction model.
+        """
+        return self.model_converge(x, t)
 
     def data_prediction_fn(self, x, t):
         """
@@ -456,7 +473,10 @@ class DPM_Solver:
         if self.algorithm_type == "dpmsolver++":
             return self.data_prediction_fn(x, t)
         else:
-            return self.noise_prediction_fn(x, t)
+            if torch.isclose(self.lst_steps[self.compare_step], t.cpu(), rtol=0.001, atol=0.001):
+                return self.noise_prediction_fn(x, t)
+            else:
+                return self.noise_prediction_fn_converge(x, t)
 
     def get_time_steps(self, skip_type, t_T, t_0, N, device):
         """Compute the intermediate time steps for sampling.

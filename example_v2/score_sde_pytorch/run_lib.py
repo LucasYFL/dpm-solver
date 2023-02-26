@@ -205,9 +205,12 @@ def evaluate(config,
 
   # Initialize model
   score_model = mutils.create_model(config)
+  score_model_converge = mutils.create_model(config)
   optimizer = losses.get_optimizer(config, score_model.parameters())
   ema = ExponentialMovingAverage(score_model.parameters(), decay=config.model.ema_rate)
+  ema_converge = ExponentialMovingAverage(score_model_converge.parameters(), decay=config.model.ema_rate)
   state = dict(optimizer=optimizer, model=score_model, ema=ema, step=0)
+  state_converge = dict(optimizer=optimizer, model=score_model_converge, ema=ema_converge, step=0)
 
   checkpoint_dir = os.path.join(workdir, "checkpoints")
 
@@ -267,7 +270,7 @@ def evaluate(config,
 
   begin_ckpt = config.eval.begin_ckpt
   logging.info("begin checkpoint: %d" % (begin_ckpt,))
-  for ckpt in range(begin_ckpt, config.eval.end_ckpt + 1):
+  for ckpt in range(begin_ckpt, config.eval.end_ckpt + 1, config.eval.ckpt_interval):
     # Wait if the target checkpoint doesn't exist yet
     waiting_message_printed = False
     ckpt_filename = os.path.join(checkpoint_dir, "checkpoint_{}.pth".format(ckpt))
@@ -288,7 +291,12 @@ def evaluate(config,
       except:
         time.sleep(120)
         state = restore_checkpoint(ckpt_path, state, device=config.device)
+
+    ckpt_path_converge = os.path.join(checkpoint_dir, "checkpoint_{}.pth".format(config.eval.converge_epoch))
     ema.copy_to(score_model.parameters())
+
+    state_converge = restore_checkpoint(ckpt_path_converge, state_converge, device=config.device)
+    ema_converge.copy_to(score_model_converge.parameters())
     # Compute the loss function on the full evaluation dataset if loss computation is enabled
     if config.eval.enable_loss:
       all_losses = []
@@ -344,7 +352,10 @@ def evaluate(config,
         this_sample_dir = os.path.join(
           eval_dir, f"ckpt_{ckpt}")
         tf.io.gfile.makedirs(this_sample_dir)
-        samples_raw, n = sampling_fn(score_model)
+        # samples_raw, n = sampling_fn(score_model)
+
+        samples_raw, n = sampling_fn(score_model, score_model_converge, compare_step = config.eval.compare_step)
+
         samples = np.clip(samples_raw.permute(0, 2, 3, 1).cpu().numpy() * 255., 0, 255).astype(np.uint8)
         samples = samples.reshape(
           (-1, config.data.image_size, config.data.image_size, config.data.num_channels))
