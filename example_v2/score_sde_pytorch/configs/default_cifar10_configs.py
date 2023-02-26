@@ -31,7 +31,7 @@ def get_default_configs():
   evaluate.begin_ckpt = 8
   evaluate.end_ckpt = 8
   evaluate.ckpt_interval = 5
-  evaluate.batch_size = 4
+  evaluate.batch_size = 2500
   evaluate.enable_sampling = True
   evaluate.num_samples = 50000
   evaluate.enable_loss = False
@@ -40,7 +40,7 @@ def get_default_configs():
   #added
   evaluate.t = 0.0
 
-  evaluate.converge_epoch = 0 # epoch to be the baseline
+  evaluate.converge_epoch = 40 # epoch to be the baseline
   evaluate.compare_step = 0 # timestep to be compared
   # data
   config.data = data = ml_collections.ConfigDict()
