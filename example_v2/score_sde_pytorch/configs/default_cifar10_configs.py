@@ -6,7 +6,7 @@ def get_default_configs():
   config = ml_collections.ConfigDict()
   # training
   config.training = training = ml_collections.ConfigDict()
-  config.training.batch_size = 256
+  config.training.batch_size = 4
   training.n_iters = 1300001
   training.snapshot_freq = 10000
   training.log_freq = 50
@@ -18,7 +18,7 @@ def get_default_configs():
   training.likelihood_weighting = False
   training.continuous = True
   training.reduce_mean = False
-
+  training.objective_weight = "x0"
   # sampling
   config.sampling = sampling = ml_collections.ConfigDict()
   sampling.n_steps_each = 1

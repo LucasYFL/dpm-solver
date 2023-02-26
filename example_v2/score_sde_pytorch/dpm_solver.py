@@ -347,11 +347,13 @@ class DPM_Solver:
         self,
         model_fn,
         noise_schedule,
+        objective_scheduler,
         algorithm_type="dpmsolver++",
         correcting_x0_fn=None,
         correcting_xt_fn=None,
         thresholding_max_val=1.,
         dynamic_thresholding_ratio=0.995,
+        weight_type = None,
     ):
         """Construct a DPM-Solver. 
 
@@ -420,6 +422,8 @@ class DPM_Solver:
         self.correcting_xt_fn = correcting_xt_fn
         self.dynamic_thresholding_ratio = dynamic_thresholding_ratio
         self.thresholding_max_val = thresholding_max_val
+        self.weight_type = weight_type
+        self.objective_scheduler = objective_scheduler
 
     def dynamic_thresholding_fn(self, x0, t):
         """
@@ -436,7 +440,9 @@ class DPM_Solver:
         """
         Return the noise prediction model.
         """
-        return self.model(x, t)
+        bs, _, _, _ = x.shape
+        _, _, xt_param, f_param = self.objective_scheduler(t.repeat(bs, 1, 1, 1))
+        return x * xt_param + f_param * self.model(x, t)
 
     def data_prediction_fn(self, x, t):
         """

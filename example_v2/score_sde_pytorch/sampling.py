@@ -27,6 +27,7 @@ from scipy import integrate
 import sde_lib
 from models import utils as mutils
 from dpm_solver import NoiseScheduleVP, model_wrapper, DPM_Solver
+from losses import get_objective_schedule
 
 _CORRECTORS = {}
 _PREDICTORS = {}
@@ -134,7 +135,8 @@ def get_sampling_fn(config, sde, shape, inverse_scaler, eps):
                                   algorithm_type=config.sampling.algorithm_type,
                                   thresholding=config.sampling.thresholding,
                                   rtol=config.sampling.rtol,
-                                  device=config.device)
+                                  device=config.device,
+                                  weight_type=config.training.objective_weight)
   else:
     raise ValueError(f"Sampler name {sampler_name} unknown.")
 
@@ -519,7 +521,7 @@ def get_ode_sampler(sde, shape, inverse_scaler,
 def get_dpm_solver_sampler(sde, shape, inverse_scaler, steps=10, eps=1e-3,
                     skip_type="logSNR", method="singlestep", order=3,
                     denoise=False, algorithm_type="dpmsolver", thresholding=False,
-                    rtol=0.05, atol=0.0078, device='cuda'):
+                    rtol=0.05, atol=0.0078, device='cuda', weight_type = None):
   """Create a Predictor-Corrector (PC) sampler.
 
   Args:
@@ -540,8 +542,8 @@ def get_dpm_solver_sampler(sde, shape, inverse_scaler, steps=10, eps=1e-3,
     A sampling function that returns samples and the number of function evaluations during sampling.
   """
   ns = NoiseScheduleVP('linear', continuous_beta_0=sde.beta_0, continuous_beta_1=sde.beta_1)
-
-  def dpm_solver_sampler(model):
+  os = get_objective_schedule(sde, weight_type)
+  def dpm_solver_sampler(model, weight_type):
     """ The DPM-Solver sampler funciton.
 
     Args:
@@ -551,7 +553,8 @@ def get_dpm_solver_sampler(sde, shape, inverse_scaler, steps=10, eps=1e-3,
     """
     with torch.no_grad():
       noise_pred_fn = get_noise_fn(sde, model, train=False, continuous=True)
-      dpm_solver = DPM_Solver(noise_pred_fn, ns, algorithm_type=algorithm_type, correcting_x0_fn="dynamic_thresholding" if thresholding else None)
+
+      dpm_solver = DPM_Solver(noise_pred_fn, ns, os, weight_type=weight_type, algorithm_type=algorithm_type, correcting_x0_fn="dynamic_thresholding" if thresholding else None)
       # Initial sample
       x = sde.prior_sampling(shape).to(device)
       x = dpm_solver.sample(

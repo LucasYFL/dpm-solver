@@ -48,34 +48,26 @@ def optimization_manager(config):
     if grad_clip >= 0:
       torch.nn.utils.clip_grad_norm_(params, max_norm=grad_clip)
     optimizer.step()
-
   return optimize_fn
 
 
-def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_weighting=True, eps=1e-5,tl=0):
-  #set environ var EXP_FEWER_STEPS ahead of time
-  logging.info("Sde loss")
-  fewer = int(os.environ.get("EXP_FEWER_STEPS",0))
-  loss_type = int(os.environ.get("LOSS_TYPE",0))
-  logging.info("Fewer: {}".format(fewer))
-  if fewer==1:
-    lst_steps = torch.tensor([1.0,0.950049877166748,0.9000999927520752,0.8501499891281128,
-0.8001999258995056,0.750249981880188,0.7002999782562256,
-0.6503499746322632,0.6003999710083008,0.5504499673843384,
-0.5004999041557312,0.4505499303340912,0.40059995651245117,
-0.35064995288848877,0.30069997906684875,0.25074997544288635,
-0.20079998672008514,0.15084998309612274,0.10090000182390213,
-0.050950001925230026,0.0010000000474974513,])
-    logging.info("fewer steps set")
-  elif fewer>=2:
-    if tl:
-      lst_steps=torch.tensor([tl])#[0.050950001925230026])#[0.30069997906684875])
-    else:
-      lst_steps=torch.tensor([0.9000999927520752])#[0.050950001925230026])#[0.30069997906684875])
-    logging.info("one step set")
-    
-  """Create a loss function for training with arbirary SDEs.
+def get_objective_schedule(sde, weight_type):
+    assert(weight_type in ['x0', 'near_distribution', 'far_distribution'])
+    if weight_type == "x0":
+      alpha = 1
+      beta = 0
+    def obj_schedule(t):
+      ## alpha_param, beta_param for loss, xt_param, f_param for sampling
+      mean_param, std_param = sde.sde_params(t)
+      alpha_param = alpha * torch.ones_like(mean_param)
+      beta_param = beta * torch.ones_like(mean_param)
+      xt_param = alpha_param/(std_param * alpha_param - mean_param * beta_param)
+      f_param = -mean_param/(std_param * alpha_param - mean_param * beta_param)
+      return alpha_param, beta_param, xt_param, f_param
+    return obj_schedule
 
+def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_weighting=True, eps=1e-5):
+  """Create a loss function for training with arbirary SDEs.
   Args:
     sde: An `sde_lib.SDE` object that represents the forward SDE.
     train: `True` for training loss and `False` for evaluation loss.
@@ -85,52 +77,28 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     likelihood_weighting: If `True`, weight the mixture of score matching losses
       according to https://arxiv.org/abs/2101.09258; otherwise use the weighting recommended in our paper.
     eps: A `float` number. The smallest time step to sample from.
-
   Returns:
     A loss function.
   """
   reduce_op = torch.mean if reduce_mean else lambda *args, **kwargs: 0.5 * torch.sum(*args, **kwargs)
-  def loss_fn(model, batch):
-    """Compute the loss function.
 
+  def loss_fn(model, batch, obj_scheduler):
+    """Compute the loss function.
     Args:
       model: A score model.
       batch: A mini-batch of training data.
-
     Returns:
       loss: A scalar that represents the average loss value across the mini-batch.
     """
     score_fn = mutils.get_score_fn(sde, model, train=train, continuous=continuous)
-    if fewer==1:
-      t = lst_steps.to(batch.device)[torch.randint(lst_steps.shape[0],(batch.shape[0],))]
-    elif fewer>=2:
-      t = lst_steps.to(batch.device).repeat(batch.shape[0])
-    else:
-      t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
+    t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
     z = torch.randn_like(batch)
     mean, std = sde.marginal_prob(batch, t)
     perturbed_data = mean + std[:, None, None, None] * z
     score = score_fn(perturbed_data, t)
-    if not train and loss_type:
-      if fewer==3:
-        losses = torch.square(-(perturbed_data/std[:, None, None, None]+torch.sqrt(1-torch.square(std[:, None, None, None]))*score ) + z)
-        losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
-      elif fewer==2:
-        losses = torch.square(-(std[:, None, None, None]*std[:, None, None, None]*score+perturbed_data)/torch.sqrt(1-torch.square(std[:, None, None, None])) + batch)
-        losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
-      loss = torch.mean(losses)
-      return loss
-    if not likelihood_weighting:
-      if fewer==3:
-        losses = torch.square(score * std[:, None, None, None] + batch)#try to not modify too much code
-        losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
-      else:
-        losses = torch.square(score * std[:, None, None, None] + z)
-        losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
-    else:
-      g2 = sde.sde(torch.zeros_like(batch), t)[1] ** 2
-      losses = torch.square(score + z / std[:, None, None, None])
-      losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1) * g2
+    alpha, beta, _, _ = obj_scheduler(t)
+    losses = torch.square(score * std[:, None, None, None] + alpha * batch + beta * z)
+    losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
 
     loss = torch.mean(losses)
     return loss
@@ -201,7 +169,7 @@ def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True
   """
   if continuous:
     loss_fn = get_sde_loss_fn(sde, train, reduce_mean=reduce_mean,
-                              continuous=True, likelihood_weighting=likelihood_weighting,tl=t)
+                              continuous=True, likelihood_weighting=likelihood_weighting)
   else:
     assert not likelihood_weighting, "Likelihood weighting is not supported for original SMLD/DDPM training."
     if isinstance(sde, VESDE):
@@ -211,7 +179,7 @@ def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True
     else:
       raise ValueError(f"Discrete training for {sde.__class__.__name__} is not recommended.")
 
-  def step_fn(state, batch):
+  def step_fn(state, batch, obj_scheduler):
     """Running one step of training or evaluation.
 
     This function will undergo `jax.lax.scan` so that multiple steps can be pmapped and jit-compiled together
@@ -229,7 +197,7 @@ def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True
     if train:
       optimizer = state['optimizer']
       optimizer.zero_grad()
-      loss = loss_fn(model, batch)
+      loss = loss_fn(model, batch, obj_scheduler)
       loss.backward()
       optimize_fn(optimizer, model.parameters(), step=state['step'])
       state['step'] += 1
@@ -239,7 +207,7 @@ def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True
         ema = state['ema']
         ema.store(model.parameters())
         ema.copy_to(model.parameters())
-        loss = loss_fn(model, batch)
+        loss = loss_fn(model, batch, obj_scheduler)
         ema.restore(model.parameters())
 
     return loss
