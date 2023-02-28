@@ -136,7 +136,8 @@ def get_sampling_fn(config, sde, shape, inverse_scaler, eps):
                                   thresholding=config.sampling.thresholding,
                                   rtol=config.sampling.rtol,
                                   device=config.device,
-                                  weight_type=config.training.objective_weight)
+                                  weight_type=config.training.objective_weight,
+                                  dt = config.training.dt)
   else:
     raise ValueError(f"Sampler name {sampler_name} unknown.")
 
@@ -521,7 +522,7 @@ def get_ode_sampler(sde, shape, inverse_scaler,
 def get_dpm_solver_sampler(sde, shape, inverse_scaler, steps=10, eps=1e-3,
                     skip_type="logSNR", method="singlestep", order=3,
                     denoise=False, algorithm_type="dpmsolver", thresholding=False,
-                    rtol=0.05, atol=0.0078, device='cuda', weight_type = None):
+                    rtol=0.05, atol=0.0078, device='cuda', weight_type = None, dt = 0):
   """Create a Predictor-Corrector (PC) sampler.
 
   Args:
@@ -542,7 +543,7 @@ def get_dpm_solver_sampler(sde, shape, inverse_scaler, steps=10, eps=1e-3,
     A sampling function that returns samples and the number of function evaluations during sampling.
   """
   ns = NoiseScheduleVP('linear', continuous_beta_0=sde.beta_0, continuous_beta_1=sde.beta_1)
-  os = get_objective_schedule(sde, weight_type)
+  os = get_objective_schedule(sde, weight_type, dt)
   def dpm_solver_sampler(model, weight_type):
     """ The DPM-Solver sampler funciton.
 

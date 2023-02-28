@@ -18,7 +18,8 @@ def get_default_configs():
   training.likelihood_weighting = False
   training.continuous = True
   training.reduce_mean = False
-  training.objective_weight = "x0"
+  training.objective_weight = "near_distribution"
+  training.dt = 0.1
   # sampling
   config.sampling = sampling = ml_collections.ConfigDict()
   sampling.n_steps_each = 1

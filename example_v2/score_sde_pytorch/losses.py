@@ -51,16 +51,22 @@ def optimization_manager(config):
   return optimize_fn
 
 
-def get_objective_schedule(sde, weight_type):
+def get_objective_schedule(sde, weight_type, dt):
     assert(weight_type in ['x0', 'near_distribution', 'far_distribution'])
     if weight_type == "x0":
-      alpha = 1
-      beta = 0
+      train_para_schedule = lambda t: (1 * torch.ones_like(t[:, None, None, None]), 0 * torch.ones_like(t[:, None, None, None]))
+    if weight_type == "near_distribution":
+      def train_para_schedule(t):
+        t_param = t - dt
+        mask = t_param < 0
+        alpha_param, beta_param = sde.sde_params(t_param)
+        alpha_param[mask] = 1.
+        beta_param[mask] = 0.
+        return alpha_param, beta_param
     def obj_schedule(t):
       ## alpha_param, beta_param for loss, xt_param, f_param for sampling
       mean_param, std_param = sde.sde_params(t)
-      alpha_param = alpha * torch.ones_like(mean_param)
-      beta_param = beta * torch.ones_like(mean_param)
+      alpha_param, beta_param = train_para_schedule(t)
       xt_param = alpha_param/(std_param * alpha_param - mean_param * beta_param)
       f_param = -mean_param/(std_param * alpha_param - mean_param * beta_param)
       return alpha_param, beta_param, xt_param, f_param
