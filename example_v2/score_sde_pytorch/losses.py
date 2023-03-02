@@ -52,10 +52,12 @@ def optimization_manager(config):
 
 
 def get_objective_schedule(sde, weight_type, dt):
-    assert(weight_type in ['x0', 'near_distribution', 'far_distribution'])
+    assert(weight_type in ['x0', 'near_distribution', 'far_distribution', 'eps'])
     if weight_type == "x0":
       train_para_schedule = lambda t: (1 * torch.ones_like(t[:, None, None, None]), 0 * torch.ones_like(t[:, None, None, None]))
-    if weight_type == "near_distribution":
+    elif weight_type == "eps":
+      train_para_schedule = lambda t: (0 * torch.ones_like(t[:, None, None, None]), 1 * torch.ones_like(t[:, None, None, None]))
+    elif weight_type == "near_distribution":
       def train_para_schedule(t):
         t_param = t - dt
         mask = t_param < 0
