@@ -15,6 +15,7 @@ import numpy as np
 import math
 from timm.models.vision_transformer import PatchEmbed, Attention, Mlp
 
+from . import utils
 
 def modulate(x, shift, scale):
     return x * (1 + scale.unsqueeze(1)) + shift.unsqueeze(1)
@@ -108,7 +109,7 @@ class DiTBlock(nn.Module):
         self.attn = Attention(hidden_size, num_heads=num_heads, qkv_bias=True, **block_kwargs)
         self.norm2 = nn.LayerNorm(hidden_size, elementwise_affine=False, eps=1e-6)
         mlp_hidden_dim = int(hidden_size * mlp_ratio)
-        approx_gelu = lambda: nn.GELU(approximate="tanh")
+        approx_gelu = lambda: nn.GELU( )
         self.mlp = Mlp(in_features=hidden_size, hidden_features=mlp_hidden_dim, act_layer=approx_gelu, drop=0)
         self.adaLN_modulation = nn.Sequential(
             nn.SiLU(),
@@ -141,32 +142,34 @@ class FinalLayer(nn.Module):
         x = self.linear(x)
         return x
 
-
+@utils.register_model(name='DiT')
 class DiT(nn.Module):
     """
     Diffusion model with a Transformer backbone.
     """
     def __init__(
         self,
-        input_size=32,
-        patch_size=2,
-        in_channels=4,
-        hidden_size=1152,
-        depth=28,
-        num_heads=16,
-        mlp_ratio=4.0,
-        class_dropout_prob=0.1,
-        num_classes=1000,
-        learn_sigma=True,
+        config,
     ):
         super().__init__()
+        input_size=config.model.input_size
+        patch_size=config.model.patch_size
+        in_channels=config.model.in_channels
+        hidden_size=config.model.hidden_size
+        depth=config.model.depth
+        num_heads=config.model.num_heads
+        mlp_ratio=config.model.mlp_ratio
+        class_dropout_prob=config.model.class_dropout_prob
+        num_classes=config.model.num_classes
+        learn_sigma=config.model.learn_sigma
+        
         self.learn_sigma = learn_sigma
         self.in_channels = in_channels
         self.out_channels = in_channels * 2 if learn_sigma else in_channels
         self.patch_size = patch_size
         self.num_heads = num_heads
 
-        self.x_embedder = PatchEmbed(input_size, patch_size, in_channels, hidden_size, bias=True)
+        self.x_embedder = PatchEmbed(input_size, patch_size, in_channels, hidden_size)
         self.t_embedder = TimestepEmbedder(hidden_size)
         self.y_embedder = LabelEmbedder(num_classes, hidden_size, class_dropout_prob)
         num_patches = self.x_embedder.num_patches
@@ -230,17 +233,31 @@ class DiT(nn.Module):
         imgs = x.reshape(shape=(x.shape[0], c, h * p, h * p))
         return imgs
 
-    def forward(self, x, t, y):
+    # def forward(self, x, t, y):
+    #     """
+    #     Forward pass of DiT.
+    #     x: (N, C, H, W) tensor of spatial inputs (images or latent representations of images)
+    #     t: (N,) tensor of diffusion timesteps
+    #     y: (N,) tensor of class labels
+    #     """
+    #     x = self.x_embedder(x) + self.pos_embed  # (N, T, D), where T = H * W / patch_size ** 2
+    #     t = self.t_embedder(t)                   # (N, D)
+    #     y = self.y_embedder(y, self.training)    # (N, D)
+    #     c = t + y                                # (N, D)
+    #     for block in self.blocks:
+    #         x = block(x, c)                      # (N, T, D)
+    #     x = self.final_layer(x, c)                # (N, T, patch_size ** 2 * out_channels)
+    #     x = self.unpatchify(x)                   # (N, out_channels, H, W)
+    #     return x
+
+    def forward(self, x, t):
         """
         Forward pass of DiT.
         x: (N, C, H, W) tensor of spatial inputs (images or latent representations of images)
         t: (N,) tensor of diffusion timesteps
-        y: (N,) tensor of class labels
         """
         x = self.x_embedder(x) + self.pos_embed  # (N, T, D), where T = H * W / patch_size ** 2
-        t = self.t_embedder(t)                   # (N, D)
-        y = self.y_embedder(y, self.training)    # (N, D)
-        c = t + y                                # (N, D)
+        c = self.t_embedder(t)                   # (N, D)
         for block in self.blocks:
             x = block(x, c)                      # (N, T, D)
         x = self.final_layer(x, c)                # (N, T, patch_size ** 2 * out_channels)
