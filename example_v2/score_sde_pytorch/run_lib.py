@@ -106,10 +106,12 @@ def train(config, workdir):
   likelihood_weighting = config.training.likelihood_weighting
   train_step_fn = losses.get_step_fn(sde, train=True, optimize_fn=optimize_fn,
                                      reduce_mean=reduce_mean, continuous=continuous,
-                                     likelihood_weighting=likelihood_weighting)
+                                     likelihood_weighting=likelihood_weighting,
+                                     fewer_step=config.training.fewer_step)
   eval_step_fn = losses.get_step_fn(sde, train=False, optimize_fn=optimize_fn,
                                     reduce_mean=reduce_mean, continuous=continuous,
-                                    likelihood_weighting=likelihood_weighting)
+                                    likelihood_weighting=likelihood_weighting,
+                                    fewer_step=config.training.fewer_step)
 
   # Building sampling functions
   if config.training.snapshot_sampling:
@@ -227,7 +229,8 @@ def evaluate(config,
     eval_step = losses.get_step_fn(sde, train=False, optimize_fn=optimize_fn,
                                    reduce_mean=reduce_mean,
                                    continuous=continuous,
-                                   likelihood_weighting=likelihood_weighting)
+                                   likelihood_weighting=likelihood_weighting,
+                                   fewer_step=config.training.fewer_step)
 
 
   # Create data loaders for likelihood evaluation. Only evaluate on uniformly dequantized data
