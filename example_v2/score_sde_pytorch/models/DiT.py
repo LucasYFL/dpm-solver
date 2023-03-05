@@ -162,6 +162,7 @@ class DiT(nn.Module):
         class_dropout_prob=config.model.class_dropout_prob
         num_classes=config.model.num_classes
         learn_sigma=config.model.learn_sigma
+        self.treat_t_as_y = config.model.treat_t_as_y
         
         self.learn_sigma = learn_sigma
         self.in_channels = in_channels
@@ -181,6 +182,15 @@ class DiT(nn.Module):
         ])
         self.final_layer = FinalLayer(hidden_size, patch_size, self.out_channels)
         self.initialize_weights()
+
+        # if config.model.treat_t_asy:
+        #     self.steps = torch.tensor([1.0,0.950049877166748,0.9000999927520752,0.8501499891281128,
+        #     0.8001999258995056,0.750249981880188,0.7002999782562256,
+        #     0.6503499746322632,0.6003999710083008,0.5504499673843384,
+        #     0.5004999041557312,0.4505499303340912,0.40059995651245117,
+        #     0.35064995288848877,0.30069997906684875,0.25074997544288635,
+        #     0.20079998672008514,0.15084998309612274,0.10090000182390213,
+        #     0.050950001925230026,0.0010000000474974513,])
 
     def initialize_weights(self):
         # Initialize transformer layers:
@@ -257,7 +267,10 @@ class DiT(nn.Module):
         t: (N,) tensor of diffusion timesteps
         """
         x = self.x_embedder(x) + self.pos_embed  # (N, T, D), where T = H * W / patch_size ** 2
-        c = self.t_embedder(t)                   # (N, D)
+        if not self.treat_t_as_y:
+            c = self.t_embedder(t)                   # (N, D)
+        else:
+            c = self.y_embedder((t /999 * 20).to(torch.long), self.training)
         for block in self.blocks:
             x = block(x, c)                      # (N, T, D)
         x = self.final_layer(x, c)                # (N, T, patch_size ** 2 * out_channels)
