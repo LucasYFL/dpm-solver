@@ -52,11 +52,14 @@ def optimization_manager(config):
 
 
 def get_objective_schedule(sde, weight_type, dt):
-    assert(weight_type in ['x0', 'near_distribution', 'far_distribution'])
+    assert(weight_type in ['x0', 'near_distribution', 'far_distribution', 'eps', 'x0_weightedloss'])
     if weight_type == "x0":
       train_para_schedule = lambda t: (1 * torch.ones_like(t[:, None, None, None]), 0 * torch.ones_like(t[:, None, None, None]))
+      loss_weight_schedule = lambda t: 1 * torch.ones_like(t[:, None, None, None])   
+    elif weight_type == "eps":
+      train_para_schedule = lambda t: (0 * torch.ones_like(t[:, None, None, None]), 1 * torch.ones_like(t[:, None, None, None]))
       loss_weight_schedule = lambda t: 1 * torch.ones_like(t[:, None, None, None])
-    if weight_type == "near_distribution":
+    elif weight_type == "near_distribution":
       def train_para_schedule(t):
         t_param = t - dt
         mask = t_param < 0
@@ -65,6 +68,11 @@ def get_objective_schedule(sde, weight_type, dt):
         beta_param[mask] = 0.
         return alpha_param, beta_param
       loss_weight_schedule = lambda t: 1 * torch.ones_like(t[:, None, None, None])
+    elif weight_type == "x0_weightedloss":
+      train_para_schedule = lambda t: (1 * torch.ones_like(t[:, None, None, None]), 0 * torch.ones_like(t[:, None, None, None]))
+      def loss_weight_schedule(t):
+          alpha, beta = sde.sde_params(t)
+          return alpha**2/beta**2
     def obj_schedule(t):
       ## alpha_param, beta_param for loss, xt_param, f_param for sampling
       mean_param, std_param = sde.sde_params(t)
@@ -106,7 +114,7 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     perturbed_data = mean + std[:, None, None, None] * z
     score = score_fn(perturbed_data, t)
     alpha, beta, _, _, loss_weight= obj_scheduler(t)
-    losses = torch.square(score * std[:, None, None, None] + alpha * batch + beta * z)
+    losses = torch.square(score * std[:, None, None, None] + alpha * batch + beta * z) * loss_weight
     losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
 
     loss = torch.mean(losses)
