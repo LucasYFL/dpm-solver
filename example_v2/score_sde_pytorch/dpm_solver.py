@@ -441,7 +441,7 @@ class DPM_Solver:
         Return the noise prediction model.
         """
         bs, _, _, _ = x.shape
-        _, _, xt_param, f_param = self.objective_scheduler(t.repeat(bs))
+        _, _, xt_param, f_param, _ = self.objective_scheduler(t.repeat(bs))
         return x * xt_param + f_param * self.model(x, t)
 
     def data_prediction_fn(self, x, t):

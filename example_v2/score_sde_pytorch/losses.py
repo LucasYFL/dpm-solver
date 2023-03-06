@@ -55,6 +55,7 @@ def get_objective_schedule(sde, weight_type, dt):
     assert(weight_type in ['x0', 'near_distribution', 'far_distribution'])
     if weight_type == "x0":
       train_para_schedule = lambda t: (1 * torch.ones_like(t[:, None, None, None]), 0 * torch.ones_like(t[:, None, None, None]))
+      loss_weight_schedule = lambda t: 1 * torch.ones_like(t[:, None, None, None])
     if weight_type == "near_distribution":
       def train_para_schedule(t):
         t_param = t - dt
@@ -63,13 +64,15 @@ def get_objective_schedule(sde, weight_type, dt):
         alpha_param[mask] = 1.
         beta_param[mask] = 0.
         return alpha_param, beta_param
+      loss_weight_schedule = lambda t: 1 * torch.ones_like(t[:, None, None, None])
     def obj_schedule(t):
       ## alpha_param, beta_param for loss, xt_param, f_param for sampling
       mean_param, std_param = sde.sde_params(t)
       alpha_param, beta_param = train_para_schedule(t)
       xt_param = alpha_param/(std_param * alpha_param - mean_param * beta_param)
       f_param = -mean_param/(std_param * alpha_param - mean_param * beta_param)
-      return alpha_param, beta_param, xt_param, f_param
+      loss_weight = loss_weight_schedule(t)
+      return alpha_param, beta_param, xt_param, f_param, loss_weight
     return obj_schedule
 
 def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_weighting=True, eps=1e-5):
@@ -102,7 +105,7 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     mean, std = sde.marginal_prob(batch, t)
     perturbed_data = mean + std[:, None, None, None] * z
     score = score_fn(perturbed_data, t)
-    alpha, beta, _, _ = obj_scheduler(t)
+    alpha, beta, _, _, loss_weight= obj_scheduler(t)
     losses = torch.square(score * std[:, None, None, None] + alpha * batch + beta * z)
     losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
 
