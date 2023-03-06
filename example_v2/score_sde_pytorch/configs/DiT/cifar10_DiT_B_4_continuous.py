@@ -57,5 +57,6 @@ def get_config():
   model.num_classes=1000
   model.learn_sigma=False
   model.ema_rate = 0.9999
+  model.treat_t_as_y = False
   return config
 
