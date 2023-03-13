@@ -52,7 +52,7 @@ def optimization_manager(config):
 
 
 def get_objective_schedule(sde, weight_type, dt):
-    assert(weight_type in ['x0', 'near_distribution', 'far_distribution', 'eps', 'x0_weightedloss'])
+    assert(weight_type in ['x0', 'near_distribution', 'far_distribution', 'eps', 'x0_weightedloss', 'near_distribution_weightedloss'])
     if weight_type == "x0":
       train_para_schedule = lambda t: (1 * torch.ones_like(t[:, None, None, None]), 0 * torch.ones_like(t[:, None, None, None]))
       loss_weight_schedule = lambda t: 1 * torch.ones_like(t[:, None, None, None])   
@@ -73,6 +73,21 @@ def get_objective_schedule(sde, weight_type, dt):
       def loss_weight_schedule(t):
           alpha, beta = sde.sde_params(t)
           return alpha**2/beta**2
+    elif weight_type == "near_distribution_weightedloss":
+      def train_para_schedule(t):
+        t_param = t - dt
+        mask = t_param < 0
+        alpha_param, beta_param = sde.sde_params(t_param)
+        alpha_param[mask] = 1.
+        beta_param[mask] = 0.
+        return alpha_param, beta_param
+      
+      def loss_weight_schedule(t):
+        mean_param, std_param = sde.sde_params(t)
+        alpha_param, beta_param = train_para_schedule(t)
+        return (mean_param/(alpha_param * std_param - beta_param * mean_param)) ** 2
+        
+    
     def obj_schedule(t):
       ## alpha_param, beta_param for loss, xt_param, f_param for sampling
       mean_param, std_param = sde.sde_params(t)
