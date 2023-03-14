@@ -1,0 +1,32 @@
+2
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+I0221 11:52:50.785195 22804812785472 xla_bridge.py:355] Unable to initialize backend 'tpu_driver': NOT_FOUND: Unable to find driver in registry given worker: 
+I0221 11:52:50.785426 22804812785472 xla_bridge.py:355] Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0221 11:52:50.785512 22804812785472 xla_bridge.py:355] Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0221 11:52:50.786669 22804812785472 xla_bridge.py:355] Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
+I0221 11:52:50.786777 22804812785472 xla_bridge.py:355] Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
+W0221 11:52:50.786848 22804812785472 xla_bridge.py:362] No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+I0221 11:52:50.790291 22804812785472 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0221 11:52:50.796306 22804812785472 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0221 11:52:50.796411 22804812785472 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0221 11:52:50.796517 22804812785472 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0221 11:52:50.796598 22804812785472 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0221 11:52:51.001324 22804812785472 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0221 11:52:51.001481 22804812785472 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0221 11:52:51.001587 22804812785472 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0221 11:52:51.001662 22804812785472 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0221 11:52:56.348995 22804812785472 losses.py:57] Sde loss
+I0221 11:52:56.349521 22804812785472 losses.py:60] Fewer: 2
+I0221 11:52:56.349650 22804812785472 losses.py:75] one step set
+I0221 11:52:56.351389 22804812785472 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0221 11:52:56.353601 22804812785472 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0221 11:52:56.353723 22804812785472 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0221 11:52:56.353866 22804812785472 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0221 11:52:56.353965 22804812785472 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0221 11:52:56.403892 22804812785472 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0221 11:52:56.404017 22804812785472 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0221 11:52:56.404119 22804812785472 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0221 11:52:56.404198 22804812785472 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0221 11:52:56.448656 22804812785472 resolver.py:105] Using /tmp/tfhub_modules to cache modules.
+I0221 11:52:59.108791 22804812785472 run_lib.py:266] begin checkpoint: 9
