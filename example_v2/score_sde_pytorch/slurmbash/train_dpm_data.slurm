@@ -9,12 +9,12 @@
 #SBATCH --partition=spgpu
 #SBATCH --gpus=a40:2
 #SBATCH --output=testL.out
-#SBATCH --export=ALL,EXP_FEWER_STEPS=2
+#SBATCH --export=ALL,EXP_FEWER_STEPS=3
 
 echo $EXP_FEWER_STEPS
 module purge
 module load cuda/11.3.0 cudnn/11.3-v8.2.1
 eval "$(conda shell.bash hook)"
 conda activate dpm
-cd /home/yifulu/work/dpm-solver/example_v2/score_sde_pytorch
-python main.py --config "configs/vp/cifar10_ddpm_continuous.py" --workdir experiments/dpm_last --mode train #--workdir experiments/dpm_unconditional #--noconfig.model.conditional
+cd /scratch/qingqu_root/qingqu1/huijiezh/dpm-solver/example_v2/score_sde_pytorch
+python main.py --config "configs/vp/cifar10_ddpm_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_data --mode train --config.eval.t=0.050950001925230026 #--workdir experiments/dpm_unconditional #--noconfig.model.conditional

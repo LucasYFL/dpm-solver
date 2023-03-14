@@ -103,10 +103,13 @@ def train(config, workdir):
   optimize_fn = losses.optimization_manager(config)
   continuous = config.training.continuous
   reduce_mean = config.training.reduce_mean
+  """
+  Not passing t here
+  """
   likelihood_weighting = config.training.likelihood_weighting
   train_step_fn = losses.get_step_fn(sde, train=True, optimize_fn=optimize_fn,
                                      reduce_mean=reduce_mean, continuous=continuous,
-                                     likelihood_weighting=likelihood_weighting)
+                                     likelihood_weighting=likelihood_weighting,)
   eval_step_fn = losses.get_step_fn(sde, train=False, optimize_fn=optimize_fn,
                                     reduce_mean=reduce_mean, continuous=continuous,
                                     likelihood_weighting=likelihood_weighting)
@@ -117,7 +120,7 @@ def train(config, workdir):
     sampling_shape = (config.training.batch_size, config.data.num_channels,
                       config.data.image_size, config.data.image_size)
     if fewer==3:
-      sampling_fn = lambda model: (model(sde.prior_sampling(sampling_shape).to(config.device),t=0.050950001925230026),None)
+      sampling_fn = lambda model: (model(sde.prior_sampling(sampling_shape).to(config.device),t=0.30069997906684875),None)
     else:
       sampling_fn = sampling.get_sampling_fn(config, sde, sampling_shape, inverse_scaler, sampling_eps)
 
@@ -157,23 +160,23 @@ def train(config, workdir):
       save_checkpoint(os.path.join(checkpoint_dir, f'checkpoint_{save_step}.pth'), state)
 
       # Generate and save samples
-      if config.training.snapshot_sampling:
-        ema.store(score_model.parameters())
-        ema.copy_to(score_model.parameters())
-        sample, n = sampling_fn(score_model)
-        ema.restore(score_model.parameters())
-        this_sample_dir = os.path.join(sample_dir, "iter_{}".format(step))
-        tf.io.gfile.makedirs(this_sample_dir)
-        nrow = int(np.sqrt(sample.shape[0]))
-        image_grid = make_grid(sample, nrow, padding=2)
-        sample = np.clip(sample.permute(0, 2, 3, 1).cpu().numpy() * 255, 0, 255).astype(np.uint8)
-        with tf.io.gfile.GFile(
-            os.path.join(this_sample_dir, "sample.np"), "wb") as fout:
-          np.save(fout, sample)
+      # if config.training.snapshot_sampling:
+      #   ema.store(score_model.parameters())
+      #   ema.copy_to(score_model.parameters())
+      #   sample, n = sampling_fn(score_model)
+      #   ema.restore(score_model.parameters())
+      #   this_sample_dir = os.path.join(sample_dir, "iter_{}".format(step))
+      #   tf.io.gfile.makedirs(this_sample_dir)
+      #   nrow = int(np.sqrt(sample.shape[0]))
+      #   image_grid = make_grid(sample, nrow, padding=2)
+      #   sample = np.clip(sample.permute(0, 2, 3, 1).cpu().numpy() * 255, 0, 255).astype(np.uint8)
+      #   with tf.io.gfile.GFile(
+      #       os.path.join(this_sample_dir, "sample.np"), "wb") as fout:
+      #     np.save(fout, sample)
 
-        with tf.io.gfile.GFile(
-            os.path.join(this_sample_dir, "sample.png"), "wb") as fout:
-          save_image(image_grid, fout)
+      #   with tf.io.gfile.GFile(
+      #       os.path.join(this_sample_dir, "sample.png"), "wb") as fout:
+      #     save_image(image_grid, fout)
 
 
 def evaluate(config,
