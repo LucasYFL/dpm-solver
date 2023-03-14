@@ -18,7 +18,8 @@ def get_default_configs():
   training.likelihood_weighting = False
   training.continuous = True
   training.reduce_mean = False
-
+  training.t0 = 0
+  training.t1 = 0
   # sampling
   config.sampling = sampling = ml_collections.ConfigDict()
   sampling.n_steps_each = 1

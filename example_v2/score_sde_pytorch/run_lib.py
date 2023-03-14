@@ -104,15 +104,15 @@ def train(config, workdir):
   continuous = config.training.continuous
   reduce_mean = config.training.reduce_mean
   """
-  Not passing t here
+  Not passing t here, or pass for interval training
   """
   likelihood_weighting = config.training.likelihood_weighting
   train_step_fn = losses.get_step_fn(sde, train=True, optimize_fn=optimize_fn,
                                      reduce_mean=reduce_mean, continuous=continuous,
-                                     likelihood_weighting=likelihood_weighting,)
+                                     likelihood_weighting=likelihood_weighting,t=float(config.training.t0), t1=float(config.training.t1))
   eval_step_fn = losses.get_step_fn(sde, train=False, optimize_fn=optimize_fn,
                                     reduce_mean=reduce_mean, continuous=continuous,
-                                    likelihood_weighting=likelihood_weighting)
+                                    likelihood_weighting=likelihood_weighting,t=float(config.training.t0), t1=float(config.training.t1))
   fewer = int(os.environ.get("EXP_FEWER_STEPS",0))
   # Building sampling functions
   if config.training.snapshot_sampling:
