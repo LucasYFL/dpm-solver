@@ -40,7 +40,8 @@ def get_default_configs():
   evaluate.bpd_dataset = 'test'
   #added
   evaluate.t = 0.0
-  evaluate.t_tuples = tuple()
+  evaluate.t_tuples = (0.259,0.676) #intervals
+  evaluate.t_converge = (0,0,0) #num models 1 more than intervals, if the model is converged.
   evaluate.converge_epoch = 40 # epoch to be the baseline
   evaluate.compare_step = 0 # timestep to be compared
   # data

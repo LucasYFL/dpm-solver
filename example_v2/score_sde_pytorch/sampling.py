@@ -528,7 +528,7 @@ def get_dpm_solver_sampler(sde, shape, inverse_scaler, steps=10, eps=1e-3,
   """
   ns = NoiseScheduleVP('linear', continuous_beta_0=sde.beta_0, continuous_beta_1=sde.beta_1)
 
-  def dpm_solver_sampler(model, model_converge, compare_step):
+  def dpm_solver_sampler(models, compare_step):
     """ The DPM-Solver sampler funciton.
 
     Args:
@@ -537,9 +537,10 @@ def get_dpm_solver_sampler(sde, shape, inverse_scaler, steps=10, eps=1e-3,
       Samples, number of function evaluations.
     """
     with torch.no_grad():
-      noise_pred_fn = get_noise_fn(sde, model, train=False, continuous=True)
-      noise_pred_converge_fn = get_noise_fn(sde, model_converge, train=False, continuous=True)
-      dpm_solver = DPM_Solver(noise_pred_fn, noise_pred_converge_fn, ns, compare_step = compare_step, algorithm_type=algorithm_type, correcting_x0_fn="dynamic_thresholding" if thresholding else None)
+      noise_pred_fns = []
+      for m in models:
+        noise_pred_fns.append(get_noise_fn(sde, m, train=False, continuous=True))
+      dpm_solver = DPM_Solver(noise_pred_fns, ns, compare_step = compare_step, algorithm_type=algorithm_type, correcting_x0_fn="dynamic_thresholding" if thresholding else None)
       # Initial sample
       x = sde.prior_sampling(shape).to(device)
       x = dpm_solver.sample(

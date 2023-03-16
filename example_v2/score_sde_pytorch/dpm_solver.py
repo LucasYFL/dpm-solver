@@ -345,15 +345,14 @@ def model_wrapper(
 class DPM_Solver:
     def __init__(
         self,
-        model_fn,
-        model_fn_converge,
+        model_fns,
         noise_schedule,
         algorithm_type="dpmsolver++",
         correcting_x0_fn=None,
         correcting_xt_fn=None,
         thresholding_max_val=1.,
         dynamic_thresholding_ratio=0.995,
-        compare_step = 0
+        compare_step = (0,)
     ):
         """Construct a DPM-Solver. 
 
@@ -411,8 +410,9 @@ class DPM_Solver:
             Burcu Karagol Ayan, S Sara Mahdavi, Rapha Gontijo Lopes, et al. Photorealistic text-to-image diffusion models
             with deep language understanding. arXiv preprint arXiv:2205.11487, 2022b.
         """
-        self.model = lambda x, t: model_fn(x, t.expand((x.shape[0])))
-        self.model_converge = lambda x, t: model_fn_converge(x, t.expand((x.shape[0])))
+        self.models = []
+        for m in model_fns:
+            self.models.append(lambda x, t: m(x, t.expand((x.shape[0]))))
         self.noise_schedule = noise_schedule
         assert algorithm_type in ["dpmsolver", "dpmsolver++"]
         self.algorithm_type = algorithm_type
@@ -447,14 +447,12 @@ class DPM_Solver:
         """
         Return the noise prediction model.
         """
-        return self.model(x, t)
+        for i,s in enumerate(self.compare_step):
+            if t <= s:
+                return self.models[i](x, t)
+        return self.models[-1](x, t)
 
-    def noise_prediction_fn_converge(self, x, t):
-        """
-        Return the noise prediction model.
-        """
-        return self.model_converge(x, t)
-
+    
     def data_prediction_fn(self, x, t):
         """
         Return the data prediction model (with corrector).
@@ -473,10 +471,8 @@ class DPM_Solver:
         if self.algorithm_type == "dpmsolver++":
             return self.data_prediction_fn(x, t)
         else:
-            if torch.isclose(self.lst_steps[self.compare_step], t.cpu(), rtol=0.001, atol=0.001):
-                return self.noise_prediction_fn(x, t)
-            else:
-                return self.noise_prediction_fn_converge(x, t)
+            return self.noise_prediction_fn(x, t)
+            
 
     def get_time_steps(self, skip_type, t_T, t_0, N, device):
         """Compute the intermediate time steps for sampling.

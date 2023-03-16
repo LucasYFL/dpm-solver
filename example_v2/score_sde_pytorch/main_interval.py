@@ -40,7 +40,7 @@ flags.DEFINE_string("m2", None, "Model 2  directory.")
 flags.DEFINE_string("m3", None, "Model 3 directory.")
 flags.DEFINE_string("eval_folder", "eval",
                     "The folder name for storing evaluation results")
-flags.mark_flags_as_required(["workdir", "config", 'm1','m2','m3'])
+flags.mark_flags_as_required(["workdir", "config", 'm1','m2'])
 
 tf.config.experimental.set_visible_devices([], "GPU")
 os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
@@ -56,13 +56,13 @@ if __name__ == "__main__":
 
 
 def evaluate(config,
-             workdir,m1,m2,m3,
+             workdir,m1,m2,m3=None,
              eval_folder="eval"):
   """Evaluate trained models.
 
   Args:
     config: Configuration to use.
-    workdir: Working directory for checkpoints.
+    workdir: Working directory for models
     eval_folder: The subfolder for storing evaluation results. Default to
       "eval".
   """
@@ -80,11 +80,15 @@ def evaluate(config,
   inverse_scaler = datasets.get_data_inverse_scaler(config)
 
   # Initialize model
-  score_models = {}
+  score_models = []
   optimizers = []
   emas = []
   states = []
-  for i in range(3):
+  mdir = (m1,m2,m3)
+  checkpoint_dirs = []
+  logging.info(config.evaluate.t_tuples)
+
+  for i in range(len(config.evaluate.t_tuples)+1):
     s = mutils.create_model(config)
     score_models.append(s)
     opt = losses.get_optimizer(config, s.parameters())
@@ -92,9 +96,7 @@ def evaluate(config,
     ema = ExponentialMovingAverage(s.parameters(), decay=config.model.ema_rate)
     emas.append(ema)
     states.append(dict(optimizer=opt, model=s, ema=ema, step=0))
-
-  checkpoint_dir = os.path.join(workdir, "checkpoints")
-
+    checkpoint_dirs.append( os.path.join(workdir,mdir[i], "checkpoints"))
   # Setup SDEs
   if config.training.sde.lower() == 'vpsde':
     sde = sde_lib.VPSDE(beta_min=config.model.beta_min, beta_max=config.model.beta_max, N=config.model.num_scales)
@@ -152,33 +154,16 @@ def evaluate(config,
   begin_ckpt = config.eval.begin_ckpt
   logging.info("begin checkpoint: %d" % (begin_ckpt,))
   for ckpt in range(begin_ckpt, config.eval.end_ckpt + 1, config.eval.ckpt_interval):
-    # Wait if the target checkpoint doesn't exist yet
-    waiting_message_printed = False
-    ckpt_filename = os.path.join(checkpoint_dir, "checkpoint_{}.pth".format(ckpt))
-    while not tf.io.gfile.exists(ckpt_filename):
-      if not waiting_message_printed:
-        logging.warning("Waiting for the arrival of checkpoint_%d" % (ckpt,))
-        waiting_message_printed = True
-      time.sleep(60)
-
-    # Wait for 2 additional mins in case the file exists but is not ready for reading
-    ckpt_path = os.path.join(checkpoint_dir, f'checkpoint_{ckpt}.pth')
-    try:
-      state = restore_checkpoint(ckpt_path, state, device=config.device)
-    except:
-      time.sleep(60)
-      try:
-        state = restore_checkpoint(ckpt_path, state, device=config.device)
-      except:
-        time.sleep(120)
-        state = restore_checkpoint(ckpt_path, state, device=config.device)
-
-    ckpt_path_converge = os.path.join(checkpoint_dir, "checkpoint_{}.pth".format(config.eval.converge_epoch))
-    ema.copy_to(score_model.parameters())
-
-    state_converge = restore_checkpoint(ckpt_path_converge, state_converge, device=config.device)
-    ema_converge.copy_to(score_model_converge.parameters())
+    for i in range(len(checkpoint_dirs)):
+      if config.evaluate.t_converge[i]:
+        logging.info("{} is converged model".format(i))
+        ckpt_path = os.path.join(checkpoint_dirs[i], "checkpoint_{}.pth".format(config.eval.converge_epoch))
+      else:
+        ckpt_path = os.path.join(checkpoint_dirs[i], "checkpoint_{}.pth".format(ckpt))
+      states[i] =restore_checkpoint(ckpt_path, states[i], device=config.device)
+      emas[i].copy_to(score_models[i].parameters())
     # Compute the loss function on the full evaluation dataset if loss computation is enabled
+    #!!!!!NO loss and bpd for interval exp!!!!!
     if config.eval.enable_loss:
       all_losses = []
       eval_iter = iter(eval_ds)  # pytype: disable=wrong-arg-types
@@ -235,7 +220,7 @@ def evaluate(config,
         tf.io.gfile.makedirs(this_sample_dir)
         # samples_raw, n = sampling_fn(score_model)
 
-        samples_raw, n = sampling_fn(score_model, score_model_converge, compare_step = config.eval.compare_step)
+        samples_raw, n = sampling_fn(score_models, compare_step = config.evaluate.t_tuples)
 
         samples = np.clip(samples_raw.permute(0, 2, 3, 1).cpu().numpy() * 255., 0, 255).astype(np.uint8)
         samples = samples.reshape(
