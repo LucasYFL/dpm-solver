@@ -75,7 +75,8 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     else:
       lst_steps=torch.tensor([0.9000999927520752])#[0.050950001925230026])#[0.30069997906684875])
     logging.info("one step set")
-    
+  elif fewer==4:
+    logging.info("({}, {}]".format(tl,tl2))
   """Create a loss function for training with arbirary SDEs.
 
   Args:

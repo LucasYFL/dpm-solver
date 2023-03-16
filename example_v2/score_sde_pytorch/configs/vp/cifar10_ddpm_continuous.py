@@ -26,7 +26,7 @@ def get_config():
   training.sde = 'vpsde'
   training.continuous = True
   training.reduce_mean = True
-  training.snapshot_freq = 50000
+  training.snapshot_freq = 10000
   # sampling
   sampling = config.sampling
   sampling.method = 'dpm_solver'

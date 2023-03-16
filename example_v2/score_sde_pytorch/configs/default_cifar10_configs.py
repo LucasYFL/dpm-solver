@@ -18,8 +18,8 @@ def get_default_configs():
   training.likelihood_weighting = False
   training.continuous = True
   training.reduce_mean = False
-  training.t0 = 0
-  training.t1 = 0
+  training.t0 = 0.0
+  training.t1 = 0.0
   # sampling
   config.sampling = sampling = ml_collections.ConfigDict()
   sampling.n_steps_each = 1
@@ -40,7 +40,7 @@ def get_default_configs():
   evaluate.bpd_dataset = 'test'
   #added
   evaluate.t = 0.0
-
+  evaluate.t_tuples = tuple()
   evaluate.converge_epoch = 40 # epoch to be the baseline
   evaluate.compare_step = 0 # timestep to be compared
   # data
