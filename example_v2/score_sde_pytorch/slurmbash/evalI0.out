@@ -1,0 +1,48 @@
+4
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+I0316 12:56:16.909487 22785308272448 xla_bridge.py:355] Unable to initialize backend 'tpu_driver': NOT_FOUND: Unable to find driver in registry given worker: 
+I0316 12:56:16.909743 22785308272448 xla_bridge.py:355] Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0316 12:56:16.909811 22785308272448 xla_bridge.py:355] Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0316 12:56:16.911668 22785308272448 xla_bridge.py:355] Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
+I0316 12:56:16.911772 22785308272448 xla_bridge.py:355] Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
+W0316 12:56:16.911840 22785308272448 xla_bridge.py:362] No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+I0316 12:56:16.914760 22785308272448 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0316 12:56:16.938580 22785308272448 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0316 12:56:16.938664 22785308272448 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0316 12:56:16.938752 22785308272448 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0316 12:56:16.938823 22785308272448 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0316 12:56:17.161850 22785308272448 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0316 12:56:17.162012 22785308272448 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0316 12:56:17.162120 22785308272448 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0316 12:56:17.162188 22785308272448 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+Traceback (most recent call last):
+  File "/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/ml_collections/config_dict/config_dict.py", line 883, in __getitem__
+    field = self._fields[key]
+KeyError: 'evaluate'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/ml_collections/config_dict/config_dict.py", line 807, in __getattr__
+    return self[attribute]
+  File "/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/ml_collections/config_dict/config_dict.py", line 889, in __getitem__
+    raise KeyError(self._generate_did_you_mean_message(key, str(e)))
+KeyError: "'evaluate'"
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/main_interval.py", line 300, in <module>
+    app.run(main)
+  File "/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/absl/app.py", line 300, in run
+    _run_main(main, args)
+  File "/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/absl/app.py", line 251, in _run_main
+    sys.exit(main(argv))
+  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/main_interval.py", line 297, in main
+    evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,FLAGS.m3, FLAGS.eval_folder)
+  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/main_interval.py", line 79, in evaluate
+    logging.info(config.evaluate.t_tuples)
+  File "/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/ml_collections/config_dict/config_dict.py", line 809, in __getattr__
+    raise AttributeError(e)
+AttributeError: "'evaluate'"

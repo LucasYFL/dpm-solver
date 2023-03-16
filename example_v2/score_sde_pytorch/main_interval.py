@@ -76,9 +76,9 @@ def evaluate(config,
   states = []
   mdir = (m1,m2,m3)
   checkpoint_dirs = []
-  logging.info(config.evaluate.t_tuples)
+  logging.info(config.eval.t_tuples)
 
-  for i in range(len(config.evaluate.t_tuples)+1):
+  for i in range(len(config.eval.t_tuples)+1):
     s = mutils.create_model(config)
     score_models.append(s)
     opt = losses.get_optimizer(config, s.parameters())
@@ -145,7 +145,7 @@ def evaluate(config,
   logging.info("begin checkpoint: %d" % (begin_ckpt,))
   for ckpt in range(begin_ckpt, config.eval.end_ckpt + 1, config.eval.ckpt_interval):
     for i in range(len(checkpoint_dirs)):
-      if config.evaluate.t_converge[i]:
+      if config.eval.t_converge[i]:
         logging.info("{} is converged model".format(i))
         ckpt_path = os.path.join(checkpoint_dirs[i], "checkpoint_{}.pth".format(config.eval.converge_epoch))
       else:
@@ -210,7 +210,7 @@ def evaluate(config,
         tf.io.gfile.makedirs(this_sample_dir)
         # samples_raw, n = sampling_fn(score_model)
 
-        samples_raw, n = sampling_fn(score_models, compare_step = config.evaluate.t_tuples)
+        samples_raw, n = sampling_fn(score_models, compare_step = config.eval.t_tuples)
 
         samples = np.clip(samples_raw.permute(0, 2, 3, 1).cpu().numpy() * 255., 0, 255).astype(np.uint8)
         samples = samples.reshape(
