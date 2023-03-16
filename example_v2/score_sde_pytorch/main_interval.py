@@ -45,16 +45,6 @@ flags.mark_flags_as_required(["workdir", "config", 'm1','m2'])
 tf.config.experimental.set_visible_devices([], "GPU")
 os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
 
-def main(argv):
-  global config_fewer
-  config_fewer = FLAGS.config
-  # Run the evaluation pipeline
-  evaluate(FLAGS.config, FLAGS.workdir, FLAGS.eval_folder)
- 
-if __name__ == "__main__":
-  app.run(main)
-
-
 def evaluate(config,
              workdir,m1,m2,m3=None,
              eval_folder="eval"):
@@ -298,3 +288,13 @@ def evaluate(config,
         io_buffer = io.BytesIO()
         np.savez_compressed(io_buffer, IS=inception_score, fid=fid, kid=kid)
         f.write(io_buffer.getvalue())
+
+
+def main(argv):
+  global config_fewer
+  config_fewer = FLAGS.config
+  # Run the evaluation pipeline
+  evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,FLAGS.m3, FLAGS.eval_folder)
+ 
+if __name__ == "__main__":
+  app.run(main)
