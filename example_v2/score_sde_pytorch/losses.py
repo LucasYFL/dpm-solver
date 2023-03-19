@@ -109,7 +109,7 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     elif fewer>=2 and fewer<=3:
       t = lst_steps.to(batch.device).repeat(batch.shape[0])
     elif fewer==4:
-      t = torch.rand(batch.shape[0], device=batch.device) * (tl2-tl-eps) + eps
+      t = torch.rand(batch.shape[0], device=batch.device) * (tl2-tl-eps) + eps+tl
     else:
       t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
     z = torch.randn_like(batch)

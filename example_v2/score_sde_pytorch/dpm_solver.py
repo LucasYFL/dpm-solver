@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 import math
-
+import logging
 
 class NoiseScheduleVP:
     def __init__(
@@ -352,7 +352,8 @@ class DPM_Solver:
         correcting_xt_fn=None,
         thresholding_max_val=1.,
         dynamic_thresholding_ratio=0.995,
-        compare_step = (0,)
+        compare_step = (0,),
+        ms =None
     ):
         """Construct a DPM-Solver. 
 
@@ -410,7 +411,15 @@ class DPM_Solver:
             Burcu Karagol Ayan, S Sara Mahdavi, Rapha Gontijo Lopes, et al. Photorealistic text-to-image diffusion models
             with deep language understanding. arXiv preprint arXiv:2205.11487, 2022b.
         """
+        
         self.models = []
+        def comp(md1,md2):
+            for p1, p2 in zip(md1.parameters(), md2.parameters()):
+                if p1.data.ne(p2.data).sum() > 0:
+                    return False
+            return True
+        logging.info("m1 and m3: {}".format(comp(ms[0],ms[2])))
+        logging.info("m1 and m2: {}".format(comp(ms[0],ms[1])))
         for m in model_fns:
             self.models.append(lambda x, t: m(x, t.expand((x.shape[0]))))
         self.noise_schedule = noise_schedule
@@ -447,8 +456,16 @@ class DPM_Solver:
         """
         Return the noise prediction model.
         """
+        m1 = self.models[0](x,t)
+        m2 = self.models[1](x,t)
+        m3 = self.models[2](x,t)
+        def comp(d1,d2):
+            return (d1-d2).sum()
+        logging.info("m1 and m3 :{}".format(comp(m1,m3)))
+        logging.info("m1 and m2 :{}".format(comp(m1,m2)))
         for i,s in enumerate(self.compare_step):
             if t <= s:
+                logging.info("inside: {}, t {}".format(i,t.item()))
                 return self.models[i](x, t)
         return self.models[-1](x, t)
 

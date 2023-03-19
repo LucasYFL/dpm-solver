@@ -1,0 +1,60 @@
+4
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+I0319 11:07:18.676796 22870966806336 xla_bridge.py:355] Unable to initialize backend 'tpu_driver': NOT_FOUND: Unable to find driver in registry given worker: 
+I0319 11:07:18.677007 22870966806336 xla_bridge.py:355] Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0319 11:07:18.677081 22870966806336 xla_bridge.py:355] Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0319 11:07:18.677533 22870966806336 xla_bridge.py:355] Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
+I0319 11:07:18.677639 22870966806336 xla_bridge.py:355] Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
+W0319 11:07:18.677709 22870966806336 xla_bridge.py:362] No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+I0319 11:07:18.678719 22870966806336 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0319 11:07:18.680541 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0319 11:07:18.680632 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0319 11:07:18.680727 22870966806336 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0319 11:07:18.680803 22870966806336 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0319 11:07:18.836144 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0319 11:07:18.836298 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0319 11:07:18.836405 22870966806336 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0319 11:07:18.836479 22870966806336 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0319 11:07:18.870697 22870966806336 main_interval.py:79] (0.259, 0.676)
+I0319 11:07:22.082164 22870966806336 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0319 11:07:22.084199 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0319 11:07:22.084321 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0319 11:07:22.084447 22870966806336 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0319 11:07:22.084531 22870966806336 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0319 11:07:22.131526 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0319 11:07:22.131657 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0319 11:07:22.131754 22870966806336 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0319 11:07:22.131829 22870966806336 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0319 11:07:22.168720 22870966806336 sampling.py:98] dpm_solver
+I0319 11:07:22.169011 22870966806336 resolver.py:105] Using /tmp/tfhub_modules to cache modules.
+I0319 11:07:24.429181 22870966806336 main_interval.py:145] begin checkpoint: 1
+I0319 11:07:24.469172 22870966806336 main_interval.py:149] 0 is converged model
+I0319 11:07:42.818427 22870966806336 main_interval.py:149] 2 is converged model
+I0319 11:07:55.904925 22870966806336 main_interval.py:202] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_control_1
+I0319 11:07:55.906191 22870966806336 main_interval.py:205] sampling -- ckpt: 1, round: 0
+I0319 11:07:55.962796 22870966806336 dpm_solver.py:450] outside of loop:<class 'torch.Tensor'>
+Traceback (most recent call last):
+  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/main_interval.py", line 300, in <module>
+    app.run(main)
+  File "/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/absl/app.py", line 300, in run
+    _run_main(main, args)
+  File "/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/absl/app.py", line 251, in _run_main
+    sys.exit(main(argv))
+  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/main_interval.py", line 297, in main
+    evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,FLAGS.m3, FLAGS.eval_folder)
+  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/main_interval.py", line 213, in evaluate
+    samples_raw, n = sampling_fn(score_models, compare_step = config.eval.t_tuples)
+  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/sampling.py", line 546, in dpm_solver_sampler
+    x = dpm_solver.sample(
+  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/dpm_solver.py", line 1258, in sample
+    x = self.singlestep_dpm_solver_update(x, s, t, order, solver_type=solver_type, r1=r1, r2=r2)
+  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/dpm_solver.py", line 958, in singlestep_dpm_solver_update
+    return self.singlestep_dpm_solver_third_update(x, s, t, return_intermediate=return_intermediate, solver_type=solver_type, r1=r1, r2=r2)
+  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/dpm_solver.py", line 790, in singlestep_dpm_solver_third_update
+    model_s = self.model_fn(x, s)
+  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/dpm_solver.py", line 478, in model_fn
+    return self.noise_prediction_fn(x, t)
+  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/dpm_solver.py", line 451, in noise_prediction_fn
+    logging.info( t <= s)
+UnboundLocalError: local variable 's' referenced before assignment
