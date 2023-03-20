@@ -414,14 +414,16 @@ class DPM_Solver:
         
         self.models = []
         def comp(md1,md2):
+            err = 0 
             for p1, p2 in zip(md1.parameters(), md2.parameters()):
-                if p1.data.ne(p2.data).sum() > 0:
-                    return False
-            return True
-        logging.info("m1 and m3: {}".format(comp(ms[0],ms[2])))
-        logging.info("m1 and m2: {}".format(comp(ms[0],ms[1])))
-        for m in model_fns:
-            self.models.append(lambda x, t: m(x, t.expand((x.shape[0]))))
+                """if p1.data.ne(p2.data).sum() > 0:
+                    return False"""
+                err += torch.abs(p1.data-p2.data).sum()
+            return err
+        logging.info("m1 vs m3: {}".format(comp(ms[0],ms[2])))
+        logging.info("m1 vs m2: {}".format(comp(ms[0],ms[1])))
+        f = lambda m: lambda x,t:m(x, t.expand((x.shape[0])))
+        self.models = [f(i) for i in model_fns]
         self.noise_schedule = noise_schedule
         assert algorithm_type in ["dpmsolver", "dpmsolver++"]
         self.algorithm_type = algorithm_type
@@ -460,7 +462,7 @@ class DPM_Solver:
         m2 = self.models[1](x,t)
         m3 = self.models[2](x,t)
         def comp(d1,d2):
-            return (d1-d2).sum()
+            return torch.abs(d1-d2).sum()
         logging.info("m1 and m3 :{}".format(comp(m1,m3)))
         logging.info("m1 and m2 :{}".format(comp(m1,m2)))
         for i,s in enumerate(self.compare_step):
