@@ -153,13 +153,7 @@ def evaluate(config,
       logging.info(ckpt_path)
       states[i] =restore_checkpoint(ckpt_path, states[i], device=config.device)
       emas[i].copy_to(score_models[i].parameters())
-    def comp(md1,md2):
-      for p1, p2 in zip(md1.parameters(), md2.parameters()):
-        if p1.data.ne(p2.data).sum() > 0:
-            return False
-      return True
-    """logging.info("m1 and m3: {}".format(comp(score_models[0],score_models[2])))
-    logging.info("m1 and m2: {}".format(comp(score_models[0],score_models[1])))"""
+    
     # Compute the loss function on the full evaluation dataset if loss computation is enabled
     #!!!!!NO loss and bpd for interval exp!!!!!
     if config.eval.enable_loss:

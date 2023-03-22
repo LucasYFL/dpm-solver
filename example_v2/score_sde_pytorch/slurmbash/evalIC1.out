@@ -1,60 +1,280 @@
 4
 WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
 
-I0319 11:07:18.676796 22870966806336 xla_bridge.py:355] Unable to initialize backend 'tpu_driver': NOT_FOUND: Unable to find driver in registry given worker: 
-I0319 11:07:18.677007 22870966806336 xla_bridge.py:355] Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
-I0319 11:07:18.677081 22870966806336 xla_bridge.py:355] Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
-I0319 11:07:18.677533 22870966806336 xla_bridge.py:355] Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
-I0319 11:07:18.677639 22870966806336 xla_bridge.py:355] Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
-W0319 11:07:18.677709 22870966806336 xla_bridge.py:362] No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
-I0319 11:07:18.678719 22870966806336 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
-W0319 11:07:18.680541 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
-W0319 11:07:18.680632 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
-I0319 11:07:18.680727 22870966806336 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
-I0319 11:07:18.680803 22870966806336 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
-W0319 11:07:18.836144 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
-W0319 11:07:18.836298 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
-I0319 11:07:18.836405 22870966806336 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
-I0319 11:07:18.836479 22870966806336 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
-I0319 11:07:18.870697 22870966806336 main_interval.py:79] (0.259, 0.676)
-I0319 11:07:22.082164 22870966806336 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
-W0319 11:07:22.084199 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
-W0319 11:07:22.084321 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
-I0319 11:07:22.084447 22870966806336 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
-I0319 11:07:22.084531 22870966806336 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
-W0319 11:07:22.131526 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
-W0319 11:07:22.131657 22870966806336 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
-I0319 11:07:22.131754 22870966806336 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
-I0319 11:07:22.131829 22870966806336 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
-I0319 11:07:22.168720 22870966806336 sampling.py:98] dpm_solver
-I0319 11:07:22.169011 22870966806336 resolver.py:105] Using /tmp/tfhub_modules to cache modules.
-I0319 11:07:24.429181 22870966806336 main_interval.py:145] begin checkpoint: 1
-I0319 11:07:24.469172 22870966806336 main_interval.py:149] 0 is converged model
-I0319 11:07:42.818427 22870966806336 main_interval.py:149] 2 is converged model
-I0319 11:07:55.904925 22870966806336 main_interval.py:202] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_control_1
-I0319 11:07:55.906191 22870966806336 main_interval.py:205] sampling -- ckpt: 1, round: 0
-I0319 11:07:55.962796 22870966806336 dpm_solver.py:450] outside of loop:<class 'torch.Tensor'>
-Traceback (most recent call last):
-  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/main_interval.py", line 300, in <module>
-    app.run(main)
-  File "/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/absl/app.py", line 300, in run
-    _run_main(main, args)
-  File "/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/absl/app.py", line 251, in _run_main
-    sys.exit(main(argv))
-  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/main_interval.py", line 297, in main
-    evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,FLAGS.m3, FLAGS.eval_folder)
-  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/main_interval.py", line 213, in evaluate
-    samples_raw, n = sampling_fn(score_models, compare_step = config.eval.t_tuples)
-  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/sampling.py", line 546, in dpm_solver_sampler
-    x = dpm_solver.sample(
-  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/dpm_solver.py", line 1258, in sample
-    x = self.singlestep_dpm_solver_update(x, s, t, order, solver_type=solver_type, r1=r1, r2=r2)
-  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/dpm_solver.py", line 958, in singlestep_dpm_solver_update
-    return self.singlestep_dpm_solver_third_update(x, s, t, return_intermediate=return_intermediate, solver_type=solver_type, r1=r1, r2=r2)
-  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/dpm_solver.py", line 790, in singlestep_dpm_solver_third_update
-    model_s = self.model_fn(x, s)
-  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/dpm_solver.py", line 478, in model_fn
-    return self.noise_prediction_fn(x, t)
-  File "/gpfs/accounts/qingqu_root/qingqu1/yifulu/dpm-solver/example_v2/score_sde_pytorch/dpm_solver.py", line 451, in noise_prediction_fn
-    logging.info( t <= s)
-UnboundLocalError: local variable 's' referenced before assignment
+I0320 23:07:14.020304 22755629340480 xla_bridge.py:355] Unable to initialize backend 'tpu_driver': NOT_FOUND: Unable to find driver in registry given worker: 
+I0320 23:07:14.020786 22755629340480 xla_bridge.py:355] Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0320 23:07:14.020995 22755629340480 xla_bridge.py:355] Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0320 23:07:14.023147 22755629340480 xla_bridge.py:355] Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
+I0320 23:07:14.023406 22755629340480 xla_bridge.py:355] Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
+W0320 23:07:14.023601 22755629340480 xla_bridge.py:362] No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+I0320 23:07:14.027992 22755629340480 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0320 23:07:14.033762 22755629340480 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0320 23:07:14.033898 22755629340480 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0320 23:07:14.034060 22755629340480 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0320 23:07:14.034190 22755629340480 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0320 23:07:14.251731 22755629340480 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0320 23:07:14.251878 22755629340480 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0320 23:07:14.251979 22755629340480 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0320 23:07:14.252048 22755629340480 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0320 23:07:14.286210 22755629340480 main_interval.py:79] (0.259, 0.676)
+I0320 23:07:17.517666 22755629340480 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0320 23:07:17.519664 22755629340480 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0320 23:07:17.519782 22755629340480 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0320 23:07:17.519887 22755629340480 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0320 23:07:17.519964 22755629340480 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0320 23:07:17.563920 22755629340480 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0320 23:07:17.564049 22755629340480 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0320 23:07:17.564142 22755629340480 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0320 23:07:17.564210 22755629340480 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0320 23:07:17.600703 22755629340480 sampling.py:98] dpm_solver
+I0320 23:07:17.600988 22755629340480 resolver.py:105] Using /tmp/tfhub_modules to cache modules.
+I0320 23:07:20.103334 22755629340480 main_interval.py:145] begin checkpoint: 1
+I0320 23:07:20.103650 22755629340480 main_interval.py:149] 0 is converged model
+I0320 23:07:20.103816 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0320 23:09:50.843738 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_1.pth
+I0320 23:12:32.290774 22755629340480 main_interval.py:149] 2 is converged model
+I0320 23:12:32.312895 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0320 23:14:46.127039 22755629340480 main_interval.py:204] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_control_1
+I0320 23:14:46.156726 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 0
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow/python/util/nest.py:869: UserWarning: `tf.layers.flatten` is deprecated and will be removed in a future version. Please use `tf.keras.layers.Flatten` instead.
+  structure[0], [func(*x) for x in entries],
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/keras/legacy_tf_layers/core.py:523: UserWarning: `layer.apply` is deprecated and will be removed in a future version. Please use `layer.__call__` method instead.
+  return layer.apply(inputs)
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/keras/legacy_tf_layers/base.py:573: UserWarning: `layer.updates` will be removed in a future version. This property should not be used in TensorFlow 2.0, as `updates` are applied automatically.
+  _add_elements_to_collection(self.updates, tf.compat.v1.GraphKeys.UPDATE_OPS)
+2023-03-20 23:15:53.862566: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 13829760000 exceeds 10% of free system memory.
+I0320 23:21:10.810662 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 1
+2023-03-20 23:22:09.575241: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 13829760000 exceeds 10% of free system memory.
+I0320 23:27:26.395281 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 2
+2023-03-20 23:28:25.370548: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 13829760000 exceeds 10% of free system memory.
+I0320 23:33:41.490320 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 3
+2023-03-20 23:34:40.263626: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 13829760000 exceeds 10% of free system memory.
+I0320 23:39:58.556097 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 4
+2023-03-20 23:40:57.367657: W tensorflow/core/framework/cpu_allocator_impl.cc:82] Allocation of 13829760000 exceeds 10% of free system memory.
+I0320 23:46:13.345764 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 5
+I0320 23:52:29.934064 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 6
+I0320 23:58:46.757714 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 7
+I0321 00:05:02.379910 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 8
+I0321 00:11:18.277281 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 9
+I0321 00:17:35.695914 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 10
+I0321 00:23:51.769584 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 11
+I0321 00:30:08.688337 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 12
+I0321 00:36:22.832635 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 13
+I0321 00:42:47.848827 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 14
+I0321 00:49:02.954792 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 15
+I0321 00:55:19.917894 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 16
+I0321 01:01:36.868106 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 17
+I0321 01:07:53.935539 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 18
+I0321 01:14:09.729511 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 19
+I0321 01:20:25.136943 22755629340480 main_interval.py:207] sampling -- ckpt: 1, round: 20
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/eval/classifier_metrics.py:1157: calling map_fn_v2 (from tensorflow.python.ops.map_fn) with back_prop=False is deprecated and will be removed in a future version.
+Instructions for updating:
+back_prop=False is deprecated. Consider using tf.stop_gradient instead.
+Instead of:
+results = tf.map_fn(fn, elems, back_prop=False)
+Use:
+results = tf.nest.map_structure(tf.stop_gradient, tf.map_fn(fn, elems))
+W0321 01:28:19.637740 22755629340480 deprecation.py:614] From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/eval/classifier_metrics.py:1157: calling map_fn_v2 (from tensorflow.python.ops.map_fn) with back_prop=False is deprecated and will be removed in a future version.
+Instructions for updating:
+back_prop=False is deprecated. Consider using tf.stop_gradient instead.
+Instead of:
+results = tf.map_fn(fn, elems, back_prop=False)
+Use:
+results = tf.nest.map_structure(tf.stop_gradient, tf.map_fn(fn, elems))
+I0321 01:28:31.297339 22755629340480 main_interval.py:284] ckpt-1 --- inception_score: 8.479749e+00, FID: 1.310810e+01, KID: 9.616692e-03
+I0321 01:28:31.303055 22755629340480 main_interval.py:149] 0 is converged model
+I0321 01:28:31.303171 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 01:28:52.671121 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_6.pth
+I0321 01:29:15.933920 22755629340480 main_interval.py:149] 2 is converged model
+I0321 01:29:15.965175 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 01:29:38.314565 22755629340480 main_interval.py:204] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_control_1
+I0321 01:29:38.394722 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 0
+I0321 01:35:55.711844 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 1
+I0321 01:42:11.375658 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 2
+I0321 01:48:28.762877 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 3
+I0321 01:54:44.749526 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 4
+I0321 02:01:01.860080 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 5
+I0321 02:07:23.749949 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 6
+I0321 02:13:40.552773 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 7
+I0321 02:19:56.748718 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 8
+I0321 02:26:11.959543 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 9
+I0321 02:32:28.880328 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 10
+I0321 02:38:46.486261 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 11
+I0321 02:45:02.489325 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 12
+I0321 02:51:19.675820 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 13
+I0321 02:57:36.621020 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 14
+I0321 03:03:54.314410 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 15
+I0321 03:10:11.014306 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 16
+I0321 03:16:28.157583 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 17
+I0321 03:22:44.894145 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 18
+I0321 03:29:03.024425 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 19
+I0321 03:35:18.169243 22755629340480 main_interval.py:207] sampling -- ckpt: 6, round: 20
+I0321 03:43:26.510448 22755629340480 main_interval.py:284] ckpt-6 --- inception_score: 9.076329e+00, FID: 6.497095e+00, KID: 3.680927e-03
+I0321 03:43:26.540957 22755629340480 main_interval.py:149] 0 is converged model
+I0321 03:43:26.593926 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 03:43:46.182541 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_11.pth
+I0321 03:44:05.682253 22755629340480 main_interval.py:149] 2 is converged model
+I0321 03:44:05.695515 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 03:44:24.819263 22755629340480 main_interval.py:204] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_control_1
+I0321 03:44:24.833894 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 0
+I0321 03:50:42.828108 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 1
+I0321 03:56:59.412887 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 2
+I0321 04:03:15.891000 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 3
+I0321 04:09:32.498379 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 4
+I0321 04:15:48.260335 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 5
+I0321 04:22:04.755966 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 6
+I0321 04:28:20.923155 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 7
+I0321 04:34:37.567526 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 8
+I0321 04:40:54.329962 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 9
+I0321 04:47:10.499068 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 10
+I0321 04:53:26.943016 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 11
+I0321 04:59:43.910738 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 12
+I0321 05:05:59.503949 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 13
+I0321 05:12:15.930363 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 14
+I0321 05:18:31.503858 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 15
+I0321 05:24:48.501697 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 16
+I0321 05:31:05.202393 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 17
+I0321 05:37:21.960966 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 18
+I0321 05:43:36.225211 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 19
+I0321 05:49:53.188207 22755629340480 main_interval.py:207] sampling -- ckpt: 11, round: 20
+I0321 05:57:59.534116 22755629340480 main_interval.py:284] ckpt-11 --- inception_score: 9.242699e+00, FID: 5.767157e+00, KID: 2.939409e-03
+I0321 05:57:59.616547 22755629340480 main_interval.py:149] 0 is converged model
+I0321 05:57:59.616806 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 05:58:19.302995 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_16.pth
+I0321 05:58:39.638591 22755629340480 main_interval.py:149] 2 is converged model
+I0321 05:58:39.719983 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 05:59:01.786256 22755629340480 main_interval.py:204] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_control_1
+I0321 05:59:01.799516 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 0
+I0321 06:05:20.136456 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 1
+I0321 06:11:36.996679 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 2
+I0321 06:17:54.085015 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 3
+I0321 06:24:10.702403 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 4
+I0321 06:30:27.678534 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 5
+I0321 06:36:44.761768 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 6
+I0321 06:43:02.130577 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 7
+I0321 06:49:19.172688 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 8
+I0321 06:55:36.332175 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 9
+I0321 07:01:53.465492 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 10
+I0321 07:08:10.887759 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 11
+I0321 07:14:27.354091 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 12
+I0321 07:20:42.697232 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 13
+I0321 07:26:58.877708 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 14
+I0321 07:33:16.127790 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 15
+I0321 07:39:33.597439 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 16
+I0321 07:45:51.078798 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 17
+I0321 07:52:07.736633 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 18
+I0321 07:58:24.717154 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 19
+I0321 08:04:40.993596 22755629340480 main_interval.py:207] sampling -- ckpt: 16, round: 20
+I0321 08:12:44.991323 22755629340480 main_interval.py:284] ckpt-16 --- inception_score: 9.400436e+00, FID: 5.445340e+00, KID: 2.711734e-03
+I0321 08:12:45.021602 22755629340480 main_interval.py:149] 0 is converged model
+I0321 08:12:45.021769 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 08:13:04.316502 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_21.pth
+I0321 08:13:23.899660 22755629340480 main_interval.py:149] 2 is converged model
+I0321 08:13:24.002027 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 08:13:44.396889 22755629340480 main_interval.py:204] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_control_1
+I0321 08:13:44.406785 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 0
+I0321 08:20:03.092493 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 1
+I0321 08:26:20.078742 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 2
+I0321 08:32:36.684622 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 3
+I0321 08:38:54.300133 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 4
+I0321 08:45:10.929203 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 5
+I0321 08:51:28.397197 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 6
+I0321 08:57:43.767488 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 7
+I0321 09:04:00.519708 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 8
+I0321 09:10:16.961833 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 9
+I0321 09:16:33.688571 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 10
+I0321 09:22:49.492720 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 11
+I0321 09:29:06.517823 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 12
+I0321 09:35:22.004173 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 13
+I0321 09:41:39.037861 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 14
+I0321 09:47:55.771856 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 15
+I0321 09:54:13.509400 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 16
+I0321 10:00:29.354795 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 17
+I0321 10:06:46.843346 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 18
+I0321 10:13:02.538425 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 19
+I0321 10:19:18.950017 22755629340480 main_interval.py:207] sampling -- ckpt: 21, round: 20
+I0321 10:27:22.583163 22755629340480 main_interval.py:284] ckpt-21 --- inception_score: 9.371958e+00, FID: 5.415515e+00, KID: 2.746577e-03
+I0321 10:27:22.597962 22755629340480 main_interval.py:149] 0 is converged model
+I0321 10:27:22.598096 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 10:27:39.693847 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_26.pth
+I0321 10:27:56.269779 22755629340480 main_interval.py:149] 2 is converged model
+I0321 10:27:56.310987 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 10:28:11.308118 22755629340480 main_interval.py:204] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_control_1
+I0321 10:28:11.366730 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 0
+I0321 10:34:26.906388 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 1
+I0321 10:40:43.545814 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 2
+I0321 10:47:00.945178 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 3
+I0321 10:53:17.209336 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 4
+I0321 10:59:33.157384 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 5
+I0321 11:05:49.457203 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 6
+I0321 11:12:05.800094 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 7
+I0321 11:18:22.182406 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 8
+I0321 11:24:39.122631 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 9
+I0321 11:30:55.276944 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 10
+I0321 11:37:12.994502 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 11
+I0321 11:43:29.097320 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 12
+I0321 11:49:45.746074 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 13
+I0321 11:56:01.593877 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 14
+I0321 12:02:18.999739 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 15
+I0321 12:08:34.866705 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 16
+I0321 12:14:51.828211 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 17
+I0321 12:21:07.786197 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 18
+I0321 12:27:24.761542 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 19
+I0321 12:33:40.116481 22755629340480 main_interval.py:207] sampling -- ckpt: 26, round: 20
+I0321 12:41:44.275945 22755629340480 main_interval.py:284] ckpt-26 --- inception_score: 9.402271e+00, FID: 5.452102e+00, KID: 2.764887e-03
+I0321 12:41:44.412836 22755629340480 main_interval.py:149] 0 is converged model
+I0321 12:41:44.413089 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 12:42:02.518119 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_31.pth
+I0321 12:42:23.474017 22755629340480 main_interval.py:149] 2 is converged model
+I0321 12:42:23.495446 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 12:42:43.881449 22755629340480 main_interval.py:204] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_control_1
+I0321 12:42:43.906087 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 0
+I0321 12:49:01.271317 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 1
+I0321 12:55:18.482825 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 2
+I0321 13:01:34.389894 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 3
+I0321 13:07:51.574728 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 4
+I0321 13:14:07.723056 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 5
+I0321 13:20:24.848230 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 6
+I0321 13:26:41.471694 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 7
+I0321 13:32:58.654683 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 8
+I0321 13:39:14.742170 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 9
+I0321 13:45:31.747947 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 10
+I0321 13:51:47.621301 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 11
+I0321 13:58:04.740662 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 12
+I0321 14:04:21.733379 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 13
+I0321 14:10:39.033612 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 14
+I0321 14:16:55.685736 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 15
+I0321 14:23:13.165075 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 16
+I0321 14:29:30.106876 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 17
+I0321 14:35:47.250134 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 18
+I0321 14:42:03.039779 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 19
+I0321 14:48:20.212182 22755629340480 main_interval.py:207] sampling -- ckpt: 31, round: 20
+I0321 14:57:04.833416 22755629340480 main_interval.py:284] ckpt-31 --- inception_score: 9.474360e+00, FID: 5.417804e+00, KID: 2.790227e-03
+I0321 14:57:04.893405 22755629340480 main_interval.py:149] 0 is converged model
+I0321 14:57:04.893658 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 14:57:58.323727 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_36.pth
+I0321 14:58:42.802210 22755629340480 main_interval.py:149] 2 is converged model
+I0321 14:58:42.827930 22755629340480 main_interval.py:153] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0321 14:59:29.916709 22755629340480 main_interval.py:204] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_control_1
+I0321 14:59:29.944950 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 0
+I0321 15:05:48.087299 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 1
+I0321 15:12:03.865640 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 2
+I0321 15:18:20.369458 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 3
+I0321 15:24:37.262423 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 4
+I0321 15:30:54.415869 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 5
+I0321 15:37:10.545054 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 6
+I0321 15:43:24.725862 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 7
+I0321 15:49:41.371392 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 8
+I0321 15:55:57.519853 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 9
+I0321 16:02:14.256945 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 10
+I0321 16:08:31.874400 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 11
+I0321 16:14:47.221419 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 12
+I0321 16:21:05.027046 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 13
+I0321 16:27:21.063028 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 14
+I0321 16:33:38.085233 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 15
+I0321 16:39:54.115033 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 16
+I0321 16:46:11.935037 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 17
+I0321 16:52:29.024521 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 18
+I0321 16:58:46.427679 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 19
+I0321 17:05:03.074397 22755629340480 main_interval.py:207] sampling -- ckpt: 36, round: 20
+I0321 17:13:09.653812 22755629340480 main_interval.py:284] ckpt-36 --- inception_score: 9.484901e+00, FID: 5.425336e+00, KID: 2.813904e-03
