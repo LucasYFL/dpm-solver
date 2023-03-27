@@ -76,17 +76,10 @@ def evaluate(config,
   states = []
   mdir = (m1,m2,m3)
   checkpoint_dirs = []
+  objectives = []
   logging.info(config.eval.t_tuples)
 
-  for i in range(len(config.eval.t_tuples)+1):
-    s = mutils.create_model(config)
-    score_models.append(s)
-    opt = losses.get_optimizer(config, s.parameters())
-    optimizers.append(opt)
-    ema = ExponentialMovingAverage(s.parameters(), decay=config.model.ema_rate)
-    emas.append(ema)
-    states.append(dict(optimizer=opt, model=s, ema=ema, step=0))
-    checkpoint_dirs.append( os.path.join(workdir,mdir[i], "checkpoints"))
+  
   # Setup SDEs
   if config.training.sde.lower() == 'vpsde':
     sde = sde_lib.VPSDE(beta_min=config.model.beta_min, beta_max=config.model.beta_max, N=config.model.num_scales)
@@ -99,7 +92,16 @@ def evaluate(config,
     sampling_eps = 1e-5
   else:
     raise NotImplementedError(f"SDE {config.training.sde} unknown.")
-
+  for i in range(len(config.eval.t_tuples)+1):
+    s = mutils.create_model(config)
+    score_models.append(s)
+    opt = losses.get_optimizer(config, s.parameters())
+    optimizers.append(opt)
+    ema = ExponentialMovingAverage(s.parameters(), decay=config.model.ema_rate)
+    emas.append(ema)
+    states.append(dict(optimizer=opt, model=s, ema=ema, step=0))
+    checkpoint_dirs.append( os.path.join(workdir,mdir[i], "checkpoints"))
+    objectives.append(losses.get_objective_schedule(sde,config.eval.objectives[i],config.training.dt))
   # Create the one-step evaluation function when loss computation is enabled
   if config.eval.enable_loss:
     optimize_fn = losses.optimization_manager(config)
@@ -212,7 +214,7 @@ def evaluate(config,
         tf.io.gfile.makedirs(this_sample_dir)
         # samples_raw, n = sampling_fn(score_model)
 
-        samples_raw, n = sampling_fn(score_models, compare_step = config.eval.t_tuples)
+        samples_raw, n = sampling_fn(score_models, config.eval.t_tuples,objectives)
 
         samples = np.clip(samples_raw.permute(0, 2, 3, 1).cpu().numpy() * 255., 0, 255).astype(np.uint8)
         samples = samples.reshape(

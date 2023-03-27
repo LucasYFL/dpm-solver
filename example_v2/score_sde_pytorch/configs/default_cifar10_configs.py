@@ -20,6 +20,8 @@ def get_default_configs():
   training.reduce_mean = False
   training.t0 = 0.0
   training.t1 = 0.0
+  training.objective_weight = "eps"
+  training.dt = 0.1
   # sampling
   config.sampling = sampling = ml_collections.ConfigDict()
   sampling.n_steps_each = 1
@@ -42,6 +44,7 @@ def get_default_configs():
   evaluate.t = 0.0
   evaluate.t_tuples = (0.259,0.676) #intervals
   evaluate.t_converge = (0,0,0) #num models 1 more than intervals, if the model is converged.
+  evaluate.objectives = ("eps","eps","eps")
   evaluate.converge_epoch = 40 # epoch to be the baseline
   evaluate.compare_step = 0 # timestep to be compared
   # data

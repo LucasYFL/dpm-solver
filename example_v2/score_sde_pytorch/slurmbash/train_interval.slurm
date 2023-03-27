@@ -6,9 +6,9 @@
 #SBATCH --mem=50GB
 #SBATCH --time=06-00:00:00
 #SBATCH --account=qingqu1
-#SBATCH --partition=gpu
-#SBATCH --gpus=v100:2
-#SBATCH --output=testI1.out
+#SBATCH --partition=spgpu
+#SBATCH --gpus=a40:2
+#SBATCH --output=testI0x0w.out
 #SBATCH --export=ALL,EXP_FEWER_STEPS=4
 
 echo $EXP_FEWER_STEPS
@@ -17,5 +17,6 @@ module load cuda/11.3.0 cudnn/11.3-v8.2.1
 eval "$(conda shell.bash hook)"
 conda activate dpm
 cd /home/yifulu/work/dpm-solver/example_v2/score_sde_pytorch
-python main.py --config "configs/vp/cifar10_ddpm_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I1 --mode train --config.training.t0=0.259 --config.training.t1=0.6760
+#python main.py --config "configs/vp/cifar10_ddpm_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I1 --mode train --config.training.t0=0.259 --config.training.t1=0.6760
 #python main.py --config "configs/vp/cifar10_ddpm_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I2 --mode train --config.training.t0=0.6760 #--config.training.t1=0.6760
+python main.py --config "configs/vp/cifar10_ddpm_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I0_x0_weighted --mode train --config.training.t1=0.259 --config.training.objective_weight="x0_weightedloss" #--config.training.t1=0.6760

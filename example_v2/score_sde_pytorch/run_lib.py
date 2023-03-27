@@ -128,14 +128,14 @@ def train(config, workdir):
 
   # In case there are multiple hosts (e.g., TPU pods), only log to host 0
   logging.info("Starting training loop at step %d." % (initial_step,))
-
+  obj_scheduler = losses.get_objective_schedule(sde, config.training.objective_weight, config.training.dt)
   for step in range(initial_step, num_train_steps + 1):
     # Convert data to JAX arrays and normalize them. Use ._numpy() to avoid copy.
     batch = torch.from_numpy(next(train_iter)['image']._numpy()).to(config.device).float()
     batch = batch.permute(0, 3, 1, 2)
     batch = scaler(batch)
     # Execute one training step
-    loss = train_step_fn(state, batch)
+    loss = train_step_fn(state, batch, obj_scheduler)
     if step % config.training.log_freq == 0:
       logging.info("step: %d, training_loss: %.5e" % (step, loss.item()))
       writer.add_scalar("training_loss", loss, step)
@@ -149,7 +149,7 @@ def train(config, workdir):
       eval_batch = torch.from_numpy(next(eval_iter)['image']._numpy()).to(config.device).float()
       eval_batch = eval_batch.permute(0, 3, 1, 2)
       eval_batch = scaler(eval_batch)
-      eval_loss = eval_step_fn(state, eval_batch)
+      eval_loss = eval_step_fn(state, eval_batch,obj_scheduler)
       logging.info("step: %d, eval_loss: %.5e" % (step, eval_loss.item()))
       writer.add_scalar("eval_loss", eval_loss.item(), step)
 

@@ -52,6 +52,53 @@ def optimization_manager(config):
   return optimize_fn
 
 
+def get_objective_schedule(sde, weight_type, dt):
+    assert weight_type in ['x0', 'near_distribution', 'far_distribution', 'eps', 'x0_weightedloss', 'near_distribution_weightedloss'], "{} not supported".format(weight_type)
+    if weight_type == "x0":
+      train_para_schedule = lambda t: (1 * torch.ones_like(t[:, None, None, None]), 0 * torch.ones_like(t[:, None, None, None]))
+      loss_weight_schedule = lambda t: 1 * torch.ones_like(t[:, None, None, None])   
+    elif weight_type == "eps":
+      train_para_schedule = lambda t: (0 * torch.ones_like(t[:, None, None, None]), 1 * torch.ones_like(t[:, None, None, None]))
+      loss_weight_schedule = lambda t: 1 * torch.ones_like(t[:, None, None, None])
+    elif weight_type == "near_distribution":
+      def train_para_schedule(t):
+        t_param = t - dt
+        mask = t_param < 0
+        alpha_param, beta_param = sde.sde_params(t_param)
+        alpha_param[mask] = 1.
+        beta_param[mask] = 0.
+        return alpha_param, beta_param
+      loss_weight_schedule = lambda t: 1 * torch.ones_like(t[:, None, None, None])
+    elif weight_type == "x0_weightedloss":
+      train_para_schedule = lambda t: (1 * torch.ones_like(t[:, None, None, None]), 0 * torch.ones_like(t[:, None, None, None]))
+      def loss_weight_schedule(t):
+          alpha, beta = sde.sde_params(t)
+          return alpha**2/beta**2
+    elif weight_type == "near_distribution_weightedloss":
+      def train_para_schedule(t):
+        t_param = t - dt
+        mask = t_param < 0
+        alpha_param, beta_param = sde.sde_params(t_param)
+        alpha_param[mask] = 1.
+        beta_param[mask] = 0.
+        return alpha_param, beta_param
+      
+      def loss_weight_schedule(t):
+        mean_param, std_param = sde.sde_params(t)
+        alpha_param, beta_param = train_para_schedule(t)
+        return (mean_param/(alpha_param * std_param - beta_param * mean_param)) ** 2
+        
+    
+    def obj_schedule(t):
+      ## alpha_param, beta_param for loss, xt_param, f_param for sampling
+      mean_param, std_param = sde.sde_params(t)
+      alpha_param, beta_param = train_para_schedule(t)
+      xt_param = alpha_param/(std_param * alpha_param - mean_param * beta_param)
+      f_param = -mean_param/(std_param * alpha_param - mean_param * beta_param)
+      loss_weight = loss_weight_schedule(t)
+      return alpha_param, beta_param, xt_param, f_param, loss_weight
+    return obj_schedule
+
 def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_weighting=True, eps=1e-5,tl=0,tl2=0):
   #set environ var EXP_FEWER_STEPS ahead of time
   logging.info("Sde loss")
@@ -93,7 +140,7 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     A loss function.
   """
   reduce_op = torch.mean if reduce_mean else lambda *args, **kwargs: 0.5 * torch.sum(*args, **kwargs)
-  def loss_fn(model, batch):
+  def loss_fn(model, batch,obj_scheduler):
     """Compute the loss function.
 
     Args:
@@ -116,7 +163,8 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     mean, std = sde.marginal_prob(batch, t)
     perturbed_data = mean + std[:, None, None, None] * z
     score = score_fn(perturbed_data, t)
-    if not train and loss_type:
+    alpha, beta, _, _, loss_weight= obj_scheduler(t)
+    """if not train and loss_type:
       if fewer==3:
         losses = torch.square(-(perturbed_data/std[:, None, None, None]+torch.sqrt(1-torch.square(std[:, None, None, None]))*score ) + z)
         losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
@@ -135,7 +183,10 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     else:
       g2 = sde.sde(torch.zeros_like(batch), t)[1] ** 2
       losses = torch.square(score + z / std[:, None, None, None])
-      losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1) * g2
+      losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1) * g2"""
+     
+    losses = torch.square(score * std[:, None, None, None] + alpha * batch + beta * z) * loss_weight
+    losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1)
 
     loss = torch.mean(losses)
     return loss
@@ -216,7 +267,7 @@ def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True
     else:
       raise ValueError(f"Discrete training for {sde.__class__.__name__} is not recommended.")
 
-  def step_fn(state, batch):
+  def step_fn(state, batch, obj_scheduler):
     """Running one step of training or evaluation.
 
     This function will undergo `jax.lax.scan` so that multiple steps can be pmapped and jit-compiled together
@@ -234,7 +285,7 @@ def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True
     if train:
       optimizer = state['optimizer']
       optimizer.zero_grad()
-      loss = loss_fn(model, batch)
+      loss = loss_fn(model, batch, obj_scheduler)
       loss.backward()
       optimize_fn(optimizer, model.parameters(), step=state['step'])
       state['step'] += 1
@@ -244,7 +295,7 @@ def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True
         ema = state['ema']
         ema.store(model.parameters())
         ema.copy_to(model.parameters())
-        loss = loss_fn(model, batch)
+        loss = loss_fn(model, batch, obj_scheduler)
         ema.restore(model.parameters())
 
     return loss

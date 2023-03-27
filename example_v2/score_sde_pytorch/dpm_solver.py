@@ -347,6 +347,7 @@ class DPM_Solver:
         self,
         model_fns,
         noise_schedule,
+        objective_schedulers,
         algorithm_type="dpmsolver++",
         correcting_x0_fn=None,
         correcting_xt_fn=None,
@@ -412,6 +413,7 @@ class DPM_Solver:
         """
         
         self.models = []
+        self.objectives = objective_schedulers
         """def comp(md1,md2):
             err = 0 
             for p1, p2 in zip(md1.parameters(), md2.parameters()):
@@ -432,13 +434,7 @@ class DPM_Solver:
         self.dynamic_thresholding_ratio = dynamic_thresholding_ratio
         self.thresholding_max_val = thresholding_max_val
         self.compare_step = compare_step
-        self.lst_steps = torch.tensor([1.0,0.950049877166748,0.9000999927520752,0.8501499891281128,
-        0.8001999258995056,0.750249981880188,0.7002999782562256,
-        0.6503499746322632,0.6003999710083008,0.5504499673843384,
-        0.5004999041557312,0.4505499303340912,0.40059995651245117,
-        0.35064995288848877,0.30069997906684875,0.25074997544288635,
-        0.20079998672008514,0.15084998309612274,0.10090000182390213,
-        0.050950001925230026,0.0010000000474974513,])
+        
 
     def dynamic_thresholding_fn(self, x0, t):
         """
@@ -455,19 +451,15 @@ class DPM_Solver:
         """
         Return the noise prediction model.
         """
-        """
-        m1 = self.models[0](x,t)
-        m2 = self.models[1](x,t)
-        m3 = self.models[2](x,t)
-        def comp(d1,d2):
-            return torch.abs(d1-d2).sum()
-        logging.info("m1 and m3 :{}".format(comp(m1,m3)))
-        logging.info("m1 and m2 :{}".format(comp(m1,m2)))"""
+        bs, _, _, _ = x.shape
+        
         for i,s in enumerate(self.compare_step):
             if t <= s:
                 #logging.info("inside: {}, t {}".format(i,t.item()))
-                return self.models[i](x, t)
-        return self.models[-1](x, t)
+                _, _, xt_param, f_param, _ = self.objectives[i](t.repeat(bs))
+                return x * xt_param + f_param *self.models[i](x, t)
+        _, _, xt_param, f_param, _ = self.objectives[-1](t.repeat(bs))
+        return x * xt_param + f_param *self.models[-1](x, t)
 
     
     def data_prediction_fn(self, x, t):
