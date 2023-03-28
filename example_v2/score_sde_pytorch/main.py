@@ -15,13 +15,19 @@
 
 """Training and evaluation"""
 
-import run_lib
+import example_v2.score_sde_pytorch.run_lib as run_lib
 from absl import app
 from absl import flags
 from ml_collections.config_flags import config_flags
 import logging
 import os
 import tensorflow as tf
+import torch
+
+local_rank = int(os.environ["LOCAL_RANK"])
+total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
+torch.cuda.set_device(local_rank)
+torch.distributed.init_process_group(backend='nccl')
 
 FLAGS = flags.FLAGS
 
@@ -33,22 +39,22 @@ flags.DEFINE_string("eval_folder", "eval",
                     "The folder name for storing evaluation results")
 flags.mark_flags_as_required(["workdir", "config", "mode"])
 
-tf.config.experimental.set_visible_devices([], "GPU")
-os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
+# os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
 
 def main(argv):
   if FLAGS.mode == "train":
     # Create the working directory
-    tf.io.gfile.makedirs(FLAGS.workdir)
     # Set logger so that it outputs to both console and file
     # Make logging work for both disk and Google Cloud Storage
-    gfile_stream = open(os.path.join(FLAGS.workdir, 'stdout.txt'), 'w')
-    handler = logging.StreamHandler(gfile_stream)
-    formatter = logging.Formatter('%(levelname)s - %(filename)s - %(asctime)s - %(message)s')
-    handler.setFormatter(formatter)
-    logger = logging.getLogger()
-    logger.addHandler(handler)
-    logger.setLevel('INFO')
+    if local_rank == 0:
+      tf.io.gfile.makedirs(FLAGS.workdir)
+      gfile_stream = open(os.path.join(FLAGS.workdir, 'stdout.txt'), 'w')
+      handler = logging.StreamHandler(gfile_stream)
+      formatter = logging.Formatter('%(levelname)s - %(filename)s - %(asctime)s - %(message)s')
+      handler.setFormatter(formatter)
+      logger = logging.getLogger()
+      logger.addHandler(handler)
+      logger.setLevel('INFO')
     # Run the training pipeline
     run_lib.train(FLAGS.config, FLAGS.workdir)
   elif FLAGS.mode == "eval":

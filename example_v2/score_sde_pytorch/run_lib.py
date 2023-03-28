@@ -31,7 +31,7 @@ import losses
 import sampling
 from models import utils as mutils
 from models.ema import ExponentialMovingAverage
-import datasets
+import example_v2.score_sde_pytorch.datasets as datasets
 import evaluation
 import likelihood
 import sde_lib
@@ -42,7 +42,8 @@ from torchvision.utils import make_grid, save_image
 from utils import save_checkpoint, restore_checkpoint
 
 FLAGS = flags.FLAGS
-
+local_rank = int(os.environ["LOCAL_RANK"])
+total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
 
 def train(config, workdir):
   """Runs the training pipeline.
@@ -62,7 +63,7 @@ def train(config, workdir):
   writer = tensorboard.SummaryWriter(tb_dir)
 
   # Initialize model.
-  score_model = mutils.create_model(config)
+  score_model = mutils.create_model(config, local_rank)
   ema = ExponentialMovingAverage(score_model.parameters(), decay=config.model.ema_rate)
   optimizer = losses.get_optimizer(config, score_model.parameters())
   state = dict(optimizer=optimizer, model=score_model, ema=ema, step=0)
@@ -78,10 +79,11 @@ def train(config, workdir):
   initial_step = int(state['step'])
 
   # Build data iterators
-  train_ds, eval_ds, _ = datasets.get_dataset(config,
-                                              uniform_dequantization=config.data.uniform_dequantization)
-  train_iter = iter(train_ds)  # pytype: disable=wrong-arg-types
-  eval_iter = iter(eval_ds)  # pytype: disable=wrong-arg-types
+  train_ds, eval_ds = datasets.get_dataset(config)
+
+  train_iter = datasets.distributed_dataset(train_ds, config)
+  eval_iter = datasets.distributed_dataset(eval_ds, config)
+
   # Create data normalizer and its inverse
   scaler = datasets.get_data_scaler(config)
   inverse_scaler = datasets.get_data_inverse_scaler(config)
@@ -122,32 +124,41 @@ def train(config, workdir):
   # In case there are multiple hosts (e.g., TPU pods), only log to host 0
   logging.info("Starting training loop at step %d." % (initial_step,))
 
-  for step in range(initial_step, num_train_steps + 1):
-    # Convert data to JAX arrays and normalize them. Use ._numpy() to avoid copy.
-    batch = torch.from_numpy(next(train_iter)['image']._numpy()).to(config.device).float()
-    batch = batch.permute(0, 3, 1, 2)
+  step_interval = total_rank
+  for step in range(initial_step, num_train_steps + 1, step_interval):
+    try:
+        batch, _ = next(train_iter)
+    except StopIteration:
+        train_iter = datasets.distributed_dataset(train_ds, config)
+        batch, _ = next(train_iter)
+    batch = batch.to(config.device)
     batch = scaler(batch)
     # Execute one training step
     loss = train_step_fn(state, batch)
-    if step % config.training.log_freq == 0:
-      logging.info("step: %d, training_loss: %.5e" % (step, loss.item()))
-      writer.add_scalar("training_loss", loss, step)
+    if step % config.training.log_freq == 0 and local_rank == 0:
+        logging.info("step: %d, training_loss: %.5e" % (step, loss.item()))
+        writer.add_scalar("training_loss", loss, step)
 
     # Save a temporary checkpoint to resume training after pre-emption periodically
-    if step != 0 and step % config.training.snapshot_freq_for_preemption == 0:
-      save_checkpoint(checkpoint_meta_dir, state)
+    if step != 0 and step % config.training.snapshot_freq_for_preemption == 0 and local_rank == 0:
+        save_checkpoint(checkpoint_meta_dir, state)
 
     # Report the loss on an evaluation dataset periodically
     if step % config.training.eval_freq == 0:
-      eval_batch = torch.from_numpy(next(eval_iter)['image']._numpy()).to(config.device).float()
-      eval_batch = eval_batch.permute(0, 3, 1, 2)
+      try:
+          batch, _ = next(eval_iter)
+      except StopIteration:
+          eval_iter = datasets.distributed_dataset(eval_ds, config)
+          batch, _ = next(eval_iter)      
+      eval_batch = batch.to(config.device)
       eval_batch = scaler(eval_batch)
       eval_loss = eval_step_fn(state, eval_batch)
-      logging.info("step: %d, eval_loss: %.5e" % (step, eval_loss.item()))
-      writer.add_scalar("eval_loss", eval_loss.item(), step)
+      if local_rank == 0:
+        logging.info("step: %d, eval_loss: %.5e" % (step, eval_loss.item()))
+        writer.add_scalar("eval_loss", eval_loss.item(), step)
 
     # Save a checkpoint periodically and generate samples if needed
-    if step != 0 and step % config.training.snapshot_freq == 0 or step == num_train_steps:
+    if step != 0 and (step % config.training.snapshot_freq == 0 or step == num_train_steps) and local_rank == 0:
       # Save the checkpoint.
       save_step = step // config.training.snapshot_freq
       save_checkpoint(os.path.join(checkpoint_dir, f'checkpoint_{save_step}.pth'), state)

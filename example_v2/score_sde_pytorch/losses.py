@@ -16,12 +16,15 @@
 """All functions related to loss computation and optimization.
 """
 
+import os
 import torch
 import torch.optim as optim
 import numpy as np
 from models import utils as mutils
 from sde_lib import VESDE, VPSDE
 
+total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
+step_intervel = total_rank
 
 def get_optimizer(config, params):
   """Returns a flax optimizer object based on `config`."""
@@ -195,7 +198,7 @@ def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True
       loss = loss_fn(model, batch)
       loss.backward()
       optimize_fn(optimizer, model.parameters(), step=state['step'])
-      state['step'] += 1
+      state['step'] += step_intervel
       state['ema'].update(model.parameters())
     else:
       with torch.no_grad():
