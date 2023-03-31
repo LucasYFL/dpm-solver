@@ -15,7 +15,7 @@
 
 """Training and evaluation"""
 
-import example_v2.score_sde_pytorch.run_lib as run_lib
+import run_lib
 from absl import app
 from absl import flags
 from ml_collections.config_flags import config_flags

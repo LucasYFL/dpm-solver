@@ -31,7 +31,7 @@ import losses
 import sampling
 from models import utils as mutils
 from models.ema import ExponentialMovingAverage
-import example_v2.score_sde_pytorch.datasets as datasets
+import datasets
 import evaluation
 import likelihood
 import sde_lib
