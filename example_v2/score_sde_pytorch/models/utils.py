@@ -85,12 +85,12 @@ def get_ddpm_params(config):
   }
 
 
-def create_model(config):
+def create_model(config, local_rank):
   """Create the score model."""
   model_name = config.model.name
   score_model = get_model(model_name)(config)
   score_model = score_model.to(config.device)
-  score_model = torch.nn.DataParallel(score_model)
+  score_model = torch.nn.parallel.DistributedDataParallel(score_model, find_unused_parameters=True, device_ids = [local_rank])
   return score_model
 
 
