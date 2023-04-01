@@ -43,7 +43,6 @@ from utils import save_checkpoint, restore_checkpoint
 
 FLAGS = flags.FLAGS
 local_rank = int(os.environ["LOCAL_RANK"])
-total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
 
 def train(config, workdir):
   """Runs the training pipeline.
@@ -124,14 +123,16 @@ def train(config, workdir):
   # In case there are multiple hosts (e.g., TPU pods), only log to host 0
   logging.info("Starting training loop at step %d." % (initial_step,))
 
-  step_interval = total_rank
-  for step in range(initial_step, num_train_steps + 1, step_interval):
+  for step in range(initial_step, num_train_steps + 1):
     try:
         batch, _ = next(train_iter)
     except StopIteration:
         train_iter = datasets.distributed_dataset(train_ds, config)
         batch, _ = next(train_iter)
-    batch = batch.to(config.device)
+    if config.device == torch.device('cuda'):
+      batch = batch.to(f"{config.device}:{local_rank}")  
+    else:
+      batch = batch.to(config.device)
     batch = scaler(batch)
     # Execute one training step
     loss = train_step_fn(state, batch)
@@ -150,7 +151,10 @@ def train(config, workdir):
       except StopIteration:
           eval_iter = datasets.distributed_dataset(eval_ds, config)
           batch, _ = next(eval_iter)      
-      eval_batch = batch.to(config.device)
+      if config.device == torch.device('cuda'):
+        eval_batch = batch.to(f"{config.device}:{local_rank}")  
+      else:
+        eval_batch = batch.to(config.device)
       eval_batch = scaler(eval_batch)
       eval_loss = eval_step_fn(state, eval_batch)
       if local_rank == 0:

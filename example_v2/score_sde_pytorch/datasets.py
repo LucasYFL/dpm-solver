@@ -93,8 +93,12 @@ def get_dataset(config, uniform_dequantization=False, evaluation=False):
   prefetch_size = tf.data.experimental.AUTOTUNE
   num_epochs = None if not evaluation else 1
   root = "./dataset"
+  if not os.path.isdir(root):
+    os.mkdir(root)
   # Create dataset builders for each dataset.
   if config.data.dataset == 'CIFAR10':
+    if not os.path.isdir(os.path.join(root, config.data.dataset)):
+      os.mkdir(os.path.join(root, config.data.dataset))
     download = 'cifar-10-batches-py' not in os.listdir(os.path.join(root, config.data.dataset))
     
     train_transforms = [

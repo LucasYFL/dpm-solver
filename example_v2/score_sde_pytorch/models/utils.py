@@ -90,6 +90,8 @@ def create_model(config, local_rank):
   model_name = config.model.name
   score_model = get_model(model_name)(config)
   score_model = score_model.to(config.device)
+  if torch.__version__ >= "2.0.0":
+    score_model = torch.compile(score_model)
   score_model = torch.nn.parallel.DistributedDataParallel(score_model, find_unused_parameters=True, device_ids = [local_rank])
   return score_model
 
@@ -184,7 +186,6 @@ def get_score_fn(sde, model, train=False, continuous=False):
         labels = t * (sde.N - 1)
         score = model_fn(x, labels)
         std = sde.sqrt_1m_alphas_cumprod.to(labels.device)[labels.long()]
-
       score = -score / std[:, None, None, None]
       return score
 
