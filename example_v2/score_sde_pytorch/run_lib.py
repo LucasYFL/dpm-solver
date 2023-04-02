@@ -45,6 +45,7 @@ FLAGS = flags.FLAGS
 local_rank = int(os.environ["LOCAL_RANK"])
 total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
 
+
 def train(config, workdir):
   """Runs the training pipeline.
 
@@ -117,7 +118,7 @@ def train(config, workdir):
   if config.training.snapshot_sampling:
     sampling_shape = (config.training.batch_size, config.data.num_channels,
                       config.data.image_size, config.data.image_size)
-    sampling_fn = sampling.get_sampling_fn(config, sde, sampling_shape, inverse_scaler, sampling_eps)
+    sampling_fn = sampling.get_sampling_fn(config, sde, sampling_shape, inverse_scaler, sampling_eps, local_rank)
 
   num_train_steps = config.training.n_iters
 
@@ -212,6 +213,12 @@ def evaluate(config,
   scaler = datasets.get_data_scaler(config)
   inverse_scaler = datasets.get_data_inverse_scaler(config)
 
+  
+  
+  # Use inceptionV3 for images with resolution higher than 256.
+  # inceptionv3 = config.data.image_size >= 256
+  # inception_model = evaluation.get_inception_model(inceptionv3=inceptionv3)
+    
   # Initialize model
   score_model = mutils.create_model(config, local_rank)
   optimizer = losses.get_optimizer(config, score_model.parameters())
@@ -268,11 +275,7 @@ def evaluate(config,
     sampling_shape = (config.eval.batch_size // total_rank,
                       config.data.num_channels,
                       config.data.image_size, config.data.image_size)
-    sampling_fn = sampling.get_sampling_fn(config, sde, sampling_shape, inverse_scaler, sampling_eps)
-
-  # Use inceptionV3 for images with resolution higher than 256.
-  inceptionv3 = config.data.image_size >= 256
-  inception_model = evaluation.get_inception_model(inceptionv3=inceptionv3)
+    sampling_fn = sampling.get_sampling_fn(config, sde, sampling_shape, inverse_scaler, sampling_eps, local_rank)
 
   begin_ckpt = config.eval.begin_ckpt
   logging.info("begin checkpoint: %d" % (begin_ckpt,))

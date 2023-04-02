@@ -14,13 +14,16 @@
 # limitations under the License.
 
 """Utility functions for computing FID/Inception scores."""
+import os 
 
 import jax
 import numpy as np
 import six
 import tensorflow as tf
 import tensorflow_gan as tfgan
-import tensorflow_hub as tfhub
+with tf.device('/gpu:0'):
+  import tensorflow_hub as tfhub
+
 
 INCEPTION_TFHUB = 'https://tfhub.dev/tensorflow/tfgan/eval/inception/1'
 INCEPTION_OUTPUT = 'logits'
@@ -34,10 +37,9 @@ INCEPTION_DEFAULT_IMAGE_SIZE = 299
 
 def get_inception_model(inceptionv3=False):
   if inceptionv3:
-    return tfhub.load(
-      'https://tfhub.dev/google/imagenet/inception_v3/feature_vector/4')
+    return tf.saved_model.load(tfhub.resolve('https://tfhub.dev/google/imagenet/inception_v3/feature_vector/4'))
   else:
-    return tfhub.load(INCEPTION_TFHUB)
+    return tf.saved_model.load(tfhub.resolve('https://tfhub.dev/tensorflow/tfgan/eval/inception/1'))
 
 
 def load_dataset_stats(config):

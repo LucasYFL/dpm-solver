@@ -14,18 +14,19 @@
 # limitations under the License.
 
 """Training and evaluation"""
+import os
+
+local_rank = int(os.environ["LOCAL_RANK"])
+total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
+
 
 import run_lib
 from absl import app
 from absl import flags
 from ml_collections.config_flags import config_flags
 import logging
-import os
 import tensorflow as tf
 import torch
-
-local_rank = int(os.environ["LOCAL_RANK"])
-total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
 
 torch.cuda.set_device(local_rank)
 torch.distributed.init_process_group(backend='nccl')

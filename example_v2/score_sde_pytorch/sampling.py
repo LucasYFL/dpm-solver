@@ -78,7 +78,7 @@ def get_corrector(name):
   return _CORRECTORS[name]
 
 
-def get_sampling_fn(config, sde, shape, inverse_scaler, eps):
+def get_sampling_fn(config, sde, shape, inverse_scaler, eps, local_rank):
   """Create a sampling function.
 
   Args:
@@ -103,7 +103,7 @@ def get_sampling_fn(config, sde, shape, inverse_scaler, eps):
                                   eps=config.sampling.eps,
                                   rtol=config.sampling.rk45_rtol,
                                   atol=config.sampling.rk45_atol,
-                                  device=config.device)
+                                  device=f"{config.device}:{local_rank}")
   # Predictor-Corrector sampling. Predictor-only and Corrector-only samplers are special cases.
   elif sampler_name.lower() == 'pc':
     predictor = get_predictor(config.sampling.predictor.lower())
@@ -119,7 +119,7 @@ def get_sampling_fn(config, sde, shape, inverse_scaler, eps):
                                  continuous=config.training.continuous,
                                  denoise=config.sampling.noise_removal,
                                  eps=eps,
-                                 device=config.device)
+                                 device=f"{config.device}:{local_rank}")
   elif  sampler_name.lower() == 'dpm_solver':
     sampling_fn = get_dpm_solver_sampler(sde=sde,
                                   shape=shape,
@@ -133,7 +133,7 @@ def get_sampling_fn(config, sde, shape, inverse_scaler, eps):
                                   algorithm_type=config.sampling.algorithm_type,
                                   thresholding=config.sampling.thresholding,
                                   rtol=config.sampling.rtol,
-                                  device=config.device)
+                                  device=f"{config.device}:{local_rank}")
   else:
     raise ValueError(f"Sampler name {sampler_name} unknown.")
 
