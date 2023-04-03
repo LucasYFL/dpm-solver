@@ -137,10 +137,10 @@ def get_dataset(config, uniform_dequantization=False, evaluation=False):
 
   return train_ds, eval_ds
 
-def distributed_dataset(ds, config):
+def distributed_dataset(ds, config, drop_last = False):
   sampler = torch.utils.data.distributed.DistributedSampler(ds, shuffle = True)
   
-  batch_sampler = torch.utils.data.BatchSampler(sampler, config.training.batch_size, drop_last = True)
+  batch_sampler = torch.utils.data.BatchSampler(sampler, config.training.batch_size, drop_last = drop_last)
 
   dataloader = torch.utils.data.DataLoader(ds, batch_sampler=batch_sampler, pin_memory = True, num_workers=1)
   dataset_iter = iter(dataloader)
