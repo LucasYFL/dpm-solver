@@ -22,7 +22,7 @@ import os
 import time
 
 import numpy as np
-import tensorflow as tf
+# import tensorflow as tf
 # import tensorflow_gan as tfgan
 import logging
 # Keep the import below for registering all model definitions
@@ -59,10 +59,10 @@ def train(config, workdir):
 
   # Create directories for experimental logs
   sample_dir = os.path.join(workdir, "samples")
-  tf.io.gfile.makedirs(sample_dir)
+  os.makedirs(sample_dir)
 
   tb_dir = os.path.join(workdir, "tensorboard")
-  tf.io.gfile.makedirs(tb_dir)
+  os.makedirs(tb_dir)
   writer = tensorboard.SummaryWriter(tb_dir)
 
   # Initialize model.
@@ -75,8 +75,8 @@ def train(config, workdir):
   checkpoint_dir = os.path.join(workdir, "checkpoints")
   # Intermediate checkpoints to resume training after pre-emption in cloud environments
   checkpoint_meta_dir = os.path.join(workdir, "checkpoints-meta", "checkpoint.pth")
-  tf.io.gfile.makedirs(checkpoint_dir)
-  tf.io.gfile.makedirs(os.path.dirname(checkpoint_meta_dir))
+  os.makedirs(checkpoint_dir)
+  os.makedirs(os.path.dirname(checkpoint_meta_dir))
   # Resume training when intermediate checkpoints are detected
   state = restore_checkpoint(checkpoint_meta_dir, state, config.device)
   initial_step = int(state['step'])
@@ -178,15 +178,15 @@ def train(config, workdir):
         sample, n = sampling_fn(score_model)
         ema.restore(score_model.parameters())
         this_sample_dir = os.path.join(sample_dir, "iter_{}".format(step))
-        tf.io.gfile.makedirs(this_sample_dir)
+        os.makedirs(this_sample_dir)
         nrow = int(np.sqrt(sample.shape[0]))
         image_grid = make_grid(sample, nrow, padding=2)
         sample = np.clip(sample.permute(0, 2, 3, 1).cpu().numpy() * 255, 0, 255).astype(np.uint8)
-        with tf.io.gfile.GFile(
+        with open(
             os.path.join(this_sample_dir, "sample.np"), "wb") as fout:
           np.save(fout, sample)
 
-        with tf.io.gfile.GFile(
+        with open(
             os.path.join(this_sample_dir, "sample.png"), "wb") as fout:
           save_image(image_grid, fout)
 
@@ -204,7 +204,7 @@ def evaluate(config,
   """
   # Create directory to eval_folder
   eval_dir = os.path.join(workdir, eval_folder)
-  tf.io.gfile.makedirs(eval_dir)
+  os.makedirs(eval_dir)
 
   # Build data pipeline
   train_ds, _ = datasets.get_dataset(config)
@@ -224,7 +224,6 @@ def evaluate(config,
   optimizer = losses.get_optimizer(config, score_model.parameters())
   ema = ExponentialMovingAverage(score_model.parameters(), decay=config.model.ema_rate)
   state = dict(optimizer=optimizer, model=score_model, ema=ema, step=0)
-
   checkpoint_dir = os.path.join(workdir, "checkpoints")
 
   # Setup SDEs
@@ -254,7 +253,7 @@ def evaluate(config,
     # Wait if the target checkpoint doesn't exist yet
     waiting_message_printed = False
     ckpt_filename = os.path.join(checkpoint_dir, "checkpoint_{}.pth".format(ckpt))
-    while not tf.io.gfile.exists(ckpt_filename):
+    while not os.path.exists(ckpt_filename):
       if not waiting_message_printed:
         logging.warning("Waiting for the arrival of checkpoint_%d" % (ckpt,))
         waiting_message_printed = True
@@ -289,7 +288,7 @@ def evaluate(config,
         # Directory to save samples. Different for each host to avoid writing conflicts
         this_sample_dir = os.path.join(
           eval_dir, f"ckpt_{ckpt}_host_{local_rank}")
-        tf.io.gfile.makedirs(this_sample_dir)
+        os.makedirs(this_sample_dir)
         samples_raw, n = sampling_fn(score_model)
         
         samples = torch.clip(samples_raw.permute(0, 2, 3, 1) * 255., 0, 255).to(torch.uint8)
@@ -298,7 +297,7 @@ def evaluate(config,
         samples = samples.reshape(
           (-1, config.data.image_size, config.data.image_size, config.data.num_channels)).cpu().numpy()
         # Write samples to disk or Google Cloud Storage
-        with tf.io.gfile.GFile(
+        with open(
             os.path.join(this_sample_dir, f"samples_{r}.npz"), "wb") as fout:
           io_buffer = io.BytesIO()
           np.savez_compressed(io_buffer, samples=samples)
@@ -307,7 +306,7 @@ def evaluate(config,
         if r == 0:
           nrow = int(np.sqrt(samples_raw.shape[0]))
           image_grid = make_grid(samples_raw, nrow, padding=2)
-          with tf.io.gfile.GFile(
+          with open(
               os.path.join(this_sample_dir, "sample.png"), "wb") as fout:
             save_image(image_grid, fout)
 
@@ -318,7 +317,7 @@ def evaluate(config,
         # Force garbage collection again before returning to JAX code
         gc.collect()
         # Save latent represents of the Inception network to disk or Google Cloud Storage
-        with tf.io.gfile.GFile(
+        with open(
             os.path.join(this_sample_dir, f"statistics_{r}.npz"), "wb") as fout:
           io_buffer = io.BytesIO()
           np.savez_compressed(
@@ -365,35 +364,23 @@ def evaluate(config,
         
         for rank_id in range(total_rank):
           this_sample_dir = os.path.join(eval_dir, f"ckpt_{ckpt}_host_{rank_id}")
-          stats = tf.io.gfile.glob(os.path.join(this_sample_dir, "statistics_*.npz"))
+          stats = glob.glob(os.path.join(this_sample_dir, "statistics_*.npz"))
           wait_message = False
           while len(stats) < num_sampling_rounds:
             if not wait_message:
               logging.warning(f"Waiting for statistics on host {rank_id}")
               wait_message = True
-            stats = tf.io.gfile.glob(
+            stats = glob.glob(
               os.path.join(this_sample_dir, "statistics_*.npz"))
             time.sleep(30)          
           
           for stat_file in stats:
-            with tf.io.gfile.GFile(stat_file, "rb") as fin:
+            with open(stat_file, "rb") as fin:
               stat = np.load(fin)
               all_stats.append(stat["stats"])
 
         all_stats = np.concatenate(all_stats, axis=0)[:config.eval.num_samples]
 
-        # Load pre-computed dataset statistics.
-        # data_stats = evaluation.load_dataset_stats(config)
-        # data_pools = data_stats["pool_3"]
-
-        # fid = tfgan.eval.frechet_classifier_distance_from_activations(
-        #   data_pools, all_pools)
-        # # Hack to get tfgan KID work for eager execution.
-        # tf_data_pools = tf.convert_to_tensor(data_pools)
-        # tf_all_pools = tf.convert_to_tensor(all_pools)
-        # kid = tfgan.eval.kernel_classifier_distance_from_activations(
-        #   tf_data_pools, tf_all_pools).numpy()
-        # del tf_data_pools, tf_all_pools
         mu_gt = np.mean(stats_gt, axis=0)
         sigma_gt = np.cov(stats_gt, rowvar=False)
         mu_pred = np.mean(all_stats, axis=0)
@@ -406,7 +393,7 @@ def evaluate(config,
           "ckpt-%d --- FID: %.6e" % (
             ckpt, fid))
 
-        with tf.io.gfile.GFile(os.path.join(eval_dir, f"report_{ckpt}.npz"),
+        with open(os.path.join(eval_dir, f"report_{ckpt}.npz"),
                               "wb") as f:
           io_buffer = io.BytesIO()
           np.savez_compressed(io_buffer, fid=fid)
