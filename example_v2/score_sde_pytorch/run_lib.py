@@ -59,10 +59,10 @@ def train(config, workdir):
 
   # Create directories for experimental logs
   sample_dir = os.path.join(workdir, "samples")
-  os.makedirs(sample_dir)
+  os.makedirs(sample_dir, exist_ok=True)
 
   tb_dir = os.path.join(workdir, "tensorboard")
-  os.makedirs(tb_dir)
+  os.makedirs(tb_dir, exist_ok=True)
   writer = tensorboard.SummaryWriter(tb_dir)
 
   # Initialize model.
@@ -75,8 +75,8 @@ def train(config, workdir):
   checkpoint_dir = os.path.join(workdir, "checkpoints")
   # Intermediate checkpoints to resume training after pre-emption in cloud environments
   checkpoint_meta_dir = os.path.join(workdir, "checkpoints-meta", "checkpoint.pth")
-  os.makedirs(checkpoint_dir)
-  os.makedirs(os.path.dirname(checkpoint_meta_dir))
+  os.makedirs(checkpoint_dir, exist_ok=True)
+  os.makedirs(os.path.dirname(checkpoint_meta_dir), exist_ok=True)
   # Resume training when intermediate checkpoints are detected
   state = restore_checkpoint(checkpoint_meta_dir, state, config.device)
   initial_step = int(state['step'])
@@ -178,7 +178,7 @@ def train(config, workdir):
         sample, n = sampling_fn(score_model)
         ema.restore(score_model.parameters())
         this_sample_dir = os.path.join(sample_dir, "iter_{}".format(step))
-        os.makedirs(this_sample_dir)
+        os.makedirs(this_sample_dir, exist_ok=True)
         nrow = int(np.sqrt(sample.shape[0]))
         image_grid = make_grid(sample, nrow, padding=2)
         sample = np.clip(sample.permute(0, 2, 3, 1).cpu().numpy() * 255, 0, 255).astype(np.uint8)
@@ -204,7 +204,7 @@ def evaluate(config,
   """
   # Create directory to eval_folder
   eval_dir = os.path.join(workdir, eval_folder)
-  os.makedirs(eval_dir)
+  os.makedirs(eval_dir, exist_ok=True)
 
   # Build data pipeline
   train_ds, _ = datasets.get_dataset(config)
@@ -288,7 +288,7 @@ def evaluate(config,
         # Directory to save samples. Different for each host to avoid writing conflicts
         this_sample_dir = os.path.join(
           eval_dir, f"ckpt_{ckpt}_host_{local_rank}")
-        os.makedirs(this_sample_dir)
+        os.makedirs(this_sample_dir, exist_ok=True)
         samples_raw, n = sampling_fn(score_model)
         
         samples = torch.clip(samples_raw.permute(0, 2, 3, 1) * 255., 0, 255).to(torch.uint8)

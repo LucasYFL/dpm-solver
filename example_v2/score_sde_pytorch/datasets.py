@@ -15,8 +15,8 @@
 
 # pylint: skip-file
 """Return training and evaluation/test datasets from config files."""
-import jax
-import tensorflow as tf
+# import jax
+# import tensorflow as tf
 import torchvision
 import torchvision.transforms as TF
 import torch
@@ -41,34 +41,34 @@ def get_data_inverse_scaler(config):
     return lambda x: x
 
 
-def crop_resize(image, resolution):
-  """Crop and resize an image to the given resolution."""
-  crop = tf.minimum(tf.shape(image)[0], tf.shape(image)[1])
-  h, w = tf.shape(image)[0], tf.shape(image)[1]
-  image = image[(h - crop) // 2:(h + crop) // 2,
-          (w - crop) // 2:(w + crop) // 2]
-  image = tf.image.resize(
-    image,
-    size=(resolution, resolution),
-    antialias=True,
-    method=tf.image.ResizeMethod.BICUBIC)
-  return tf.cast(image, tf.uint8)
+# def crop_resize(image, resolution):
+#   """Crop and resize an image to the given resolution."""
+#   crop = tf.minimum(tf.shape(image)[0], tf.shape(image)[1])
+#   h, w = tf.shape(image)[0], tf.shape(image)[1]
+#   image = image[(h - crop) // 2:(h + crop) // 2,
+#           (w - crop) // 2:(w + crop) // 2]
+#   image = tf.image.resize(
+#     image,
+#     size=(resolution, resolution),
+#     antialias=True,
+#     method=tf.image.ResizeMethod.BICUBIC)
+#   return tf.cast(image, tf.uint8)
 
 
-def resize_small(image, resolution):
-  """Shrink an image to the given resolution."""
-  h, w = image.shape[0], image.shape[1]
-  ratio = resolution / min(h, w)
-  h = tf.round(h * ratio, tf.int32)
-  w = tf.round(w * ratio, tf.int32)
-  return tf.image.resize(image, [h, w], antialias=True)
+# def resize_small(image, resolution):
+#   """Shrink an image to the given resolution."""
+#   h, w = image.shape[0], image.shape[1]
+#   ratio = resolution / min(h, w)
+#   h = tf.round(h * ratio, tf.int32)
+#   w = tf.round(w * ratio, tf.int32)
+#   return tf.image.resize(image, [h, w], antialias=True)
 
 
-def central_crop(image, size):
-  """Crop the center of an image to the given size."""
-  top = (image.shape[0] - size) // 2
-  left = (image.shape[1] - size) // 2
-  return tf.image.crop_to_bounding_box(image, top, left, size, size)
+# def central_crop(image, size):
+#   """Crop the center of an image to the given size."""
+#   top = (image.shape[0] - size) // 2
+#   left = (image.shape[1] - size) // 2
+#   return tf.image.crop_to_bounding_box(image, top, left, size, size)
 
 
 def get_dataset(config, uniform_dequantization=False, evaluation=False):
@@ -84,14 +84,14 @@ def get_dataset(config, uniform_dequantization=False, evaluation=False):
   """
   # Compute batch size for this worker.
   batch_size = config.training.batch_size if not evaluation else config.eval.batch_size
-  if batch_size % jax.device_count() != 0:
-    raise ValueError(f'Batch sizes ({batch_size} must be divided by'
-                     f'the number of devices ({jax.device_count()})')
+  # if batch_size % jax.device_count() != 0:
+  #   raise ValueError(f'Batch sizes ({batch_size} must be divided by'
+  #                    f'the number of devices ({jax.device_count()})')
 
   # Reduce this when image resolution is too large and data pointer is stored
-  shuffle_buffer_size = 10000
-  prefetch_size = tf.data.experimental.AUTOTUNE
-  num_epochs = None if not evaluation else 1
+  # shuffle_buffer_size = 10000
+  # prefetch_size = tf.data.experimental.AUTOTUNE
+  # num_epochs = None if not evaluation else 1
   root = "./dataset"
   if not os.path.isdir(root):
     os.mkdir(root)

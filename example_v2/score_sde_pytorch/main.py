@@ -25,7 +25,6 @@ from absl import app
 from absl import flags
 from ml_collections.config_flags import config_flags
 import logging
-# import tensorflow as tf
 import torch
 
 torch.cuda.set_device(local_rank)
@@ -50,7 +49,7 @@ def main(argv):
     # Make logging work for both disk and Google Cloud Storage
     FLAGS.config.training.batch_size = int(FLAGS.config.training.batch_size / total_rank)
     if local_rank == 0:
-      os.makedirs(FLAGS.workdir)
+      os.makedirs(FLAGS.workdir, exist_ok=True)
       gfile_stream = open(os.path.join(FLAGS.workdir, 'stdout.txt'), 'w')
       handler = logging.StreamHandler(gfile_stream)
       formatter = logging.Formatter('%(levelname)s - %(filename)s - %(asctime)s - %(message)s')
