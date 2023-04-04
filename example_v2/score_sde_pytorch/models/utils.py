@@ -89,7 +89,6 @@ def create_model(config, local_rank):
   """Create the score model."""
   model_name = config.model.name
   score_model = get_model(model_name)(config)
-  print(f"{config.device}:{local_rank}")
   score_model = score_model.to(f"{config.device}:{local_rank}")
   if torch.__version__ >= "2.0.0":
     score_model = torch.compile(score_model)
