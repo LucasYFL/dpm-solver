@@ -248,7 +248,8 @@ def evaluate(config,
     sampling_fn = sampling.get_sampling_fn(config, sde, sampling_shape, inverse_scaler, sampling_eps, local_rank)
 
   begin_ckpt = config.eval.begin_ckpt
-  logging.info("begin checkpoint: %d" % (begin_ckpt,))
+  if local_rank == 0:
+    logging.info("begin checkpoint: %d" % (begin_ckpt,))
   for ckpt in range(begin_ckpt, config.eval.end_ckpt + 1):
     # Wait if the target checkpoint doesn't exist yet
     waiting_message_printed = False

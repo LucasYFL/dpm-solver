@@ -48,6 +48,7 @@ def main(argv):
     # Set logger so that it outputs to both console and file
     # Make logging work for both disk and Google Cloud Storage
     FLAGS.config.training.batch_size = int(FLAGS.config.training.batch_size / total_rank)
+    print(FLAGS.config.training.batch_size)
     if local_rank == 0:
       os.makedirs(FLAGS.workdir, exist_ok=True)
       gfile_stream = open(os.path.join(FLAGS.workdir, 'stdout.txt'), 'w')
