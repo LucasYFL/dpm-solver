@@ -54,7 +54,7 @@ def load_dataset_stats(config):
 
   with open(filename, 'rb') as fin:
     stats = np.load(fin)
-    return stats
+  return stats
 
 
 # def classifier_fn_from_tfhub(output_fields, inception_model,
