@@ -34,6 +34,9 @@ FLAGS = flags.FLAGS
 
 config_flags.DEFINE_config_file(
   "config", None, "Training configuration.", lock_config=True)
+
+config_flags.DEFINE_config_file(
+  "config1", None, "Training configuration.", lock_config=True)
 flags.DEFINE_string("workdir", None, "Work directory.")
 flags.DEFINE_string("m1", None, "Model 1 directory.")
 flags.DEFINE_string("m2", None, "Model 2  directory.")
@@ -46,7 +49,7 @@ tf.config.experimental.set_visible_devices([], "GPU")
 os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
 
 def evaluate(config,
-             workdir,m1,m2,m3=None,
+             workdir,m1,m2,m3=None,config1=None,
              eval_folder="eval"):
   """Evaluate trained models.
 
@@ -78,7 +81,7 @@ def evaluate(config,
   checkpoint_dirs = []
   objectives = []
   logging.info(config.eval.t_tuples)
-
+  configs = (config,config1)
   
   # Setup SDEs
   if config.training.sde.lower() == 'vpsde':
@@ -93,7 +96,7 @@ def evaluate(config,
   else:
     raise NotImplementedError(f"SDE {config.training.sde} unknown.")
   for i in range(len(config.eval.t_tuples)+1):
-    s = mutils.create_model(config)
+    s = mutils.create_model(configs[i])
     score_models.append(s)
     opt = losses.get_optimizer(config, s.parameters())
     optimizers.append(opt)
@@ -297,8 +300,9 @@ def evaluate(config,
 def main(argv):
   global config_fewer
   config_fewer = FLAGS.config
+  config1 = FLAGS.config1
   # Run the evaluation pipeline
-  evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,FLAGS.m3, FLAGS.eval_folder)
+  evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,FLAGS.m3,config1, FLAGS.eval_folder)
  
 if __name__ == "__main__":
   app.run(main)

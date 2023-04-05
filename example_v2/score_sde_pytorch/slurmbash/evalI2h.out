@@ -1,0 +1,216 @@
+4
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+I0403 22:00:32.748127 23191641696064 xla_bridge.py:355] Unable to initialize backend 'tpu_driver': NOT_FOUND: Unable to find driver in registry given worker: 
+I0403 22:00:32.748353 23191641696064 xla_bridge.py:355] Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0403 22:00:32.748418 23191641696064 xla_bridge.py:355] Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0403 22:00:32.749852 23191641696064 xla_bridge.py:355] Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
+I0403 22:00:32.749949 23191641696064 xla_bridge.py:355] Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
+W0403 22:00:32.750012 23191641696064 xla_bridge.py:362] No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+I0403 22:00:32.755556 23191641696064 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0403 22:00:32.760289 23191641696064 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0403 22:00:32.760384 23191641696064 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0403 22:00:32.760487 23191641696064 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0403 22:00:32.760562 23191641696064 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0403 22:00:32.946777 23191641696064 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0403 22:00:32.946933 23191641696064 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0403 22:00:32.947048 23191641696064 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0403 22:00:32.947125 23191641696064 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0403 22:00:32.980219 23191641696064 main_interval.py:83] (0.676,)
+I0403 22:00:36.176479 23191641696064 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0403 22:00:36.178471 23191641696064 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0403 22:00:36.178583 23191641696064 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0403 22:00:36.178684 23191641696064 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0403 22:00:36.178754 23191641696064 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0403 22:00:36.220014 23191641696064 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0403 22:00:36.220170 23191641696064 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0403 22:00:36.220274 23191641696064 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0403 22:00:36.220342 23191641696064 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0403 22:00:36.256303 23191641696064 sampling.py:98] dpm_solver
+I0403 22:00:36.256647 23191641696064 resolver.py:105] Using /tmp/tfhub_modules to cache modules.
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow/python/util/nest.py:869: UserWarning: `tf.layers.flatten` is deprecated and will be removed in a future version. Please use `tf.keras.layers.Flatten` instead.
+  structure[0], [func(*x) for x in entries],
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/keras/legacy_tf_layers/core.py:523: UserWarning: `layer.apply` is deprecated and will be removed in a future version. Please use `layer.__call__` method instead.
+  return layer.apply(inputs)
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/keras/legacy_tf_layers/base.py:573: UserWarning: `layer.updates` will be removed in a future version. This property should not be used in TensorFlow 2.0, as `updates` are applied automatically.
+  _add_elements_to_collection(self.updates, tf.compat.v1.GraphKeys.UPDATE_OPS)
+I0403 22:00:39.049949 23191641696064 main_interval.py:150] begin checkpoint: 4
+I0403 22:00:39.052435 23191641696064 main_interval.py:154] 0 is converged model
+I0403 22:00:39.052503 23191641696064 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0403 22:00:54.658692 23191641696064 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I2_half/checkpoints/checkpoint_4.pth
+I0403 22:01:04.416216 23191641696064 main_interval.py:209] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval2_half
+I0403 22:01:04.416378 23191641696064 main_interval.py:212] sampling -- ckpt: 4, round: 0
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow/python/util/nest.py:869: UserWarning: `tf.layers.flatten` is deprecated and will be removed in a future version. Please use `tf.keras.layers.Flatten` instead.
+  structure[0], [func(*x) for x in entries],
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/keras/legacy_tf_layers/core.py:523: UserWarning: `layer.apply` is deprecated and will be removed in a future version. Please use `layer.__call__` method instead.
+  return layer.apply(inputs)
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/keras/legacy_tf_layers/base.py:573: UserWarning: `layer.updates` will be removed in a future version. This property should not be used in TensorFlow 2.0, as `updates` are applied automatically.
+  _add_elements_to_collection(self.updates, tf.compat.v1.GraphKeys.UPDATE_OPS)
+I0403 22:06:37.385827 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 1
+I0403 22:07:38.476691 23191641696064 main_interval.py:212] sampling -- ckpt: 4, round: 1
+I0403 22:13:01.633880 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 2
+I0403 22:14:04.253874 23191641696064 main_interval.py:212] sampling -- ckpt: 4, round: 2
+I0403 22:19:27.579962 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 3
+I0403 22:20:32.798152 23191641696064 main_interval.py:212] sampling -- ckpt: 4, round: 3
+I0403 22:25:54.393956 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 4
+I0403 22:26:59.752649 23191641696064 main_interval.py:212] sampling -- ckpt: 4, round: 4
+slurmstepd: error: *** JOB 50331165 ON gl1500 CANCELLED AT 2023-04-03T22:27:35 ***
+I0403 22:32:20.835231 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 5
+I0403 22:38:47.592360 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 6
+I0403 22:45:11.655429 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 7
+I0403 22:51:36.440976 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 8
+I0403 22:58:02.257874 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 9
+I0403 23:04:26.404759 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 10
+I0403 23:10:52.509391 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 11
+I0403 23:17:18.673304 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 12
+I0403 23:23:45.066186 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 13
+I0403 23:30:11.379633 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 14
+I0403 23:36:37.668454 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 15
+I0403 23:43:04.373622 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 16
+I0403 23:49:30.563968 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 17
+I0403 23:55:56.446154 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 18
+I0404 00:02:21.740982 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 19
+I0404 00:08:47.631922 23240079181632 main_interval.py:212] sampling -- ckpt: 4, round: 20
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/eval/classifier_metrics.py:1157: calling map_fn_v2 (from tensorflow.python.ops.map_fn) with back_prop=False is deprecated and will be removed in a future version.
+Instructions for updating:
+back_prop=False is deprecated. Consider using tf.stop_gradient instead.
+Instead of:
+results = tf.map_fn(fn, elems, back_prop=False)
+Use:
+results = tf.nest.map_structure(tf.stop_gradient, tf.map_fn(fn, elems))
+W0404 00:16:37.005284 23240079181632 deprecation.py:614] From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/eval/classifier_metrics.py:1157: calling map_fn_v2 (from tensorflow.python.ops.map_fn) with back_prop=False is deprecated and will be removed in a future version.
+Instructions for updating:
+back_prop=False is deprecated. Consider using tf.stop_gradient instead.
+Instead of:
+results = tf.map_fn(fn, elems, back_prop=False)
+Use:
+results = tf.nest.map_structure(tf.stop_gradient, tf.map_fn(fn, elems))
+I0404 00:16:47.744792 23240079181632 main_interval.py:289] ckpt-4 --- inception_score: 9.431536e+00, FID: 5.540767e+00, KID: 2.868105e-03
+I0404 00:16:47.749773 23240079181632 main_interval.py:154] 0 is converged model
+I0404 00:16:47.749903 23240079181632 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0404 00:17:06.311402 23240079181632 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I2_half/checkpoints/checkpoint_5.pth
+I0404 00:17:20.186049 23240079181632 main_interval.py:209] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval2_half
+I0404 00:17:20.186211 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 0
+I0404 00:23:48.068272 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 1
+I0404 00:30:13.456856 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 2
+I0404 00:36:39.380594 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 3
+I0404 00:43:05.706553 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 4
+I0404 00:49:30.300955 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 5
+I0404 00:55:56.472161 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 6
+I0404 01:02:21.873026 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 7
+I0404 01:08:48.116138 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 8
+I0404 01:15:13.937369 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 9
+I0404 01:21:39.962615 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 10
+I0404 01:28:05.319536 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 11
+I0404 01:34:31.212379 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 12
+I0404 01:40:56.560102 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 13
+I0404 01:47:22.460942 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 14
+I0404 01:53:48.423366 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 15
+I0404 02:00:13.748232 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 16
+I0404 02:06:39.484636 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 17
+I0404 02:13:04.840370 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 18
+I0404 02:19:29.826964 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 19
+I0404 02:25:54.794371 23240079181632 main_interval.py:212] sampling -- ckpt: 5, round: 20
+I0404 02:33:51.276628 23240079181632 main_interval.py:289] ckpt-5 --- inception_score: 9.409234e+00, FID: 5.475282e+00, KID: 2.886792e-03
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+I0404 02:34:23.540147 22745416329024 xla_bridge.py:355] Unable to initialize backend 'tpu_driver': NOT_FOUND: Unable to find driver in registry given worker: 
+I0404 02:34:23.540336 22745416329024 xla_bridge.py:355] Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0404 02:34:23.540398 22745416329024 xla_bridge.py:355] Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0404 02:34:23.540968 22745416329024 xla_bridge.py:355] Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
+I0404 02:34:23.541058 22745416329024 xla_bridge.py:355] Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
+W0404 02:34:23.541120 22745416329024 xla_bridge.py:362] No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+I0404 02:34:23.542971 22745416329024 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0404 02:34:23.552559 22745416329024 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0404 02:34:23.552642 22745416329024 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0404 02:34:23.552736 22745416329024 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0404 02:34:23.552818 22745416329024 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0404 02:34:23.694471 22745416329024 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0404 02:34:23.694612 22745416329024 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0404 02:34:23.694713 22745416329024 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0404 02:34:23.694777 22745416329024 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0404 02:34:23.726177 22745416329024 main_interval.py:83] (0.676,)
+I0404 02:34:26.277259 22745416329024 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0404 02:34:26.279238 22745416329024 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0404 02:34:26.279354 22745416329024 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0404 02:34:26.279475 22745416329024 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0404 02:34:26.279549 22745416329024 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0404 02:34:26.319415 22745416329024 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0404 02:34:26.319524 22745416329024 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0404 02:34:26.319604 22745416329024 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0404 02:34:26.319664 22745416329024 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0404 02:34:26.353030 22745416329024 sampling.py:98] dpm_solver
+I0404 02:34:26.353308 22745416329024 resolver.py:105] Using /tmp/tfhub_modules to cache modules.
+I0404 02:34:28.751384 22745416329024 main_interval.py:150] begin checkpoint: 7
+I0404 02:34:28.751539 22745416329024 main_interval.py:154] 0 is converged model
+I0404 02:34:28.751590 22745416329024 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0404 02:34:44.771271 22745416329024 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I2_half/checkpoints/checkpoint_7.pth
+I0404 02:34:55.835376 22745416329024 main_interval.py:209] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval2_half
+I0404 02:34:55.835563 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 0
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow/python/util/nest.py:869: UserWarning: `tf.layers.flatten` is deprecated and will be removed in a future version. Please use `tf.keras.layers.Flatten` instead.
+  structure[0], [func(*x) for x in entries],
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/keras/legacy_tf_layers/core.py:523: UserWarning: `layer.apply` is deprecated and will be removed in a future version. Please use `layer.__call__` method instead.
+  return layer.apply(inputs)
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/keras/legacy_tf_layers/base.py:573: UserWarning: `layer.updates` will be removed in a future version. This property should not be used in TensorFlow 2.0, as `updates` are applied automatically.
+  _add_elements_to_collection(self.updates, tf.compat.v1.GraphKeys.UPDATE_OPS)
+I0404 02:41:25.484564 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 1
+I0404 02:47:48.584518 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 2
+I0404 02:54:12.940743 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 3
+I0404 03:00:38.690086 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 4
+I0404 03:07:01.781872 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 5
+I0404 03:13:24.854712 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 6
+I0404 03:19:48.795878 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 7
+I0404 03:26:12.286551 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 8
+I0404 03:32:38.956583 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 9
+I0404 03:39:04.050589 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 10
+I0404 03:45:29.198962 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 11
+I0404 03:51:55.552486 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 12
+I0404 03:58:19.115459 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 13
+I0404 04:04:44.852740 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 14
+I0404 04:11:08.227788 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 15
+I0404 04:17:34.037504 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 16
+I0404 04:23:57.601047 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 17
+I0404 04:30:23.838922 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 18
+I0404 04:36:46.990810 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 19
+I0404 04:43:12.020672 22745416329024 main_interval.py:212] sampling -- ckpt: 7, round: 20
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/eval/classifier_metrics.py:1157: calling map_fn_v2 (from tensorflow.python.ops.map_fn) with back_prop=False is deprecated and will be removed in a future version.
+Instructions for updating:
+back_prop=False is deprecated. Consider using tf.stop_gradient instead.
+Instead of:
+results = tf.map_fn(fn, elems, back_prop=False)
+Use:
+results = tf.nest.map_structure(tf.stop_gradient, tf.map_fn(fn, elems))
+W0404 04:50:54.950952 22745416329024 deprecation.py:614] From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/eval/classifier_metrics.py:1157: calling map_fn_v2 (from tensorflow.python.ops.map_fn) with back_prop=False is deprecated and will be removed in a future version.
+Instructions for updating:
+back_prop=False is deprecated. Consider using tf.stop_gradient instead.
+Instead of:
+results = tf.map_fn(fn, elems, back_prop=False)
+Use:
+results = tf.nest.map_structure(tf.stop_gradient, tf.map_fn(fn, elems))
+I0404 04:51:05.681901 22745416329024 main_interval.py:289] ckpt-7 --- inception_score: 9.394690e+00, FID: 5.528923e+00, KID: 2.841482e-03
+I0404 04:51:05.686577 22745416329024 main_interval.py:154] 0 is converged model
+I0404 04:51:05.686703 22745416329024 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm/checkpoints/checkpoint_40.pth
+I0404 04:51:20.369180 22745416329024 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I2_half/checkpoints/checkpoint_8.pth
+I0404 04:51:28.697176 22745416329024 main_interval.py:209] /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval2_half
+I0404 04:51:28.697373 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 0
+I0404 04:57:54.867993 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 1
+I0404 05:04:20.839468 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 2
+I0404 05:10:45.777989 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 3
+I0404 05:17:10.976668 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 4
+I0404 05:23:36.533932 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 5
+I0404 05:30:01.979161 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 6
+I0404 05:36:27.057327 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 7
+I0404 05:42:52.816490 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 8
+I0404 05:49:18.362616 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 9
+I0404 05:55:42.273634 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 10
+I0404 06:02:07.327917 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 11
+I0404 06:08:32.586445 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 12
+I0404 06:14:58.330235 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 13
+I0404 06:21:24.275233 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 14
+I0404 06:27:49.365442 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 15
+I0404 06:34:14.841088 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 16
+I0404 06:40:39.822593 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 17
+I0404 06:47:05.872343 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 18
+I0404 06:53:32.178852 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 19
+I0404 06:59:56.908222 22745416329024 main_interval.py:212] sampling -- ckpt: 8, round: 20
+I0404 07:07:50.847421 22745416329024 main_interval.py:289] ckpt-8 --- inception_score: 9.462956e+00, FID: 5.632566e+00, KID: 2.938300e-03
