@@ -52,8 +52,7 @@ def load_dataset_stats(config):
   else:
     raise ValueError(f'Dataset {config.data.dataset} stats not found.')
 
-  with open(filename, 'rb') as fin:
-    stats = np.load(fin)
+  stats = np.load(filename)
   return stats
 
 

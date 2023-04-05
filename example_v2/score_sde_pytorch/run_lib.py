@@ -218,7 +218,6 @@ def evaluate(config,
   # Use inceptionV3 for images with resolution higher than 256.
   # inceptionv3 = config.data.image_size >= 256
   # inception_model = evaluation.get_inception_model(inceptionv3=inceptionv3)
-    
   # Initialize model
   score_model = mutils.create_model(config, local_rank)
   optimizer = losses.get_optimizer(config, score_model.parameters())
