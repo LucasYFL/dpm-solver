@@ -49,68 +49,68 @@ def evaluate(config,
   for ckpt in range(begin_ckpt, config.eval.end_ckpt + 1):
 
     # Generate samples and compute IS/FID/KID when enabled
-      logging.info(eval_dir)
-      num_sampling_rounds = config.eval.num_samples // config.eval.batch_size + 1
-      sample_dir = os.path.join(
-            eval_dir, f"ckpt_{ckpt}_host_*")
+    logging.info(eval_dir)
+    sample_dir = os.path.join(eval_dir, f"ckpt_{ckpt}_host_*")
         
-      dirs = glob.glob(sample_dir)
-      if len(dirs) == 0:
-          break
-      for r in range(num_sampling_rounds):
-        logging.info("evaluation -- ckpt: %d, round: %d" % (ckpt, r))
+    dirs = glob.glob(sample_dir)
+    if len(dirs) == 0:
+      break
+    
+    # Directory to save samples. Different for each host to avoid writing conflicts
 
-        # Directory to save samples. Different for each host to avoid writing conflicts
+    for this_sample_dir in dirs:
+      
+      sample_paths = glob.glob(os.path.join(this_sample_dir, f"samples_*.npz"))
+      sample_paths.sort()
+      for sample_path in sample_paths:
+        r = os.path.basename(sample_path).split("samples_")[1].split(".npz")[0]
+        logging.info(f"evaluation -- ckpt: {ckpt}, round: {r}")
+        # Read samples to disk or Google Cloud Storage
+        samples = np.load(sample_path, "wb")['samples']
 
-
-        for this_sample_dir in dirs:
-            # Read samples to disk or Google Cloud Storage
-            samples = np.load(os.path.join(this_sample_dir, f"samples_{r}.npz"), "wb")['samples']
-
-            # Force garbage collection before calling TensorFlow code for Inception network
-            gc.collect()
-            latents = evaluation.run_inception_distributed(samples, inception_model,
+        # Force garbage collection before calling TensorFlow code for Inception network
+        gc.collect()
+        latents = evaluation.run_inception_distributed(samples, inception_model,
                                                         inceptionv3=inceptionv3)
-            # Force garbage collection again before returning to JAX code
-            gc.collect()
-            # Save latent represents of the Inception network to disk or Google Cloud Storage
-            with tf.io.gfile.GFile(
-                os.path.join(this_sample_dir, f"statistics_{r}.npz"), "wb") as fout:
-                io_buffer = io.BytesIO()
-                np.savez_compressed(
-                    io_buffer, pool_3=latents["pool_3"])
-                fout.write(io_buffer.getvalue())
+        # Force garbage collection again before returning to JAX code
+        gc.collect()
+        # Save latent represents of the Inception network to disk or Google Cloud Storage
+        with tf.io.gfile.GFile(os.path.join(this_sample_dir, f"statistics_{r}.npz"), "wb") as fout:
+          io_buffer = io.BytesIO()
+          np.savez_compressed(
+            io_buffer, pool_3=latents["pool_3"])
+          fout.write(io_buffer.getvalue())
 
-      # Compute inception scores, FIDs and KIDs.
-      # Load all statistics that have been previously computed and saved for each host
+    # Compute inception scores, FIDs and KIDs.
+    # Load all statistics that have been previously computed and saved for each host
 
-      all_pools = []
-      for this_sample_dir in dirs:
-        stats = tf.io.gfile.glob(os.path.join(this_sample_dir, "statistics_*.npz"))
-        for stat_file in stats:
-            with tf.io.gfile.GFile(stat_file, "rb") as fin:
-                stat = np.load(fin)
-                all_pools.append(stat["pool_3"])
+    all_pools = []
+    for this_sample_dir in dirs:
+      stats = tf.io.gfile.glob(os.path.join(this_sample_dir, "statistics_*.npz"))
+      for stat_file in stats:
+          with tf.io.gfile.GFile(stat_file, "rb") as fin:
+              stat = np.load(fin)
+              all_pools.append(stat["pool_3"])
 
-      all_pools = np.concatenate(all_pools, axis=0)[:config.eval.num_samples]
+    all_pools = np.concatenate(all_pools, axis=0)[:config.eval.num_samples]
 
-      # Load pre-computed dataset statistics.
-      data_stats = evaluation.load_dataset_stats(config)
-      data_pools = data_stats["pool_3"]
+    # Load pre-computed dataset statistics.
+    data_stats = evaluation.load_dataset_stats(config)
+    data_pools = data_stats["pool_3"]
 
-      fid = tfgan.eval.frechet_classifier_distance_from_activations(
-        data_pools, all_pools)
+    fid = tfgan.eval.frechet_classifier_distance_from_activations(
+      data_pools, all_pools)
 
 
-      logging.info(
-        "ckpt-%d --- FID: %.6e" % (
-          ckpt, fid))
+    logging.info(
+      "ckpt-%d --- FID: %.6e" % (
+        ckpt, fid))
 
-      with tf.io.gfile.GFile(os.path.join(eval_dir, f"report_{ckpt}.npz"),
-                             "wb") as f:
-        io_buffer = io.BytesIO()
-        np.savez_compressed(io_buffer, fid=fid)
-        f.write(io_buffer.getvalue())
+    with tf.io.gfile.GFile(os.path.join(eval_dir, f"report_{ckpt}.npz"),
+                            "wb") as f:
+      io_buffer = io.BytesIO()
+      np.savez_compressed(io_buffer, fid=fid)
+      f.write(io_buffer.getvalue())
 
 
 def main(argv):
