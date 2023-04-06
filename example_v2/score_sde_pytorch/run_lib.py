@@ -32,8 +32,6 @@ import sampling
 from models import utils as mutils
 from models.ema import ExponentialMovingAverage
 import datasets
-import evaluation
-import likelihood
 import sde_lib
 from absl import flags
 import torch
@@ -276,7 +274,7 @@ def evaluate(config,
     # Generate samples and compute IS/FID/KID when enabled
     if config.eval.enable_sampling:
       
-      inceptionv3 = FID_score.get_inceptionV3(device = f"{config.device}:{local_rank}", dims = 2048)
+      # inceptionv3 = FID_score.get_inceptionV3(device = f"{config.device}:{local_rank}", dims = 2048)
         
       if local_rank == 0:
         logging.info(eval_dir)
@@ -311,90 +309,91 @@ def evaluate(config,
             save_image(image_grid, fout)
 
         # Force garbage collection before calling TensorFlow code for Inception network
-        gc.collect()
         
-        act = FID_score.get_activations(samples_fid, inceptionv3)
-        # Force garbage collection again before returning to JAX code
-        gc.collect()
-        # Save latent represents of the Inception network to disk or Google Cloud Storage
-        with open(
-            os.path.join(this_sample_dir, f"statistics_{r}.npz"), "wb") as fout:
-          io_buffer = io.BytesIO()
-          np.savez_compressed(
-            io_buffer, stats=act)
-          fout.write(io_buffer.getvalue())
-
-      # Calculate dataset statistic if needed
-      try:
-        stats_gt = evaluation.load_dataset_stats(config)['stats_gt']
-      except:
-        stats_gt_rank = []
-        while True:
-          try:
-            batch, _ = next(train_iter)
-            # centered to [-1, 1]
-            batch = batch * 2 - 1
-            if config.device == torch.device('cuda'):
-              batch = batch.to(f"{config.device}:{local_rank}")  
-            else:
-              batch = batch.to(config.device)
-            act = FID_score.get_activations(batch, inceptionv3)
-            stats_gt_rank.append(act)
-            logging.info(f"Generating the ground truth statistics in {len(stats_gt_rank)} iterations.")
-          except StopIteration:
-            stats_gt_rank = np.concatenate(stats_gt_rank, axis=0)
-            if not os.path.isdir('assets'):
-              os.mkdir('assets')
-            if not os.path.isdir('assets/stats/'):
-              os.mkdir('assets/stats/')
-            np.savez(f'assets/stats/{config.data.dataset.lower()}_stats_{local_rank}.npz', stats_gt=stats_gt_rank)
-            break
-        if local_rank == 0:
-          stats_gt = []
-          files = glob.glob(os.path.join('assets/stats/', f'{config.data.dataset.lower()}_stats_*.npz'))
-          for f in files:
-            stats_gt.append(np.load(f)['stats_gt'])
-          stats_gt = np.concatenate(stats_gt, axis=0)
-          np.savez(f'assets/stats/{config.data.dataset.lower()}_stats.npz', stats_gt=stats_gt)
-
-      # Compute inception scores, FIDs and KIDs.
-      # Load all statistics that have been previously computed and saved for each host
-      if local_rank == 0:
-        all_stats = []
+      #   gc.collect()
         
-        for rank_id in range(total_rank):
-          this_sample_dir = os.path.join(eval_dir, f"ckpt_{ckpt}_host_{rank_id}")
-          stats = glob.glob(os.path.join(this_sample_dir, "statistics_*.npz"))
-          wait_message = False
-          while len(stats) < num_sampling_rounds:
-            if not wait_message:
-              logging.warning(f"Waiting for statistics on host {rank_id}")
-              wait_message = True
-            stats = glob.glob(
-              os.path.join(this_sample_dir, "statistics_*.npz"))
-            time.sleep(30)          
+      #   act = FID_score.get_activations(samples_fid, inceptionv3)
+      #   # Force garbage collection again before returning to JAX code
+      #   gc.collect()
+      #   # Save latent represents of the Inception network to disk or Google Cloud Storage
+      #   with open(
+      #       os.path.join(this_sample_dir, f"statistics_{r}.npz"), "wb") as fout:
+      #     io_buffer = io.BytesIO()
+      #     np.savez_compressed(
+      #       io_buffer, stats=act)
+      #     fout.write(io_buffer.getvalue())
+
+      # # Calculate dataset statistic if needed
+      # try:
+      #   stats_gt = evaluation.load_dataset_stats(config)['stats_gt']
+      # except:
+      #   stats_gt_rank = []
+      #   while True:
+      #     try:
+      #       batch, _ = next(train_iter)
+      #       # centered to [-1, 1]
+      #       batch = batch * 2 - 1
+      #       if config.device == torch.device('cuda'):
+      #         batch = batch.to(f"{config.device}:{local_rank}")  
+      #       else:
+      #         batch = batch.to(config.device)
+      #       act = FID_score.get_activations(batch, inceptionv3)
+      #       stats_gt_rank.append(act)
+      #       logging.info(f"Generating the ground truth statistics in {len(stats_gt_rank)} iterations.")
+      #     except StopIteration:
+      #       stats_gt_rank = np.concatenate(stats_gt_rank, axis=0)
+      #       if not os.path.isdir('assets'):
+      #         os.mkdir('assets')
+      #       if not os.path.isdir('assets/stats/'):
+      #         os.mkdir('assets/stats/')
+      #       np.savez(f'assets/stats/{config.data.dataset.lower()}_stats_{local_rank}.npz', stats_gt=stats_gt_rank)
+      #       break
+      #   if local_rank == 0:
+      #     stats_gt = []
+      #     files = glob.glob(os.path.join('assets/stats/', f'{config.data.dataset.lower()}_stats_*.npz'))
+      #     for f in files:
+      #       stats_gt.append(np.load(f)['stats_gt'])
+      #     stats_gt = np.concatenate(stats_gt, axis=0)
+      #     np.savez(f'assets/stats/{config.data.dataset.lower()}_stats.npz', stats_gt=stats_gt)
+
+      # # Compute inception scores, FIDs and KIDs.
+      # # Load all statistics that have been previously computed and saved for each host
+      # if local_rank == 0:
+      #   all_stats = []
+        
+      #   for rank_id in range(total_rank):
+      #     this_sample_dir = os.path.join(eval_dir, f"ckpt_{ckpt}_host_{rank_id}")
+      #     stats = glob.glob(os.path.join(this_sample_dir, "statistics_*.npz"))
+      #     wait_message = False
+      #     while len(stats) < num_sampling_rounds:
+      #       if not wait_message:
+      #         logging.warning(f"Waiting for statistics on host {rank_id}")
+      #         wait_message = True
+      #       stats = glob.glob(
+      #         os.path.join(this_sample_dir, "statistics_*.npz"))
+      #       time.sleep(30)          
           
-          for stat_file in stats:
-            with open(stat_file, "rb") as fin:
-              stat = np.load(fin)
-              all_stats.append(stat["stats"])
+      #     for stat_file in stats:
+      #       with open(stat_file, "rb") as fin:
+      #         stat = np.load(fin)
+      #         all_stats.append(stat["stats"])
 
-        all_stats = np.concatenate(all_stats, axis=0)[:config.eval.num_samples]
+      #   all_stats = np.concatenate(all_stats, axis=0)[:config.eval.num_samples]
 
-        mu_gt = np.mean(stats_gt, axis=0)
-        sigma_gt = np.cov(stats_gt, rowvar=False)
-        mu_pred = np.mean(all_stats, axis=0)
-        sigma_pred = np.cov(all_stats, rowvar=False)
-        fid = FID_score.calculate_frechet_distance(
-              mu_gt, sigma_gt, mu_pred, sigma_pred
-              )
+      #   mu_gt = np.mean(stats_gt, axis=0)
+      #   sigma_gt = np.cov(stats_gt, rowvar=False)
+      #   mu_pred = np.mean(all_stats, axis=0)
+      #   sigma_pred = np.cov(all_stats, rowvar=False)
+      #   fid = FID_score.calculate_frechet_distance(
+      #         mu_gt, sigma_gt, mu_pred, sigma_pred
+      #         )
         
-        logging.info(
-          "ckpt-%d --- FID: %.6e" % (
-            ckpt, fid))
+      #   logging.info(
+      #     "ckpt-%d --- FID: %.6e" % (
+      #       ckpt, fid))
 
-        with open(os.path.join(eval_dir, f"report_{ckpt}.npz"),
-                              "wb") as f:
-          io_buffer = io.BytesIO()
-          np.savez_compressed(io_buffer, fid=fid)
-          f.write(io_buffer.getvalue())
+      #   with open(os.path.join(eval_dir, f"report_{ckpt}.npz"),
+      #                         "wb") as f:
+      #     io_buffer = io.BytesIO()
+      #     np.savez_compressed(io_buffer, fid=fid)
+      #     f.write(io_buffer.getvalue())
