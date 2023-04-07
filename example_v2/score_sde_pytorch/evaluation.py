@@ -59,15 +59,12 @@ def load_dataset_stats(config):
 def classifier_fn_from_tfhub(output_fields, inception_model,
                              return_tensor=False):
   """Returns a function that can be as a classifier function.
-
   Copied from tfgan but avoid loading the model each time calling _classifier_fn
-
   Args:
     output_fields: A string, list, or `None`. If present, assume the module
       outputs a dictionary, and select this field.
     inception_model: A model loaded from TFHub.
     return_tensor: If `True`, return a single tensor instead of a dictionary.
-
   Returns:
     A one-argument function that takes an image Tensor and returns outputs.
   """
@@ -110,13 +107,11 @@ def run_inception_distributed(input_tensor,
                               num_batches=1,
                               inceptionv3=False):
   """Distribute the inception network computation to all available TPUs.
-
   Args:
     input_tensor: The input images. Assumed to be within [0, 255].
     inception_model: The inception network model obtained from `tfhub`.
     num_batches: The number of batches used for dividing the input.
     inceptionv3: If `True`, use InceptionV3, otherwise use InceptionV1.
-
   Returns:
     A dictionary with key `pool_3` and `logits`, representing the pool_3 and
       logits of the inception network respectively.
