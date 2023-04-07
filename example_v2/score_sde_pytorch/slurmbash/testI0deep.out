@@ -1,0 +1,92 @@
+4
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+I0406 10:47:48.671770 22794250917696 main.py:54] Conditional: True
+W0406 10:48:26.595539 22794250917696 utils.py:10] No checkpoint found at /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_deep_I0/checkpoints-meta/checkpoint.pth. Returned the same state as input
+I0406 10:48:26.909602 22794250917696 xla_bridge.py:355] Unable to initialize backend 'tpu_driver': NOT_FOUND: Unable to find driver in registry given worker: 
+I0406 10:48:26.909884 22794250917696 xla_bridge.py:355] Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0406 10:48:26.909973 22794250917696 xla_bridge.py:355] Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0406 10:48:26.939983 22794250917696 xla_bridge.py:355] Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
+I0406 10:48:26.940180 22794250917696 xla_bridge.py:355] Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
+W0406 10:48:26.940288 22794250917696 xla_bridge.py:362] No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+I0406 10:48:26.984907 22794250917696 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0406 10:48:27.039655 22794250917696 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0406 10:48:27.039841 22794250917696 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0406 10:48:27.039976 22794250917696 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0406 10:48:27.040075 22794250917696 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0406 10:48:27.518265 22794250917696 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0406 10:48:27.518506 22794250917696 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0406 10:48:27.518636 22794250917696 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0406 10:48:27.518721 22794250917696 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0406 10:48:28.797363 22794250917696 losses.py:104] Sde loss
+I0406 10:48:28.797608 22794250917696 losses.py:107] Fewer: 4
+I0406 10:48:28.797686 22794250917696 losses.py:126] (0.0, 0.259]
+I0406 10:48:28.797764 22794250917696 losses.py:104] Sde loss
+I0406 10:48:28.797827 22794250917696 losses.py:107] Fewer: 4
+I0406 10:48:28.797881 22794250917696 losses.py:126] (0.0, 0.259]
+I0406 10:48:28.797964 22794250917696 sampling.py:98] dpm_solver
+I0406 10:48:28.798079 22794250917696 run_lib.py:130] Starting training loop at step 0.
+I0406 10:49:39.619674 22794250917696 run_lib.py:140] step: 0, training_loss: 1.00072e+00
+I0406 10:49:42.609752 22794250917696 run_lib.py:153] step: 0, eval_loss: 1.00050e+00
+I0406 10:50:34.740200 22794250917696 run_lib.py:140] step: 50, training_loss: 9.95901e-01
+I0406 10:51:27.230312 22794250917696 run_lib.py:140] step: 100, training_loss: 9.67063e-01
+I0406 10:51:27.614658 22794250917696 run_lib.py:153] step: 100, eval_loss: 9.71618e-01
+I0406 10:52:20.023110 22794250917696 run_lib.py:140] step: 150, training_loss: 9.04441e-01
+I0406 10:53:10.606644 22794250917696 run_lib.py:140] step: 200, training_loss: 8.20248e-01
+I0406 10:53:10.998756 22794250917696 run_lib.py:153] step: 200, eval_loss: 8.56079e-01
+I0406 10:54:01.488587 22794250917696 run_lib.py:140] step: 250, training_loss: 7.21407e-01
+I0406 10:54:52.174047 22794250917696 run_lib.py:140] step: 300, training_loss: 6.15226e-01
+I0406 10:54:52.574732 22794250917696 run_lib.py:153] step: 300, eval_loss: 6.70968e-01
+I0406 10:55:43.580645 22794250917696 run_lib.py:140] step: 350, training_loss: 5.04197e-01
+I0406 10:56:34.358419 22794250917696 run_lib.py:140] step: 400, training_loss: 3.92536e-01
+I0406 10:56:34.762248 22794250917696 run_lib.py:153] step: 400, eval_loss: 4.68332e-01
+I0406 10:57:25.713571 22794250917696 run_lib.py:140] step: 450, training_loss: 3.03023e-01
+I0406 10:58:16.375641 22794250917696 run_lib.py:140] step: 500, training_loss: 2.15614e-01
+I0406 10:58:16.752317 22794250917696 run_lib.py:153] step: 500, eval_loss: 2.89807e-01
+I0406 10:59:07.341675 22794250917696 run_lib.py:140] step: 550, training_loss: 1.61868e-01
+I0406 10:59:58.008200 22794250917696 run_lib.py:140] step: 600, training_loss: 1.34620e-01
+I0406 10:59:58.384979 22794250917696 run_lib.py:153] step: 600, eval_loss: 1.58062e-01
+I0406 11:00:49.029399 22794250917696 run_lib.py:140] step: 650, training_loss: 1.14555e-01
+I0406 11:01:39.592080 22794250917696 run_lib.py:140] step: 700, training_loss: 1.12696e-01
+I0406 11:01:39.969399 22794250917696 run_lib.py:153] step: 700, eval_loss: 1.31089e-01
+I0406 11:02:30.651282 22794250917696 run_lib.py:140] step: 750, training_loss: 1.10807e-01
+I0406 11:03:21.282856 22794250917696 run_lib.py:140] step: 800, training_loss: 1.13962e-01
+I0406 11:03:21.674126 22794250917696 run_lib.py:153] step: 800, eval_loss: 1.13283e-01
+I0406 11:04:12.157349 22794250917696 run_lib.py:140] step: 850, training_loss: 1.06174e-01
+I0406 11:05:02.817456 22794250917696 run_lib.py:140] step: 900, training_loss: 1.18482e-01
+I0406 11:05:03.249741 22794250917696 run_lib.py:153] step: 900, eval_loss: 1.20474e-01
+I0406 11:05:53.975200 22794250917696 run_lib.py:140] step: 950, training_loss: 1.04209e-01
+I0406 11:06:44.371344 22794250917696 run_lib.py:140] step: 1000, training_loss: 1.14247e-01
+I0406 11:06:44.770343 22794250917696 run_lib.py:153] step: 1000, eval_loss: 1.00381e-01
+I0406 11:07:35.157249 22794250917696 run_lib.py:140] step: 1050, training_loss: 1.08530e-01
+I0406 11:08:25.722563 22794250917696 run_lib.py:140] step: 1100, training_loss: 1.23862e-01
+I0406 11:08:26.126996 22794250917696 run_lib.py:153] step: 1100, eval_loss: 1.01637e-01
+I0406 11:09:16.818579 22794250917696 run_lib.py:140] step: 1150, training_loss: 1.09509e-01
+I0406 11:10:07.180543 22794250917696 run_lib.py:140] step: 1200, training_loss: 1.07096e-01
+I0406 11:10:07.553795 22794250917696 run_lib.py:153] step: 1200, eval_loss: 1.11640e-01
+I0406 11:10:58.243695 22794250917696 run_lib.py:140] step: 1250, training_loss: 1.11231e-01
+I0406 11:11:48.565057 22794250917696 run_lib.py:140] step: 1300, training_loss: 1.02302e-01
+I0406 11:11:49.138921 22794250917696 run_lib.py:153] step: 1300, eval_loss: 1.06874e-01
+I0406 11:12:39.649654 22794250917696 run_lib.py:140] step: 1350, training_loss: 1.13776e-01
+I0406 11:13:30.259435 22794250917696 run_lib.py:140] step: 1400, training_loss: 1.02173e-01
+I0406 11:13:30.684495 22794250917696 run_lib.py:153] step: 1400, eval_loss: 1.11330e-01
+I0406 11:14:21.235543 22794250917696 run_lib.py:140] step: 1450, training_loss: 1.01929e-01
+I0406 11:15:11.720752 22794250917696 run_lib.py:140] step: 1500, training_loss: 1.16356e-01
+I0406 11:15:12.114244 22794250917696 run_lib.py:153] step: 1500, eval_loss: 1.00315e-01
+I0406 11:16:02.594219 22794250917696 run_lib.py:140] step: 1550, training_loss: 1.16408e-01
+I0406 11:16:53.268479 22794250917696 run_lib.py:140] step: 1600, training_loss: 1.01344e-01
+I0406 11:16:53.648473 22794250917696 run_lib.py:153] step: 1600, eval_loss: 1.00332e-01
+I0406 11:17:44.196069 22794250917696 run_lib.py:140] step: 1650, training_loss: 1.17399e-01
+I0406 11:18:34.670106 22794250917696 run_lib.py:140] step: 1700, training_loss: 1.05237e-01
+I0406 11:18:35.046703 22794250917696 run_lib.py:153] step: 1700, eval_loss: 9.51214e-02
+I0406 11:19:25.690861 22794250917696 run_lib.py:140] step: 1750, training_loss: 1.02189e-01
+I0406 11:20:16.511421 22794250917696 run_lib.py:140] step: 1800, training_loss: 1.09303e-01
+I0406 11:20:16.926954 22794250917696 run_lib.py:153] step: 1800, eval_loss: 9.71809e-02
+I0406 11:21:07.376986 22794250917696 run_lib.py:140] step: 1850, training_loss: 1.03362e-01
+I0406 11:21:58.079066 22794250917696 run_lib.py:140] step: 1900, training_loss: 1.01183e-01
+I0406 11:21:58.491539 22794250917696 run_lib.py:153] step: 1900, eval_loss: 1.02855e-01
+I0406 11:22:49.003497 22794250917696 run_lib.py:140] step: 1950, training_loss: 9.36962e-02
+I0406 11:23:39.467735 22794250917696 run_lib.py:140] step: 2000, training_loss: 1.09249e-01
+I0406 11:23:39.845335 22794250917696 run_lib.py:153] step: 2000, eval_loss: 9.32382e-02
+I0406 11:24:30.440967 22794250917696 run_lib.py:140] step: 2050, training_loss: 1.06362e-01
+slurmstepd: error: *** JOB 50624283 ON gl1507 CANCELLED AT 2023-04-06T11:24:36 ***

@@ -1,0 +1,72 @@
+0
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+I0406 02:31:55.439538 22423028471616 xla_bridge.py:355] Unable to initialize backend 'tpu_driver': NOT_FOUND: Unable to find driver in registry given worker: 
+I0406 02:31:55.439744 22423028471616 xla_bridge.py:355] Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0406 02:31:55.439808 22423028471616 xla_bridge.py:355] Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0406 02:31:55.440879 22423028471616 xla_bridge.py:355] Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
+I0406 02:31:55.440980 22423028471616 xla_bridge.py:355] Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
+W0406 02:31:55.441052 22423028471616 xla_bridge.py:362] No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+I0406 02:31:55.443706 22423028471616 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0406 02:31:55.448815 22423028471616 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0406 02:31:55.448913 22423028471616 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0406 02:31:55.449018 22423028471616 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0406 02:31:55.449093 22423028471616 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0406 02:31:55.622656 22423028471616 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0406 02:31:55.622806 22423028471616 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0406 02:31:55.622915 22423028471616 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0406 02:31:55.622984 22423028471616 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0406 02:31:59.075649 22423028471616 dataset_info.py:358] Load dataset info from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0406 02:31:59.077613 22423028471616 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0406 02:31:59.077721 22423028471616 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0406 02:31:59.077838 22423028471616 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0406 02:31:59.077916 22423028471616 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split train, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+W0406 02:31:59.119925 22423028471616 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+W0406 02:31:59.120066 22423028471616 options.py:503] options.experimental_threading is deprecated. Use options.threading instead.
+I0406 02:31:59.120165 22423028471616 dataset_builder.py:351] Reusing dataset cifar10 (/home/yifulu/tensorflow_datasets/cifar10/3.0.2)
+I0406 02:31:59.120232 22423028471616 logging_logger.py:35] Constructing tf.data.Dataset cifar10 for split test, from /home/yifulu/tensorflow_datasets/cifar10/3.0.2
+I0406 02:31:59.154744 22423028471616 resolver.py:105] Using /tmp/tfhub_modules to cache modules.
+I0406 02:32:01.547456 22423028471616 run_lib.py:320] begin checkpoint: 8
+I0406 02:32:43.453486 22423028471616 run_lib.py:389] shared_exp/dpm_deep/eval
+I0406 02:32:43.477092 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 0
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow/python/util/nest.py:869: UserWarning: `tf.layers.flatten` is deprecated and will be removed in a future version. Please use `tf.keras.layers.Flatten` instead.
+  structure[0], [func(*x) for x in entries],
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/keras/legacy_tf_layers/core.py:523: UserWarning: `layer.apply` is deprecated and will be removed in a future version. Please use `layer.__call__` method instead.
+  return layer.apply(inputs)
+/home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/keras/legacy_tf_layers/base.py:573: UserWarning: `layer.updates` will be removed in a future version. This property should not be used in TensorFlow 2.0, as `updates` are applied automatically.
+  _add_elements_to_collection(self.updates, tf.compat.v1.GraphKeys.UPDATE_OPS)
+I0406 02:40:57.148801 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 1
+I0406 02:48:26.097783 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 2
+I0406 02:55:54.673659 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 3
+I0406 03:03:24.476157 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 4
+I0406 03:10:55.160715 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 5
+I0406 03:18:24.041174 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 6
+I0406 03:25:53.437209 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 7
+I0406 03:33:22.693486 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 8
+I0406 03:40:51.751428 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 9
+I0406 03:48:22.478935 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 10
+I0406 03:55:52.838747 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 11
+I0406 04:03:22.254960 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 12
+I0406 04:10:52.081135 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 13
+I0406 04:18:22.347173 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 14
+I0406 04:25:52.094101 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 15
+I0406 04:33:21.971188 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 16
+I0406 04:40:52.107154 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 17
+I0406 04:48:21.594946 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 18
+I0406 04:55:51.318043 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 19
+I0406 05:03:19.219549 22423028471616 run_lib.py:392] sampling -- ckpt: 8, round: 20
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/eval/classifier_metrics.py:1157: calling map_fn_v2 (from tensorflow.python.ops.map_fn) with back_prop=False is deprecated and will be removed in a future version.
+Instructions for updating:
+back_prop=False is deprecated. Consider using tf.stop_gradient instead.
+Instead of:
+results = tf.map_fn(fn, elems, back_prop=False)
+Use:
+results = tf.nest.map_structure(tf.stop_gradient, tf.map_fn(fn, elems))
+W0406 05:12:14.348024 22423028471616 deprecation.py:614] From /home/yifulu/.conda/envs/dpm/lib/python3.9/site-packages/tensorflow_gan/python/eval/classifier_metrics.py:1157: calling map_fn_v2 (from tensorflow.python.ops.map_fn) with back_prop=False is deprecated and will be removed in a future version.
+Instructions for updating:
+back_prop=False is deprecated. Consider using tf.stop_gradient instead.
+Instead of:
+results = tf.map_fn(fn, elems, back_prop=False)
+Use:
+results = tf.nest.map_structure(tf.stop_gradient, tf.map_fn(fn, elems))
+I0406 05:12:25.573037 22423028471616 run_lib.py:466] ckpt-8 --- inception_score: 9.563493e+00, FID: 2.743335e+00, KID: 9.645929e-04
