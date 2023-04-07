@@ -6,9 +6,9 @@ def get_default_configs():
   config = ml_collections.ConfigDict()
   # training
   config.training = training = ml_collections.ConfigDict()
-  config.training.batch_size = 128
+  config.training.batch_size = 256
   training.n_iters = 1300001
-  training.snapshot_freq = 50000
+  training.snapshot_freq = 10000
   training.log_freq = 50
   training.eval_freq = 100
   ## store additional checkpoints for preemption in cloud computing environments
@@ -18,7 +18,10 @@ def get_default_configs():
   training.likelihood_weighting = False
   training.continuous = True
   training.reduce_mean = False
-
+  training.t0 = 0.0
+  training.t1 = 0.0
+  training.objective_weight = "eps"
+  training.dt = 0.1
   # sampling
   config.sampling = sampling = ml_collections.ConfigDict()
   sampling.n_steps_each = 1
@@ -28,15 +31,22 @@ def get_default_configs():
 
   # evaluation
   config.eval = evaluate = ml_collections.ConfigDict()
-  evaluate.begin_ckpt = 1
-  evaluate.end_ckpt = 24
+  evaluate.begin_ckpt = 8
+  evaluate.end_ckpt = 8
+  evaluate.ckpt_interval = 5
   evaluate.batch_size = 2048
   evaluate.enable_sampling = True
   evaluate.num_samples = 50000
   evaluate.enable_loss = False
   evaluate.enable_bpd = False
   evaluate.bpd_dataset = 'test'
-
+  #added
+  evaluate.t = 0.0
+  evaluate.t_tuples = (0.259,0.676) #intervals
+  evaluate.t_converge = (0,0,0) #num models 1 more than intervals, if the model is converged.
+  evaluate.objectives = ("eps","eps","eps")
+  evaluate.converge_epoch = 40 # epoch to be the baseline
+  evaluate.compare_step = 0 # timestep to be compared
   # data
   config.data = data = ml_collections.ConfigDict()
   data.dataset = 'CIFAR10'

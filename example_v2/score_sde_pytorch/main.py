@@ -43,6 +43,8 @@ flags.mark_flags_as_required(["workdir", "config", "mode"])
 
 
 def main(argv):
+  global config_fewer
+  config_fewer = FLAGS.config
   if FLAGS.mode == "train":
     # Create the working directory
     # Set logger so that it outputs to both console and file
@@ -58,6 +60,7 @@ def main(argv):
       logger = logging.getLogger()
       logger.addHandler(handler)
       logger.setLevel('INFO')
+      logging.info("Conditional: {}".format(FLAGS.config.model.conditional))
     # Run the training pipeline
     run_lib.train(FLAGS.config, FLAGS.workdir)
   elif FLAGS.mode == "eval":

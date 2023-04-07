@@ -21,7 +21,7 @@ import functools
 import torch
 import numpy as np
 import abc
-
+import logging
 from models.utils import from_flattened_numpy, to_flattened_numpy, get_score_fn, get_noise_fn
 from scipy import integrate
 import sde_lib
@@ -95,6 +95,7 @@ def get_sampling_fn(config, sde, shape, inverse_scaler, eps, local_rank):
 
   sampler_name = config.sampling.method
   # Probability flow ODE sampling with black-box ODE solvers
+  logging.info(sampler_name.lower())
   if sampler_name.lower() == 'ode':
     sampling_fn = get_ode_sampler(sde=sde,
                                   shape=shape,
@@ -527,7 +528,7 @@ def get_dpm_solver_sampler(sde, shape, inverse_scaler, steps=10, eps=1e-3,
   """
   ns = NoiseScheduleVP('linear', continuous_beta_0=sde.beta_0, continuous_beta_1=sde.beta_1)
 
-  def dpm_solver_sampler(model):
+  def dpm_solver_sampler(models, compare_step,objectives):
     """ The DPM-Solver sampler funciton.
 
     Args:
@@ -536,8 +537,10 @@ def get_dpm_solver_sampler(sde, shape, inverse_scaler, steps=10, eps=1e-3,
       Samples, number of function evaluations.
     """
     with torch.no_grad():
-      noise_pred_fn = get_noise_fn(sde, model, train=False, continuous=True)
-      dpm_solver = DPM_Solver(noise_pred_fn, ns, algorithm_type=algorithm_type, correcting_x0_fn="dynamic_thresholding" if thresholding else None)
+      noise_pred_fns = []
+      for m in models:
+        noise_pred_fns.append(get_noise_fn(sde, m, train=False, continuous=True))
+      dpm_solver = DPM_Solver(noise_pred_fns, ns, objective_schedulers=objectives,compare_step = compare_step, algorithm_type=algorithm_type, correcting_x0_fn="dynamic_thresholding" if thresholding else None)
       # Initial sample
       x = sde.prior_sampling(shape).to(device)
       x = dpm_solver.sample(

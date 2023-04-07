@@ -106,25 +106,30 @@ def train(config, workdir):
   optimize_fn = losses.optimization_manager(config)
   continuous = config.training.continuous
   reduce_mean = config.training.reduce_mean
+  """
+  Not passing t here, or pass for interval training
+  """
   likelihood_weighting = config.training.likelihood_weighting
   train_step_fn = losses.get_step_fn(sde, train=True, optimize_fn=optimize_fn,
                                      reduce_mean=reduce_mean, continuous=continuous,
-                                     likelihood_weighting=likelihood_weighting)
+                                     likelihood_weighting=likelihood_weighting,t=float(config.training.t0), t1=float(config.training.t1))
   eval_step_fn = losses.get_step_fn(sde, train=False, optimize_fn=optimize_fn,
                                     reduce_mean=reduce_mean, continuous=continuous,
-                                    likelihood_weighting=likelihood_weighting)
-
+                                    likelihood_weighting=likelihood_weighting,t=float(config.training.t0), t1=float(config.training.t1))
+  fewer = int(os.environ.get("EXP_FEWER_STEPS",0))
   # Building sampling functions
   if config.training.snapshot_sampling:
+    
     sampling_shape = (config.training.batch_size, config.data.num_channels,
                       config.data.image_size, config.data.image_size)
+
     sampling_fn = sampling.get_sampling_fn(config, sde, sampling_shape, inverse_scaler, sampling_eps, local_rank)
 
   num_train_steps = config.training.n_iters
 
   # In case there are multiple hosts (e.g., TPU pods), only log to host 0
   logging.info("Starting training loop at step %d." % (initial_step,))
-
+  obj_scheduler = losses.get_objective_schedule(sde, config.training.objective_weight, config.training.dt)
   for step in range(initial_step, num_train_steps + 1):
     try:
         batch, _ = next(train_iter)
@@ -137,11 +142,12 @@ def train(config, workdir):
       batch = batch.to(config.device)
     batch = scaler(batch)
     # Execute one training step
+
     loss = train_step_fn(state, batch)
     if step % config.training.log_freq == 0 and local_rank == 0:
         logging.info("step: %d, training_loss: %.5e" % (step, loss.item()))
         writer.add_scalar("training_loss", loss, step)
-
+        
     # Save a temporary checkpoint to resume training after pre-emption periodically
     if step != 0 and step % config.training.snapshot_freq_for_preemption == 0 and local_rank == 0:
         save_checkpoint(checkpoint_meta_dir, state)
@@ -158,6 +164,7 @@ def train(config, workdir):
       else:
         eval_batch = batch.to(config.device)
       eval_batch = scaler(eval_batch)
+
       eval_loss = eval_step_fn(state, eval_batch)
       if local_rank == 0:
         logging.info("step: %d, eval_loss: %.5e" % (step, eval_loss.item()))
@@ -170,6 +177,7 @@ def train(config, workdir):
       save_checkpoint(os.path.join(checkpoint_dir, f'checkpoint_{save_step}.pth'), state)
 
       # Generate and save samples
+
       if config.training.snapshot_sampling:
         ema.store(score_model.parameters())
         ema.copy_to(score_model.parameters())
@@ -187,7 +195,6 @@ def train(config, workdir):
         with open(
             os.path.join(this_sample_dir, "sample.png"), "wb") as fout:
           save_image(image_grid, fout)
-
 
 def evaluate(config,
              workdir,
@@ -218,9 +225,12 @@ def evaluate(config,
   # inception_model = evaluation.get_inception_model(inceptionv3=inceptionv3)
   # Initialize model
   score_model = mutils.create_model(config, local_rank)
+  score_model_converge = mutils.create_model(config, local_rank)
   optimizer = losses.get_optimizer(config, score_model.parameters())
   ema = ExponentialMovingAverage(score_model.parameters(), decay=config.model.ema_rate)
+  ema_converge = ExponentialMovingAverage(score_model_converge.parameters(), decay=config.model.ema_rate)
   state = dict(optimizer=optimizer, model=score_model, ema=ema, step=0)
+  state_converge = dict(optimizer=optimizer, model=score_model_converge, ema=ema_converge, step=0)
   checkpoint_dir = os.path.join(workdir, "checkpoints")
 
   # Setup SDEs
@@ -236,6 +246,35 @@ def evaluate(config,
   else:
     raise NotImplementedError(f"SDE {config.training.sde} unknown.")
 
+  # Create the one-step evaluation function when loss computation is enabled
+  if config.eval.enable_loss:
+    optimize_fn = losses.optimization_manager(config)
+    continuous = config.training.continuous
+    likelihood_weighting = config.training.likelihood_weighting
+
+    reduce_mean = config.training.reduce_mean
+    eval_step = losses.get_step_fn(sde, train=False, optimize_fn=optimize_fn,
+                                   reduce_mean=reduce_mean,
+                                   continuous=continuous,
+                                   likelihood_weighting=likelihood_weighting,t=float(config.eval.t))
+
+
+  # Create data loaders for likelihood evaluation. Only evaluate on uniformly dequantized data
+  train_ds_bpd, eval_ds_bpd, _ = datasets.get_dataset(config,
+                                                      uniform_dequantization=True, evaluation=True)
+  if config.eval.bpd_dataset.lower() == 'train':
+    ds_bpd = train_ds_bpd
+    bpd_num_repeats = 1
+  elif config.eval.bpd_dataset.lower() == 'test':
+    # Go over the dataset 5 times when computing likelihood on the test dataset
+    ds_bpd = eval_ds_bpd
+    bpd_num_repeats = 5
+  else:
+    raise ValueError(f"No bpd dataset {config.eval.bpd_dataset} recognized.")
+
+  # Build the likelihood computation function when likelihood is enabled
+  if config.eval.enable_bpd:
+    likelihood_fn = likelihood.get_likelihood_fn(sde, inverse_scaler)
 
   # Build the sampling function when sampling is enabled
   if config.eval.enable_sampling:
@@ -245,9 +284,11 @@ def evaluate(config,
     sampling_fn = sampling.get_sampling_fn(config, sde, sampling_shape, inverse_scaler, sampling_eps, local_rank)
 
   begin_ckpt = config.eval.begin_ckpt
+
   if local_rank == 0:
     logging.info("begin checkpoint: %d" % (begin_ckpt,))
   for ckpt in range(begin_ckpt, config.eval.end_ckpt + 1):
+
     # Wait if the target checkpoint doesn't exist yet
     waiting_message_printed = False
     ckpt_filename = os.path.join(checkpoint_dir, "checkpoint_{}.pth".format(ckpt))
@@ -270,6 +311,53 @@ def evaluate(config,
         state = restore_checkpoint(ckpt_path, state, device=f"{config.device}:{local_rank}")
     ema.copy_to(score_model.parameters())
 
+    ckpt_path_converge = os.path.join(checkpoint_dir, "checkpoint_{}.pth".format(config.eval.converge_epoch))
+    
+    state_converge = restore_checkpoint(ckpt_path_converge, state_converge, device=config.device)
+    ema_converge.copy_to(score_model_converge.parameters())
+    # Compute the loss function on the full evaluation dataset if loss computation is enabled
+    if config.eval.enable_loss:
+      all_losses = []
+      eval_iter = iter(eval_ds)  # pytype: disable=wrong-arg-types
+      for i, batch in enumerate(eval_iter):
+        eval_batch = torch.from_numpy(batch['image']._numpy()).to(config.device).float()
+        eval_batch = eval_batch.permute(0, 3, 1, 2)
+        eval_batch = scaler(eval_batch)
+        eval_loss = eval_step(state, eval_batch)
+        all_losses.append(eval_loss.item())
+        if (i + 1) % 1000 == 0:
+          logging.info("Finished %dth step loss evaluation" % (i + 1))
+
+      # Save loss values to disk or Google Cloud Storage
+      all_losses = np.asarray(all_losses)
+      with tf.io.gfile.GFile(os.path.join(eval_dir, f"ckpt_{ckpt}_loss.npz"), "wb") as fout:
+        io_buffer = io.BytesIO()
+        np.savez_compressed(io_buffer, all_losses=all_losses, mean_loss=all_losses.mean())
+        fout.write(io_buffer.getvalue())
+
+    # Compute log-likelihoods (bits/dim) if enabled
+    if config.eval.enable_bpd:
+      bpds = []
+      for repeat in range(bpd_num_repeats):
+        bpd_iter = iter(ds_bpd)  # pytype: disable=wrong-arg-types
+        for batch_id in range(len(ds_bpd)):
+          batch = next(bpd_iter)
+          eval_batch = torch.from_numpy(batch['image']._numpy()).to(config.device).float()
+          eval_batch = eval_batch.permute(0, 3, 1, 2)
+          eval_batch = scaler(eval_batch)
+          bpd = likelihood_fn(score_model, eval_batch)[0]
+          bpd = bpd.detach().cpu().numpy().reshape(-1)
+          bpds.extend(bpd)
+          logging.info(
+            "ckpt: %d, repeat: %d, batch: %d, mean bpd: %6f" % (ckpt, repeat, batch_id, np.mean(np.asarray(bpds))))
+          bpd_round_id = batch_id + len(ds_bpd) * repeat
+          # Save bits/dim to disk or Google Cloud Storage
+          with tf.io.gfile.GFile(os.path.join(eval_dir,
+                                              f"{config.eval.bpd_dataset}_ckpt_{ckpt}_bpd_{bpd_round_id}.npz"),
+                                 "wb") as fout:
+            io_buffer = io.BytesIO()
+            np.savez_compressed(io_buffer, bpd)
+            fout.write(io_buffer.getvalue())
 
     # Generate samples and compute IS/FID/KID when enabled
     if config.eval.enable_sampling:
@@ -285,6 +373,7 @@ def evaluate(config,
 
         # Directory to save samples. Different for each host to avoid writing conflicts
         this_sample_dir = os.path.join(
+
           eval_dir, f"ckpt_{ckpt}_host_{local_rank}")
         os.makedirs(this_sample_dir, exist_ok=True)
         samples_raw, n = sampling_fn(score_model)

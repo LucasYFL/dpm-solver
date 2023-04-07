@@ -1,0 +1,49 @@
+
+MacOS or linux terminal command to create your ssh tunnel
+ssh -N -L 9037:gl1022:9037 yifulu@greatlakes.arc-ts.umich.edu
+Windows MobaXterm info
+Forwarded port:same as remote port
+Remote server: gl1022
+Remote port: 9037
+SSH server: arc-ts.arc-ts.umich.edu
+SSH login: yifulu
+SSH port: 22
+Use a Browser on your local machine to go to:
+localhost:9037  (prefix w/ https:// if using password)
+
+[I 2023-03-19 10:39:29.012 ServerApp] jupyterlab | extension was successfully linked.
+[I 2023-03-19 10:39:29.022 ServerApp] nbclassic | extension was successfully linked.
+[I 2023-03-19 10:39:29.289 ServerApp] notebook_shim | extension was successfully linked.
+[I 2023-03-19 10:39:29.314 ServerApp] notebook_shim | extension was successfully loaded.
+[I 2023-03-19 10:39:29.316 LabApp] JupyterLab extension loaded from /sw/pkgs/arc/python3.9-anaconda/2021.11/lib/python3.9/site-packages/jupyterlab
+[I 2023-03-19 10:39:29.316 LabApp] JupyterLab application directory is /sw/pkgs/arc/python3.9-anaconda/2021.11/share/jupyter/lab
+[I 2023-03-19 10:39:29.319 ServerApp] jupyterlab | extension was successfully loaded.
+[I 2023-03-19 10:39:29.324 ServerApp] nbclassic | extension was successfully loaded.
+[I 2023-03-19 10:39:29.326 ServerApp] Serving notebooks from local directory: /home/yifulu
+[I 2023-03-19 10:39:29.326 ServerApp] Jupyter Server 1.23.3 is running at:
+[I 2023-03-19 10:39:29.326 ServerApp] http://gl1022:9037/lab?token=4e675bbd90e8897b6bd68f2af7b63bfb0c7c756aa646a5b5
+[I 2023-03-19 10:39:29.326 ServerApp]  or http://127.0.0.1:9037/lab?token=4e675bbd90e8897b6bd68f2af7b63bfb0c7c756aa646a5b5
+[I 2023-03-19 10:39:29.326 ServerApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 2023-03-19 10:39:29.334 ServerApp] 
+    
+    To access the server, open this file in a browser:
+        file:///home/yifulu/.local/share/jupyter/runtime/jpserver-340246-open.html
+    Or copy and paste one of these URLs:
+        http://gl1022:9037/lab?token=4e675bbd90e8897b6bd68f2af7b63bfb0c7c756aa646a5b5
+     or http://127.0.0.1:9037/lab?token=4e675bbd90e8897b6bd68f2af7b63bfb0c7c756aa646a5b5
+[W 2023-03-19 10:40:24.713 LabApp] Could not determine jupyterlab build status without nodejs
+[I 2023-03-19 10:40:38.607 ServerApp] Creating new notebook in /work/dpm-solver/example_v2/score_sde_pytorch
+[I 2023-03-19 10:40:39.008 ServerApp] Kernel started: 94fbefe5-7fb4-409a-8c22-405e57822ee3
+[I 2023-03-19 10:41:04.029 ServerApp] Saving file at /work/dpm-solver/example_v2/score_sde_pytorch/Untitled.ipynb
+[I 2023-03-19 10:43:04.679 ServerApp] Saving file at /work/dpm-solver/example_v2/score_sde_pytorch/Untitled.ipynb
+[I 2023-03-19 10:45:04.761 ServerApp] Saving file at /work/dpm-solver/example_v2/score_sde_pytorch/Untitled.ipynb
+[I 2023-03-19 10:47:05.676 ServerApp] Saving file at /work/dpm-solver/example_v2/score_sde_pytorch/Untitled.ipynb
+[I 2023-03-19 10:49:06.668 ServerApp] Saving file at /work/dpm-solver/example_v2/score_sde_pytorch/Untitled.ipynb
+[I 2023-03-19 10:51:07.659 ServerApp] Saving file at /work/dpm-solver/example_v2/score_sde_pytorch/Untitled.ipynb
+[I 2023-03-19 10:53:07.759 ServerApp] Saving file at /work/dpm-solver/example_v2/score_sde_pytorch/Untitled.ipynb
+[I 2023-03-19 10:55:07.829 ServerApp] Saving file at /work/dpm-solver/example_v2/score_sde_pytorch/Untitled.ipynb
+[I 2023-03-19 10:57:07.936 ServerApp] Saving file at /work/dpm-solver/example_v2/score_sde_pytorch/Untitled.ipynb
+[I 2023-03-19 10:57:36.226 ServerApp] Saving file at /work/dpm-solver/example_v2/score_sde_pytorch/Untitled.ipynb
+[I 2023-03-19 10:59:36.718 ServerApp] Saving file at /work/dpm-solver/example_v2/score_sde_pytorch/Untitled.ipynb
+[I 2023-03-19 10:59:56.536 ServerApp] Starting buffering for 94fbefe5-7fb4-409a-8c22-405e57822ee3:0802349d-ed99-454f-8794-f87afe60c0a7
+slurmstepd: error: *** JOB 49424319 ON gl1022 CANCELLED AT 2023-03-19T11:00:07 ***

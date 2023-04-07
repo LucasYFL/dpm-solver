@@ -1,7 +1,7 @@
 import torch
 import torch.nn.functional as F
 import math
-
+import logging
 
 class NoiseScheduleVP:
     def __init__(
@@ -345,13 +345,15 @@ def model_wrapper(
 class DPM_Solver:
     def __init__(
         self,
-        model_fn,
+        model_fns,
         noise_schedule,
+        objective_schedulers,
         algorithm_type="dpmsolver++",
         correcting_x0_fn=None,
         correcting_xt_fn=None,
         thresholding_max_val=1.,
         dynamic_thresholding_ratio=0.995,
+        compare_step = (0,),
     ):
         """Construct a DPM-Solver. 
 
@@ -409,7 +411,18 @@ class DPM_Solver:
             Burcu Karagol Ayan, S Sara Mahdavi, Rapha Gontijo Lopes, et al. Photorealistic text-to-image diffusion models
             with deep language understanding. arXiv preprint arXiv:2205.11487, 2022b.
         """
-        self.model = lambda x, t: model_fn(x, t.expand((x.shape[0])))
+        
+        self.models = []
+        self.objectives = objective_schedulers
+        """def comp(md1,md2):
+            err = 0 
+            for p1, p2 in zip(md1.parameters(), md2.parameters()):
+                err += torch.abs(p1.data-p2.data).sum()
+            return err
+        logging.info("m1 vs m3: {}".format(comp(ms[0],ms[2])))
+        logging.info("m1 vs m2: {}".format(comp(ms[0],ms[1])))"""
+        f = lambda m: lambda x,t:m(x, t.expand((x.shape[0])))
+        self.models = [f(i) for i in model_fns]
         self.noise_schedule = noise_schedule
         assert algorithm_type in ["dpmsolver", "dpmsolver++"]
         self.algorithm_type = algorithm_type
@@ -420,6 +433,8 @@ class DPM_Solver:
         self.correcting_xt_fn = correcting_xt_fn
         self.dynamic_thresholding_ratio = dynamic_thresholding_ratio
         self.thresholding_max_val = thresholding_max_val
+        self.compare_step = compare_step
+        
 
     def dynamic_thresholding_fn(self, x0, t):
         """
@@ -436,8 +451,17 @@ class DPM_Solver:
         """
         Return the noise prediction model.
         """
-        return self.model(x, t)
+        bs, _, _, _ = x.shape
+        
+        for i,s in enumerate(self.compare_step):
+            if t <= s:
+                #logging.info("inside: {}, t {}".format(i,t.item()))
+                _, _, xt_param, f_param, _ = self.objectives[i](t.repeat(bs))
+                return x * xt_param + f_param *self.models[i](x, t)
+        _, _, xt_param, f_param, _ = self.objectives[-1](t.repeat(bs))
+        return x * xt_param + f_param *self.models[-1](x, t)
 
+    
     def data_prediction_fn(self, x, t):
         """
         Return the data prediction model (with corrector).
@@ -457,6 +481,7 @@ class DPM_Solver:
             return self.data_prediction_fn(x, t)
         else:
             return self.noise_prediction_fn(x, t)
+            
 
     def get_time_steps(self, skip_type, t_T, t_0, N, device):
         """Compute the intermediate time steps for sampling.
@@ -625,6 +650,7 @@ class DPM_Solver:
         h = lambda_t - lambda_s
         lambda_s1 = lambda_s + r1 * h
         s1 = ns.inverse_lambda(lambda_s1)
+        #print("{},{},{},".format(s,s1.item(),t))
         log_alpha_s, log_alpha_s1, log_alpha_t = ns.marginal_log_mean_coeff(s), ns.marginal_log_mean_coeff(s1), ns.marginal_log_mean_coeff(t)
         sigma_s, sigma_s1, sigma_t = ns.marginal_std(s), ns.marginal_std(s1), ns.marginal_std(t)
         alpha_s1, alpha_t = torch.exp(log_alpha_s1), torch.exp(log_alpha_t)
@@ -713,6 +739,7 @@ class DPM_Solver:
         lambda_s2 = lambda_s + r2 * h
         s1 = ns.inverse_lambda(lambda_s1)
         s2 = ns.inverse_lambda(lambda_s2)
+        #print("{},{},{},{},".format(s,s1.item(),s2.item(),t))
         log_alpha_s, log_alpha_s1, log_alpha_s2, log_alpha_t = ns.marginal_log_mean_coeff(s), ns.marginal_log_mean_coeff(s1), ns.marginal_log_mean_coeff(s2), ns.marginal_log_mean_coeff(t)
         sigma_s, sigma_s1, sigma_s2, sigma_t = ns.marginal_std(s), ns.marginal_std(s1), ns.marginal_std(s2), ns.marginal_std(t)
         alpha_s1, alpha_s2, alpha_t = torch.exp(log_alpha_s1), torch.exp(log_alpha_s2), torch.exp(log_alpha_t)
