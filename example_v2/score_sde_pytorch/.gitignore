@@ -23,3 +23,4 @@ dist/
 experiments
 assets/stats
 shared_exp
+dataset/*
