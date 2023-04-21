@@ -14,11 +14,11 @@ def get_config():
   data.centered = False
   data.uniform_dequantization = False
   data.num_channels = 3
-  data.dataset_root = "/scratch/qingqu_root/qingqu1/huijiezh/dpm-solver/example_v2/score_sde_pytorch/dataset/"
+  data.dataset_root = "./dataset/"
   
   # sde
   config.sde = sde = ml_collections.ConfigDict()
-  sde.type = "VESDE"
+  sde.type = "VPSDE"
   sde.sigma_min = 0.01
   sde.sigma_max = 50
   sde.num_scales = 1000
@@ -28,5 +28,11 @@ def get_config():
   # exp
   config.exp = exp = ml_collections.ConfigDict()
   exp.sampling_num = 50000
+  exp.loss_func = "epsilon"
+  exp.num_save = 2
+  exp.save_dir = "./exp"
+  
+  #host
+  config.host_id = 1
 
   return config

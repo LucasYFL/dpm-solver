@@ -143,6 +143,12 @@ class VPSDE(SDE):
     mean = torch.exp(log_mean_coeff[:, None, None, None]) * x
     std = torch.sqrt(1. - torch.exp(2. * log_mean_coeff))
     return mean, std
+  
+  def transform_prob(self, t):
+    log_mean_coeff = -0.25 * t ** 2 * (self.beta_1 - self.beta_0) - 0.5 * t * self.beta_0
+    s = torch.exp(log_mean_coeff)
+    sigma = torch.sqrt(1. - torch.exp(2. * log_mean_coeff))
+    return s, sigma/s
 
   def prior_sampling(self, shape):
     return torch.randn(*shape)
@@ -234,6 +240,11 @@ class VESDE(SDE):
     std = self.sigma_min * (self.sigma_max / self.sigma_min) ** t
     mean = x
     return mean, std
+
+  def transform_prob(self, t):
+    s = torch.tensor([1])
+    sigma = torch.tensor([self.sigma_min * (self.sigma_max / self.sigma_min) ** t])
+    return s, sigma/s
 
   def prior_sampling(self, shape):
     return torch.randn(*shape) * self.sigma_max
