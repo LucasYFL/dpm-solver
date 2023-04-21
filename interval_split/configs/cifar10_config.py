@@ -14,6 +14,7 @@ def get_config():
   data.centered = False
   data.uniform_dequantization = False
   data.num_channels = 3
+  data.dataset_root = "/scratch/qingqu_root/qingqu1/huijiezh/dpm-solver/example_v2/score_sde_pytorch/dataset/"
   
   # sde
   config.sde = sde = ml_collections.ConfigDict()

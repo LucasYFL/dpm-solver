@@ -8,6 +8,7 @@ from ml_collections.config_flags import config_flags
 import torch
 import tqdm
 import time
+from multiprocessing import Process
 
 FLAGS = flags.FLAGS
 
@@ -47,7 +48,7 @@ def main(argv):
   dataloader = torch.utils.data.DataLoader(dataset, 
                                            batch_size=config.data.batch_size, 
                                            shuffle=True, 
-                                           num_workers=8)
+                                           num_workers=1)
   
   for i in tqdm.tqdm(range(config.exp.sampling_num)):
     tt = time.time()

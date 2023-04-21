@@ -15,7 +15,7 @@ def get_dataset(config):
   """
   # Compute batch size for this worker.
   batch_size = config.data.batch_size
-  root = "./dataset"
+  root = config.data.dataset_root
   if not os.path.isdir(root):
     os.mkdir(root)
   # Create dataset builders for each dataset.
