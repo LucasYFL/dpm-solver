@@ -4,22 +4,23 @@
 #SBATCH --job-name=DPM
 #SBATCH --nodes=1
 #SBATCH --mem=30GB
-#SBATCH --time=06-00:00:00
+#SBATCH --time=00-02:00:00
 #SBATCH --account=qingqu1
-#SBATCH --partition=gpu
-#SBATCH --gpus=v100:2
+#SBATCH --partition=spgpu
+#SBATCH --gpus=a40:2
 #SBATCH --output=testI0deep.out
 #SBATCH --export=ALL,EXP_FEWER_STEPS=4
-
+#SBATCH --cpus-per-task=8
 echo $EXP_FEWER_STEPS
 module purge
-module load cuda/11.3.0 cudnn/11.3-v8.2.1
+module load cuda/11.7.1 cudnn/11.7-v8.7.0
 eval "$(conda shell.bash hook)"
-conda activate dpm
+conda activate dpm2
 cd /home/yifulu/work/dpm-solver/example_v2/score_sde_pytorch
 #python main.py --config "configs/vp/cifar10_ddpm_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I1 --mode train --config.training.t0=0.259 --config.training.t1=0.6760
 #python main.py --config "configs/vp/cifar10_ddpm_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I2 --mode train --config.training.t0=0.6760 #--config.training.t1=0.6760
 #python main.py --config "configs/vp/cifar10_ddpm_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I0_x0_weighted --mode train --config.training.t1=0.259 --config.training.objective_weight="x0_weightedloss"
 #python main.py --config "configs/vp/cifar10_ddpm_half.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I2_half --mode train --config.training.t0=0.6760
 #python main.py --config "configs/vp/cifar10_ddpm_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_I2_x0_weighted --mode train --config.training.t0=0.6760 --config.training.objective_weight="x0_weightedloss"
-python main.py --config "configs/vp/cifar10_ddpmpp_deep_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_deep_I0 --mode train --config.training.t1=0.259 --config.training.batch_size=128
+torchrun --nproc_per_node=2 main.py --config "configs/vp/cifar10_ddpmpp_deep_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_deep_I0 --mode train --config.training.t1=0.259 --config.training.batch_size=128 --noconfig.training.snapshot_sampling
+#torchrun --nproc_per_node=2 main.py --config "configs/vp/cifar10_ddpmpp_deep_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/dpm_deep_I1 --mode train --config.training.t0=0.259 --config.training.t1=0.6760 --config.training.batch_size=128 --noconfig.training.snapshot_sampling

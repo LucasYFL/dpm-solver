@@ -37,6 +37,8 @@ config_flags.DEFINE_config_file(
 
 config_flags.DEFINE_config_file(
   "config1", None, "Training configuration.", lock_config=True)
+config_flags.DEFINE_config_file(
+  "config2", None, "Training configuration.", lock_config=True)
 flags.DEFINE_string("workdir", None, "Work directory.")
 flags.DEFINE_string("m1", None, "Model 1 directory.")
 flags.DEFINE_string("m2", None, "Model 2  directory.")
@@ -52,7 +54,7 @@ total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
 torch.cuda.set_device(local_rank)
 torch.distributed.init_process_group(backend='nccl')
 def evaluate(config,
-             workdir,m1,m2,m3=None,config1=None,
+             workdir,m1,m2,m3=None,config1=None,config2=None,
              eval_folder="eval"):
   """Evaluate trained models.
 
@@ -81,7 +83,7 @@ def evaluate(config,
   checkpoint_dirs = []
   objectives = []
   logging.info(config.eval.t_tuples)
-  configs = (config,)*3 if config1 is None else (config,config1)
+  configs = (config,)*3 if config1 is None else (config,config1,config2)
   
   # Setup SDEs
   if config.training.sde.lower() == 'vpsde':
@@ -243,7 +245,7 @@ def main(argv):
   config_fewer = FLAGS.config
   config1 = FLAGS.config1
   # Run the evaluation pipeline
-  evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,FLAGS.m3,config1, FLAGS.eval_folder)
+  evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,FLAGS.m3,config1,FLAGS.config2, FLAGS.eval_folder)
  
 if __name__ == "__main__":
   app.run(main)
