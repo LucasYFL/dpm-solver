@@ -47,7 +47,7 @@ def main(argv):
   dataloader = torch.utils.data.DataLoader(dataset, 
                                            batch_size=config.data.batch_size, 
                                            shuffle=True, 
-                                           num_workers=4)
+                                           num_workers=8)
   optimal_solutions = []
   optimal_solution0s = []
   optimal_solution1s = []

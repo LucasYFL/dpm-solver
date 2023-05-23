@@ -8,13 +8,13 @@ def get_config():
   # data
   config.data = data = ml_collections.ConfigDict()
   data.dataset = 'CIFAR10'
-  data.image_size = 16
-  data.batch_size = 1024
-  data.random_flip = True
+  data.image_size = 32
+  data.batch_size = 4096
+  data.random_flip = False
   data.centered = False
   data.uniform_dequantization = False
   data.num_channels = 3
-  data.dataset_root = "./dataset/"
+  data.dataset_root = "/scratch/qingqu_root/qingqu1/huijiezh/dpm-solver/example_v2/score_sde_pytorch/dataset/"
   
   # sde
   config.sde = sde = ml_collections.ConfigDict()
@@ -27,10 +27,10 @@ def get_config():
 
   # exp
   config.exp = exp = ml_collections.ConfigDict()
-  exp.sampling_num = 50000
+  exp.sampling_num = 5000
   exp.loss_func = "epsilon"
-  exp.num_save = 2
-  exp.save_dir = "./exp"
+  exp.num_save = 500
+  exp.save_dir = "/scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_split_exp/"
   
   #host
   config.host_id = 1

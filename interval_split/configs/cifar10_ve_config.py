@@ -27,7 +27,12 @@ def get_config():
 
   # exp
   config.exp = exp = ml_collections.ConfigDict()
-  exp.sampling_num = 50000
+  exp.sampling_num = 5000
   exp.loss_func = "epsilon"
-
+  exp.num_save = 2
+  exp.save_dir = "./exp"
+  
+  #host
+  config.host_id = 1
+  
   return config
