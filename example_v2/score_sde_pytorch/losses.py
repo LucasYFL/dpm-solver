@@ -22,6 +22,7 @@ import torch.optim as optim
 import numpy as np
 from models import utils as mutils
 from sde_lib import VESDE, VPSDE
+import random
 
 
 def get_optimizer(config, params):
@@ -82,7 +83,13 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
       loss: A scalar that represents the average loss value across the mini-batch.
     """
     score_fn = mutils.get_score_fn(sde, model, train=train, continuous=continuous)
-    t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
+    choose_stage = random.randint(0, len(model.module.stage_interval) - 1)
+    if "multimodel" in model.module.__class__.__name__:
+      intervals = model.module.stage_interval[choose_stage]
+      t_rand = [random.uniform(*random.choices(intervals, weights=[r[1]-r[0] for r in intervals])[0]) for i in range(batch.shape[0])]
+      t = torch.tensor(t_rand, device=batch.device) * (sde.T - eps) + eps
+    else:
+      t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
     z = torch.randn_like(batch)
     mean, std = sde.marginal_prob(batch, t)
     perturbed_data = mean + std[:, None, None, None] * z
@@ -95,7 +102,6 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
       g2 = sde.sde(torch.zeros_like(batch), t)[1] ** 2
       losses = torch.square(score + z / std[:, None, None, None])
       losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1) * g2
-
     loss = torch.mean(losses)
     return loss
 

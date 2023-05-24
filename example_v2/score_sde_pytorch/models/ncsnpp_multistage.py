@@ -40,7 +40,6 @@ class NCSNpp_multimodel(nn.Module):
     self.config = config
     self.act = act = get_act(config)
     self.register_buffer('sigmas', torch.tensor(utils.get_sigmas(config)))
-
     # self.nf = nf = config.model.nf
     self.en_nf = config.model.en_nf
     self.stage_num = config.model.stage_num
