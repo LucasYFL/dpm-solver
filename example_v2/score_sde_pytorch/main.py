@@ -26,7 +26,8 @@ from absl import flags
 from ml_collections.config_flags import config_flags
 import logging
 import torch
-
+print(local_rank)
+print(total_rank)
 torch.cuda.set_device(local_rank)
 torch.distributed.init_process_group(backend='nccl')
 
