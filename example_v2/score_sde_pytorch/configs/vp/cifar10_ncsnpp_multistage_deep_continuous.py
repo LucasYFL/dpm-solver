@@ -30,9 +30,20 @@ def get_config():
 
   # sampling
   sampling = config.sampling
+  """
   sampling.method = 'pc'
   sampling.predictor = 'euler_maruyama'
-  sampling.corrector = 'none'
+  sampling.corrector = 'none'"""
+  sampling.eps = 1e-3
+  sampling.method = 'dpm_solver'
+  sampling.dpm_solver_method = 'singlestep'
+  sampling.dpm_solver_order = 3
+  sampling.algorithm_type = 'dpmsolver'
+  sampling.thresholding = False
+  sampling.noise_removal = False
+  sampling.steps = 10
+  sampling.skip_type = 'logSNR'
+  sampling.rtol = 0.05
 
   # data
   data = config.data
@@ -63,7 +74,7 @@ def get_config():
   model.init_scale = 0.0
   model.conv_size = 3
   model.en_nf = 128
-  model.de_nfs = [128, 128, 128]
+  model.de_nfs = [128, 128, 32]
   model.stage_num = 3
   model.stage_interval = [
     [[0, 0.4420]], [[0.4420, 0.6308]], [[0.6308, 1]]
