@@ -33,7 +33,8 @@ def get_config():
   """
   sampling.method = 'pc'
   sampling.predictor = 'euler_maruyama'
-  sampling.corrector = 'none'"""
+  sampling.corrector = 'none'
+  """
   sampling.eps = 1e-3
   sampling.method = 'dpm_solver'
   sampling.dpm_solver_method = 'singlestep'
@@ -44,7 +45,7 @@ def get_config():
   sampling.steps = 10
   sampling.skip_type = 'logSNR'
   sampling.rtol = 0.05
-
+  
   # data
   data = config.data
   data.centered = True

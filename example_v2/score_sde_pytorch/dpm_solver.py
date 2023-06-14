@@ -345,13 +345,14 @@ def model_wrapper(
 class DPM_Solver:
     def __init__(
         self,
-        model_fn,
+        model_fns,
         noise_schedule,
         algorithm_type="dpmsolver++",
         correcting_x0_fn=None,
         correcting_xt_fn=None,
         thresholding_max_val=1.,
         dynamic_thresholding_ratio=0.995,
+        compare_step = (0,),
     ):
         """Construct a DPM-Solver. 
 
@@ -409,7 +410,9 @@ class DPM_Solver:
             Burcu Karagol Ayan, S Sara Mahdavi, Rapha Gontijo Lopes, et al. Photorealistic text-to-image diffusion models
             with deep language understanding. arXiv preprint arXiv:2205.11487, 2022b.
         """
-        self.model = lambda x, t: model_fn(x, t.expand((x.shape[0])))
+        self.models = []
+        f = lambda m: lambda x,t:m(x, t.expand((x.shape[0])))
+        self.models = [f(i) for i in model_fns]
         self.noise_schedule = noise_schedule
         assert algorithm_type in ["dpmsolver", "dpmsolver++"]
         self.algorithm_type = algorithm_type
@@ -420,7 +423,7 @@ class DPM_Solver:
         self.correcting_xt_fn = correcting_xt_fn
         self.dynamic_thresholding_ratio = dynamic_thresholding_ratio
         self.thresholding_max_val = thresholding_max_val
-
+        self.compare_step = compare_step
     def dynamic_thresholding_fn(self, x0, t):
         """
         The dynamic thresholding method. 
@@ -436,8 +439,10 @@ class DPM_Solver:
         """
         Return the noise prediction model.
         """
-        return self.model(x, t)
-
+        for i,s in enumerate(self.compare_step):
+            if t <= s:
+                return self.models[i](x, t)
+        return self.models[-1](x, t)
     def data_prediction_fn(self, x, t):
         """
         Return the data prediction model (with corrector).

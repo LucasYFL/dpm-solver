@@ -18,7 +18,6 @@ def get_default_configs():
   training.likelihood_weighting = False
   training.continuous = True
   training.reduce_mean = False
-
   # sampling
   config.sampling = sampling = ml_collections.ConfigDict()
   sampling.n_steps_each = 1
@@ -36,7 +35,9 @@ def get_default_configs():
   evaluate.enable_loss = False
   evaluate.enable_bpd = False
   evaluate.bpd_dataset = 'test'
-
+  evaluate.t_tuples = (0.4420, 0.6308) #intervals
+  evaluate.t_converge = (0,0,0) #num models 1 more than intervals, if the model is converged.
+  evaluate.converge_epoch = 40 # epoch to be the baseline
   # data
   config.data = data = ml_collections.ConfigDict()
   data.dataset = 'CIFAR10'
