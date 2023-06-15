@@ -101,20 +101,23 @@ def solve(nodes, similarity, interval_list, interval_num = 3):
     m.setParam('TimeLimit', 5*60)
     m.optimize()
     printSolution()
-nodes=20
+    
+nodes=21
 eps = 1e-3
 root = "/scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_split_graph_exp/"
 similarity = np.zeros((nodes, nodes))
 
-for idx1, t1 in enumerate(torch.range(eps, 1, 0.05)):
-    for idx2, t2 in enumerate(torch.range(eps, 1, 0.05)):
+l = torch.cat((torch.range(eps, 1, 0.05), torch.tensor([1])))
+
+for idx1, t1 in enumerate(l):
+    for idx2, t2 in enumerate(l):
         if t1 != t2:
             print(f"process {t1:.4f}_{t2:.4f}")
             similarity[idx1, idx2] = calculated_distance_files(t1, t2, similarityfunc, root)
         else:
             similarity[idx1, idx2] = 1.0
 
-solve(nodes, similarity, interval_list = torch.range(eps, 1, 0.05), interval_num = 4)
+solve(nodes, similarity, interval_list = l, interval_num = 4)
             
             
         

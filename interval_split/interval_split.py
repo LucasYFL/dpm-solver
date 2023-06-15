@@ -24,19 +24,21 @@ def normal_distribution(x, y_batch, s, std, bias = 0):
   prob_y = prob.clone().view(-1, 1, 1, 1) * y_batch
   return prob.sum(dim=0, keepdim=True), prob_y.sum(dim=0, keepdim=True)
 
-def get_exp_bias(x, y_batch, std):
+def get_exp_bias(x, y_batch, s, std):
   ## because exp() might return a very small number, we need a bias
   bs = y_batch.shape[0]
-  return (-(((x - y_batch)**2).view(bs, -1).sum(dim=1)/std**2)/2).max()
+  return (-(((x - s * y_batch)**2).view(bs, -1).sum(dim=1).to(torch.float64)/std**2)/2).max()
 
-def get_optimal_sol(x, s, std, sigma, dataloader, config, t):
-
+def get_optimal_sol(batch, z, sde, t, dataloader, config):
+    s, sigma = sde.transform_prob(torch.tensor([t]))
+    std = s * sigma
+    x = s * batch + s * sigma[:, None, None, None] * z
     prob_sum = 0.
-    prob_y_sum = torch.zeros_like(x)
+    prob_y_sum = torch.zeros_like(x).to(torch.float64)
     y_sum = torch.zeros_like(x)
     exp_bias = -(torch.inf)
     for y_batch, _ in dataloader:
-      exp_bias = max(exp_bias, get_exp_bias(x, y_batch, std))
+      exp_bias = max(exp_bias, get_exp_bias(x, y_batch, s, std))
     for y_batch, _ in dataloader:
       prob, prob_y = normal_distribution(x, y_batch, s, std, exp_bias)
       prob_sum += prob
@@ -46,7 +48,7 @@ def get_optimal_sol(x, s, std, sigma, dataloader, config, t):
     if config.exp.loss_func == "x0":
       optimal_solution = prob_y_sum/prob_sum
     elif config.exp.loss_func == "epsilon":
-      optimal_solution = x/std - prob_y_sum/(prob_sum*sigma)
+      optimal_solution = prob_y_sum/prob_sum
     return optimal_solution
 
 def generate_sample(dataset, config, t1, t2, dataloader, sde):
@@ -58,12 +60,9 @@ def generate_sample(dataset, config, t1, t2, dataloader, sde):
       t = time.time()
       randn_idx = torch.randint(len(dataset), (1, ))
       batch = dataset[randn_idx][0]
-      s, sigma = sde.transform_prob(torch.tensor([t1]))
       z = torch.randn_like(batch)
-      x = s * batch + s * sigma[:, None, None, None] * z
-      std = s * sigma
-      optimal_solutiont1 = get_optimal_sol(x, s, std, sigma, dataloader, config, t1)
-      optimal_solutiont2 = get_optimal_sol(x, s, std, sigma, dataloader, config, t2)
+      optimal_solutiont1 = get_optimal_sol(batch, z, sde, t1, dataloader, config)
+      optimal_solutiont2 = get_optimal_sol(batch, z, sde, t2, dataloader, config)
       if (optimal_solutiont1.isnan().sum() + optimal_solutiont2.isnan().sum()) == 0:
         optimal_solutiont1s.append(optimal_solutiont1)
         optimal_solutiont2s.append(optimal_solutiont2)
@@ -110,17 +109,12 @@ def main(argv):
                                            batch_size=config.data.batch_size, 
                                            shuffle=True, 
                                            num_workers=4)
+  l = torch.cat((torch.range(eps, 1, 0.05), torch.tensor([1])))
+  for t1 in l:
+    for t2 in l:
+      if t1 != t2:
+        generate_sample(dataset, config, t1, t2, dataloader, sde)
 
-  # for t1 in torch.range(eps, 1, 0.05):
-  #   for t2 in torch.range(eps, 1, 0.05):
-  #     if t1 != t2:
-  #       generate_sample(dataset, config, t1, t2, dataloader, sde)
-
-  t1 = torch.tensor(1)
-  for t2 in torch.range(eps, 1, 0.05):
-    if t1 != t2:
-      generate_sample(dataset, config, t1, t2, dataloader, sde)
-      generate_sample(dataset, config, t2, t1, dataloader, sde)
 
 if __name__ == "__main__":
   app.run(main)
