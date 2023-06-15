@@ -7,6 +7,8 @@ tensorflow-addons==0.15.0
 tensorboard==2.8.0
 tensorflow-probability==0.15.0
 absl-py==0.10.0
-torch>=1.7.0
+torch>=2.0.0
 torchvision
 ninja
+scipy
+protobuf==3.20.0
