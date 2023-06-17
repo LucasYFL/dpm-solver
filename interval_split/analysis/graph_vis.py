@@ -117,7 +117,16 @@ for idx1, t1 in enumerate(l):
         else:
             similarity[idx1, idx2] = 1.0
 
-solve(nodes, similarity, interval_list = l, interval_num = 4)
+def vis_similarity(similarity):
+    string = ''
+    for idx1, t1 in enumerate(l):
+        for idx2, t2 in enumerate(l):    
+            string += f"{similarity[idx1, idx2]:.2f} "
+        string += "\n"
+    print(string)
+
+np.save(os.path.join(root, "pixel_distance_p1.npy"), similarity)
+# solve(nodes, similarity, interval_list = l, interval_num = 4)
             
             
         
