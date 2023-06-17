@@ -191,12 +191,12 @@ class NCSNpp(nn.Module):
       if progressive != 'none':
         if i_level == num_resolutions - 1:
           if progressive == 'output_skip':
-            modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, 32),
+            modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, 16),
                                         num_channels=in_ch, eps=1e-6))
             modules.append(conv3x3(in_ch, channels, init_scale=init_scale))
             pyramid_ch = channels
           elif progressive == 'residual':
-            modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, 32),
+            modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, 16),
                                         num_channels=in_ch, eps=1e-6))
             modules.append(conv3x3(in_ch, in_ch, bias=True))
             pyramid_ch = in_ch
@@ -204,7 +204,7 @@ class NCSNpp(nn.Module):
             raise ValueError(f'{progressive} is not a valid name.')
         else:
           if progressive == 'output_skip':
-            modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, 32),
+            modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, 16),
                                         num_channels=in_ch, eps=1e-6))
             modules.append(conv3x3(in_ch, channels, bias=True, init_scale=init_scale))
             pyramid_ch = channels
@@ -223,7 +223,7 @@ class NCSNpp(nn.Module):
     assert not hs_c
 
     if progressive != 'output_skip':
-      modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, 32),
+      modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, 16),
                                   num_channels=in_ch, eps=1e-6))
       modules.append(conv3x3(in_ch, channels, init_scale=init_scale))
 

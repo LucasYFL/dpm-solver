@@ -559,7 +559,7 @@ class AttnBlock(nn.Module):
   """Channel-wise self-attention block."""
   def __init__(self, channels):
     super().__init__()
-    self.GroupNorm_0 = nn.GroupNorm(num_groups=32, num_channels=channels, eps=1e-6)
+    self.GroupNorm_0 = nn.GroupNorm(num_groups=16, num_channels=channels, eps=1e-6) #was 32
     self.NIN_0 = NIN(channels, channels)
     self.NIN_1 = NIN(channels, channels)
     self.NIN_2 = NIN(channels, channels)
@@ -622,7 +622,7 @@ class ResnetBlockDDPM(nn.Module):
     super().__init__()
     if out_ch is None:
       out_ch = in_ch
-    self.GroupNorm_0 = nn.GroupNorm(num_groups=32, num_channels=in_ch, eps=1e-6)
+    self.GroupNorm_0 = nn.GroupNorm(num_groups=16, num_channels=in_ch, eps=1e-6)
     self.act = act
     self.Conv_0 = ddpm_conv3x3(in_ch, out_ch)
     if temb_dim is not None:
@@ -630,7 +630,7 @@ class ResnetBlockDDPM(nn.Module):
       self.Dense_0.weight.data = default_init()(self.Dense_0.weight.data.shape)
       nn.init.zeros_(self.Dense_0.bias)
 
-    self.GroupNorm_1 = nn.GroupNorm(num_groups=32, num_channels=out_ch, eps=1e-6)
+    self.GroupNorm_1 = nn.GroupNorm(num_groups=16, num_channels=out_ch, eps=1e-6)
     self.Dropout_0 = nn.Dropout(dropout)
     self.Conv_1 = ddpm_conv3x3(out_ch, out_ch, init_scale=0.)
     if in_ch != out_ch:
