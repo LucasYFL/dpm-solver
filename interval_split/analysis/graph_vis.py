@@ -20,10 +20,10 @@ eps = args.eps
 root = args.root
 l = torch.cat((torch.range(eps, 1, 0.05), torch.tensor([1])))
 
-assert args.distance_func in ["pixel_distance", "l2"]
+assert args.distance_func in ["pixel_distance", "l2_distance", "l1_distance"]
 if args.distance_func == "pixel_distance":
     exp_file_path = os.path.join(root, f"{args.distance_func}_p{args.pixel_threshold}.npy")
-else:
+elif args.distance_func in ["l2_distance", "l1_distance"]:
     exp_file_path = os.path.join(root, f"{args.distance_func}.npy")
 
 
@@ -115,15 +115,29 @@ def calculated_distance_files(t1, t2, distancefunc, root):
             datas = torch.load(data_path)
             distance += distancefunc(datas['optimal_solutiont1s'], datas['optimal_solutiont2s'])
             num += datas['optimal_solutiont1s'].shape[0]
+    print(f"process {t1:.4f}_{t2:.4f}, total number {num}")
     return distance/num
 
-def similarityfunc(f1, f2):
-    p = 1
+def pixel_distance(f1, f2):
     num = f1.shape[0]
-    similar = torch.abs(f1 - f2) < (2 * p / 256)
+    similar = torch.abs(f1 - f2) < (2 * args.pixel_threshold / 256)
     similar = similar.reshape((num, -1))
     pixel_num = similar.shape[1]
     return (similar.to(torch.float32).sum(dim=1)/pixel_num).sum()
+
+def l2_distance(f1, f2):
+    num = f1.shape[0]
+    similar = torch.pow(f1 - f2, 2)
+    similar = similar.reshape((num, -1)).to(torch.float32)
+    pixel_num = similar.shape[1]
+    return -(similar[torch.logical_not(similar.isnan())].mean()) * num
+
+def l1_distance(f1, f2):
+    num = f1.shape[0]
+    similar = torch.abs(f1 - f2)
+    similar = similar.reshape((num, -1))
+    pixel_num = similar.shape[1]
+    return -(similar.to(torch.float32).mean(dim=1)).sum()
 
 def vis_similarity(similarity):
     string = ''
@@ -144,10 +158,15 @@ else:
     for idx1, t1 in enumerate(l):
         for idx2, t2 in enumerate(l):
             if t1 != t2:
-                print(f"process {t1:.4f}_{t2:.4f}")
-                similarity[idx1, idx2] = calculated_distance_files(t1, t2, similarityfunc, root)
+                
+                similarity[idx1, idx2] = calculated_distance_files(t1, t2, eval(args.distance_func), root)
             else:
-                similarity[idx1, idx2] = 1.0
+                if args.distance_func == "pixel_distance":
+                    similarity[idx1, idx2] = 1.0
+                elif args.distance_func in ["l2_distance", "l1_distance"]:
+                    similarity[idx1, idx2] = -0.0
+                
+                
 
     np.save(exp_file_path, similarity)
     
