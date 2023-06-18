@@ -35,7 +35,7 @@ def solve(nodes, similarity, interval_list, interval_num = 3):
     interval = m.addVars(nodes, name="interval", vtype=GRB.INTEGER)
     interval_quantity = m.addVars(interval_num, name="1 / (total number for each state)")
     
-    m.setObjective(gp.quicksum(similarity[i, j] * connect_interval_state[i, j, k] * interval_quantity[k]  for i in range(nodes) for j in range(nodes) for k in range(interval_num)), GRB.MAXIMIZE)
+    m.setObjective(gp.quicksum(similarity[i, j] * connect_interval_state[i, j, k] * interval_quantity[k]  for i in range(nodes) for j in range(nodes) for k in range(interval_num)), GRB.MINIMIZE)
     # m.setObjective(gp.quicksum(similarity[i, j] * connect_interval_state[i, j, k]  for i in range(nodes) for j in range(nodes) for k in range(interval_num)), GRB.MINIMIZE)
 
 
