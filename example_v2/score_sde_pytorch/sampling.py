@@ -78,7 +78,7 @@ def get_corrector(name):
   return _CORRECTORS[name]
 
 
-def get_sampling_fn(config, sde, shape, inverse_scaler, eps):
+def get_sampling_fn(config, sde, shape, inverse_scaler, eps, local_rank):
   """Create a sampling function.
 
   Args:
@@ -103,7 +103,7 @@ def get_sampling_fn(config, sde, shape, inverse_scaler, eps):
                                   eps=config.sampling.eps,
                                   rtol=config.sampling.rk45_rtol,
                                   atol=config.sampling.rk45_atol,
-                                  device=config.device)
+                                  device=f"{config.device}:{local_rank}")
   # Predictor-Corrector sampling. Predictor-only and Corrector-only samplers are special cases.
   elif sampler_name.lower() == 'pc':
     predictor = get_predictor(config.sampling.predictor.lower())
@@ -119,7 +119,7 @@ def get_sampling_fn(config, sde, shape, inverse_scaler, eps):
                                  continuous=config.training.continuous,
                                  denoise=config.sampling.noise_removal,
                                  eps=eps,
-                                 device=config.device)
+                                 device=f"{config.device}:{local_rank}")
   elif  sampler_name.lower() == 'dpm_solver':
     sampling_fn = get_dpm_solver_sampler(sde=sde,
                                   shape=shape,
@@ -133,7 +133,7 @@ def get_sampling_fn(config, sde, shape, inverse_scaler, eps):
                                   algorithm_type=config.sampling.algorithm_type,
                                   thresholding=config.sampling.thresholding,
                                   rtol=config.sampling.rtol,
-                                  device=config.device)
+                                  device=f"{config.device}:{local_rank}")
   else:
     raise ValueError(f"Sampler name {sampler_name} unknown.")
 
@@ -527,7 +527,7 @@ def get_dpm_solver_sampler(sde, shape, inverse_scaler, steps=10, eps=1e-3,
   """
   ns = NoiseScheduleVP('linear', continuous_beta_0=sde.beta_0, continuous_beta_1=sde.beta_1)
 
-  def dpm_solver_sampler(model):
+  def dpm_solver_sampler(models, compare_step):
     """ The DPM-Solver sampler funciton.
 
     Args:
@@ -536,8 +536,10 @@ def get_dpm_solver_sampler(sde, shape, inverse_scaler, steps=10, eps=1e-3,
       Samples, number of function evaluations.
     """
     with torch.no_grad():
-      noise_pred_fn = get_noise_fn(sde, model, train=False, continuous=True)
-      dpm_solver = DPM_Solver(noise_pred_fn, ns, algorithm_type=algorithm_type, correcting_x0_fn="dynamic_thresholding" if thresholding else None)
+      noise_pred_fns = []
+      for m in models:
+        noise_pred_fns.append(get_noise_fn(sde, m, train=False, continuous=True))
+      dpm_solver = DPM_Solver(noise_pred_fns, ns, compare_step = compare_step, algorithm_type=algorithm_type, correcting_x0_fn="dynamic_thresholding" if thresholding else None)
       # Initial sample
       x = sde.prior_sampling(shape).to(device)
       x = dpm_solver.sample(

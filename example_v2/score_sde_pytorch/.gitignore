@@ -22,3 +22,6 @@ dist/
 
 experiments
 assets/stats
+dataset/*
+shared_exp
+multistage

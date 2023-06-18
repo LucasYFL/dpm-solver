@@ -16,11 +16,13 @@
 """All functions related to loss computation and optimization.
 """
 
+import os
 import torch
 import torch.optim as optim
 import numpy as np
 from models import utils as mutils
 from sde_lib import VESDE, VPSDE
+import random
 
 
 def get_optimizer(config, params):
@@ -81,7 +83,13 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
       loss: A scalar that represents the average loss value across the mini-batch.
     """
     score_fn = mutils.get_score_fn(sde, model, train=train, continuous=continuous)
-    t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
+    choose_stage = random.randint(0, len(model.module.stage_interval) - 1)
+    if "multimodel" in model.module.__class__.__name__:
+      intervals = model.module.stage_interval[choose_stage]
+      t_rand = [random.uniform(*random.choices(intervals, weights=[r[1]-r[0] for r in intervals])[0]) for i in range(batch.shape[0])]
+      t = torch.tensor(t_rand, device=batch.device) * (sde.T - eps) + eps
+    else:
+      t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
     z = torch.randn_like(batch)
     mean, std = sde.marginal_prob(batch, t)
     perturbed_data = mean + std[:, None, None, None] * z
@@ -94,31 +102,6 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
       g2 = sde.sde(torch.zeros_like(batch), t)[1] ** 2
       losses = torch.square(score + z / std[:, None, None, None])
       losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1) * g2
-
-    loss = torch.mean(losses)
-    return loss
-
-  return loss_fn
-
-
-def get_smld_loss_fn(vesde, train, reduce_mean=False):
-  """Legacy code to reproduce previous results on SMLD(NCSN). Not recommended for new work."""
-  assert isinstance(vesde, VESDE), "SMLD training only works for VESDEs."
-
-  # Previous SMLD models assume descending sigmas
-  smld_sigma_array = torch.flip(vesde.discrete_sigmas, dims=(0,))
-  reduce_op = torch.mean if reduce_mean else lambda *args, **kwargs: 0.5 * torch.sum(*args, **kwargs)
-
-  def loss_fn(model, batch):
-    model_fn = mutils.get_model_fn(model, train=train)
-    labels = torch.randint(0, vesde.N, (batch.shape[0],), device=batch.device)
-    sigmas = smld_sigma_array.to(batch.device)[labels]
-    noise = torch.randn_like(batch) * sigmas[:, None, None, None]
-    perturbed_data = noise + batch
-    score = model_fn(perturbed_data, labels)
-    target = -noise / (sigmas ** 2)[:, None, None, None]
-    losses = torch.square(score - target)
-    losses = reduce_op(losses.reshape(losses.shape[0], -1), dim=-1) * sigmas ** 2
     loss = torch.mean(losses)
     return loss
 
