@@ -4,26 +4,28 @@ import gurobipy as gp
 from gurobipy import GRB
 import numpy as np
 import math
+import argparse
 
-def calculated_distance_files(t1, t2, distancefunc, root):
-    pkgs = os.listdir(root)
-    distance = 0
-    num = 0
-    for pkg in pkgs:
-        data_path = os.path.join(root, pkg, f"0_{t1:.4f}_{t2:.4f}.pth")
-        if os.path.exists(data_path):
-            datas = torch.load(data_path)
-            distance += distancefunc(datas['optimal_solutiont1s'], datas['optimal_solutiont2s'])
-            num += datas['optimal_solutiont1s'].shape[0]
-    return distance/num
 
-def similarityfunc(f1, f2):
-    p = 1
-    num = f1.shape[0]
-    similar = torch.abs(f1 - f2) < (2 * p / 256)
-    similar = similar.reshape((num, -1))
-    pixel_num = similar.shape[1]
-    return (similar.to(torch.float32).sum(dim=1)/pixel_num).sum()
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('--nodes', type=int, default=21)
+parser.add_argument('--eps', type=float, default=1e-3)
+parser.add_argument('--root', type=str, default="/scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_split_graph_exp/")
+parser.add_argument('--distance_func', type=str, default="pixel_distance")
+parser.add_argument('--pixel_threshold', type=int, default=1)
+args = parser.parse_args()
+
+nodes= args.nodes
+eps = args.eps
+root = args.root
+l = torch.cat((torch.range(eps, 1, 0.05), torch.tensor([1])))
+
+assert args.distance_func in ["pixel_distance", "l2"]
+if args.distance_func == "pixel_distance":
+    exp_file_path = os.path.join(root, f"{args.distance_func}_p{args.pixel_threshold}.npy")
+else:
+    exp_file_path = os.path.join(root, f"{args.distance_func}.npy")
+
 
 def solve(nodes, similarity, interval_list, interval_num = 3):
     m = gp.Model()
@@ -101,21 +103,27 @@ def solve(nodes, similarity, interval_list, interval_num = 3):
     m.setParam('TimeLimit', 5*60)
     m.optimize()
     printSolution()
-    
-nodes=21
-eps = 1e-3
-root = "/scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_split_graph_exp/"
-similarity = np.zeros((nodes, nodes))
 
-l = torch.cat((torch.range(eps, 1, 0.05), torch.tensor([1])))
 
-for idx1, t1 in enumerate(l):
-    for idx2, t2 in enumerate(l):
-        if t1 != t2:
-            print(f"process {t1:.4f}_{t2:.4f}")
-            similarity[idx1, idx2] = calculated_distance_files(t1, t2, similarityfunc, root)
-        else:
-            similarity[idx1, idx2] = 1.0
+def calculated_distance_files(t1, t2, distancefunc, root):
+    pkgs = os.listdir(root)
+    distance = 0
+    num = 0
+    for pkg in pkgs:
+        data_path = os.path.join(root, pkg, f"0_{t1:.4f}_{t2:.4f}.pth")
+        if os.path.exists(data_path):
+            datas = torch.load(data_path)
+            distance += distancefunc(datas['optimal_solutiont1s'], datas['optimal_solutiont2s'])
+            num += datas['optimal_solutiont1s'].shape[0]
+    return distance/num
+
+def similarityfunc(f1, f2):
+    p = 1
+    num = f1.shape[0]
+    similar = torch.abs(f1 - f2) < (2 * p / 256)
+    similar = similar.reshape((num, -1))
+    pixel_num = similar.shape[1]
+    return (similar.to(torch.float32).sum(dim=1)/pixel_num).sum()
 
 def vis_similarity(similarity):
     string = ''
@@ -125,8 +133,26 @@ def vis_similarity(similarity):
         string += "\n"
     print(string)
 
-np.save(os.path.join(root, "pixel_distance_p1.npy"), similarity)
-# solve(nodes, similarity, interval_list = l, interval_num = 4)
+
+
+if os.path.exists(exp_file_path):
+    similarity = np.load(exp_file_path)
+else:
+    
+    similarity = np.zeros((nodes, nodes))
+
+    for idx1, t1 in enumerate(l):
+        for idx2, t2 in enumerate(l):
+            if t1 != t2:
+                print(f"process {t1:.4f}_{t2:.4f}")
+                similarity[idx1, idx2] = calculated_distance_files(t1, t2, similarityfunc, root)
+            else:
+                similarity[idx1, idx2] = 1.0
+
+    np.save(exp_file_path, similarity)
+    
+vis_similarity(similarity)
+solve(nodes, similarity, interval_list = l, interval_num = 3)
             
             
         
