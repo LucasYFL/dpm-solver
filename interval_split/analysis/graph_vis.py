@@ -105,6 +105,67 @@ def solve(nodes, similarity, interval_list, interval_num = 3):
     printSolution()
 
 
+def solve_tryall(nodes, similarity, interval_list = l, interval_num = 3, type = "mean"):
+    def generate_graph(idx_ts, nodes):
+        graph = np.zeros((nodes, nodes, len(idx_ts) - 1))
+        for idx in range(len(idx_ts) - 1):
+            graph[idx_ts[idx]:idx_ts[idx + 1], idx_ts[idx]:idx_ts[idx + 1], idx] = 1
+        return graph
+    
+    def calculate_objective(similarity, connected_graph, type = type):
+        object = 0
+        for idx in range(connected_graph.shape[2]):
+            if type == "mean":
+                object += (similarity * connected_graph[:, :, idx]).sum() / connected_graph[:, :, idx].sum()
+            elif type == "sum":
+                object += (similarity * connected_graph[:, :, idx]).sum()
+        return object
+    
+    objective_max = -torch.inf
+    t_optimal_idx = None
+    if interval_num == 2:
+        idx_t1 = 0
+        idx_t3 = nodes
+        for idx_t2, t2 in enumerate(interval_list):
+            if idx_t2 > idx_t1 and idx_t2 < idx_t3:
+                connected_graph = generate_graph((idx_t1, idx_t2, idx_t3), nodes)
+                objective = calculate_objective(similarity, connected_graph)
+                if objective > objective_max:
+                    t_optimal_idx = (idx_t1, idx_t2, idx_t3)
+                    objective_max = objective
+    
+    elif interval_num == 3:
+        idx_t1 = 0
+        idx_t4 = nodes
+        for idx_t2, t2 in enumerate(interval_list):
+            for idx_t3, t3 in enumerate(interval_list):
+                if idx_t2 > idx_t1 and idx_t3 > idx_t2 and idx_t4 > idx_t3:
+                    connected_graph = generate_graph((idx_t1, idx_t2, idx_t3, idx_t4), nodes)
+                    objective = calculate_objective(similarity, connected_graph)
+                    if objective > objective_max:
+                        t_optimal_idx = (idx_t1, idx_t2, idx_t3, idx_t4)
+                        objective_max = objective        
+
+    elif interval_num == 4:
+        idx_t1 = 0
+        idx_t5 = nodes
+        for idx_t2, t2 in enumerate(interval_list):
+            for idx_t3, t3 in enumerate(interval_list):
+                for idx_t4, t4 in enumerate(interval_list):
+                    if idx_t2 > idx_t1 and idx_t3 > idx_t2 and idx_t4 > idx_t3 and idx_t5 > idx_t4:
+                        connected_graph = generate_graph((idx_t1, idx_t2, idx_t3, idx_t4, idx_t5), nodes)
+                        objective = calculate_objective(similarity, connected_graph)
+                        if objective > objective_max:
+                            t_optimal_idx = (idx_t1, idx_t2, idx_t3, idx_t4, idx_t5)
+                            objective_max = objective            
+    idx = 1
+    print(f"The {idx}th is from [0, {interval_list[t_optimal_idx [idx]- 1] + 0.025})")
+    for idx in range(2, interval_num):
+        print(f"The {idx}th is from [{interval_list[t_optimal_idx [idx-1] - 1] + 0.025}, {interval_list[t_optimal_idx [idx] - 1] + 0.025})")
+    idx = interval_num
+    print(f"The {idx}th is from [{interval_list[t_optimal_idx [idx - 1]- 1] + 0.025}, 1)")                
+    return t_optimal_idx
+
 def calculated_distance_files(t1, t2, distancefunc, root):
     pkgs = os.listdir(root)
     distance = 0
@@ -165,13 +226,11 @@ else:
                     similarity[idx1, idx2] = 1.0
                 elif args.distance_func in ["l2_distance", "l1_distance"]:
                     similarity[idx1, idx2] = -0.0
-                
-                
-
     np.save(exp_file_path, similarity)
     
-vis_similarity(similarity)
-solve(nodes, similarity, interval_list = l, interval_num = 3)
+# vis_similarity(similarity)
+# solve(nodes, similarity, interval_list = l, interval_num = 3)
+solve_tryall(nodes, similarity, interval_list = l, interval_num = 4, type = "sum")
             
             
         
