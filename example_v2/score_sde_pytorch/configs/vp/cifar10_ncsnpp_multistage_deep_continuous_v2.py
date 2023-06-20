@@ -80,4 +80,5 @@ def get_config():
   model.stage_interval = [
     [[0, 0.4420]], [[0.4420, 0.6308]], [[0.6308, 1]]
   ]
+  model.group = 16
   return config

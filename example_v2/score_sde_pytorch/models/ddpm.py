@@ -42,7 +42,7 @@ class DDPM(nn.Module):
     super().__init__()
     self.act = act = get_act(config)
     self.register_buffer('sigmas', torch.tensor(utils.get_sigmas(config)))
-
+    self.groups = config.model.group
     self.nf = nf = config.model.nf
     ch_mult = config.model.ch_mult
     self.num_res_blocks = num_res_blocks = config.model.num_res_blocks
@@ -52,9 +52,9 @@ class DDPM(nn.Module):
     self.num_resolutions = num_resolutions = len(ch_mult)
     self.all_resolutions = all_resolutions = [config.data.image_size // (2 ** i) for i in range(num_resolutions)]
 
-    AttnBlock = functools.partial(layers.AttnBlock)
+    AttnBlock = functools.partial(layers.AttnBlock,groups = self.groups)
     self.conditional = conditional = config.model.conditional
-    ResnetBlock = functools.partial(ResnetBlockDDPM, act=act, temb_dim=4 * nf, dropout=dropout)
+    ResnetBlock = functools.partial(ResnetBlockDDPM, act=act, temb_dim=4 * nf, dropout=dropout,groups = self.groups)
     if conditional:
       # Condition on noise levels.
       modules = [nn.Linear(nf, nf * 4)]
@@ -101,7 +101,7 @@ class DDPM(nn.Module):
         modules.append(Upsample(channels=in_ch, with_conv=resamp_with_conv))
 
     assert not hs_c
-    modules.append(nn.GroupNorm(num_channels=in_ch, num_groups=32, eps=1e-6))
+    modules.append(nn.GroupNorm(num_channels=in_ch, num_groups=self.groups, eps=1e-6))
     modules.append(conv3x3(in_ch, channels, init_scale=0.))
     self.all_modules = nn.ModuleList(modules)
 

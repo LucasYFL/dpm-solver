@@ -62,7 +62,7 @@ flags.DEFINE_string("m2", None, "Model 2  directory.")
 flags.DEFINE_string("m3", None, "Model 3 directory.")
 flags.DEFINE_string("eval_folder", "eval",
                     "The folder name for storing evaluation results")
-flags.mark_flags_as_required(["workdir", "config", 'm1','m2'])
+flags.mark_flags_as_required(["workdir", "config", 'm1'])
 tf.config.experimental.set_visible_devices([], "GPU")
 os.environ['XLA_PYTHON_CLIENT_PREALLOCATE'] = 'false'
 local_rank = int(os.environ["LOCAL_RANK"])
@@ -70,7 +70,7 @@ total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
 torch.cuda.set_device(local_rank)
 torch.distributed.init_process_group(backend='nccl')
 def evaluate(config,
-             workdir,m1,m2,m3=None,config1=None,config2=None,
+             workdir,m1,m2=None,m3=None,config1=None,config2=None,
              eval_folder="eval"):
   """Evaluate trained models.
 

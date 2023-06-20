@@ -62,9 +62,9 @@ class Combine(nn.Module):
 class AttnBlockpp(nn.Module):
   """Channel-wise self-attention block. Modified from DDPM."""
 
-  def __init__(self, channels, skip_rescale=False, init_scale=0.):
+  def __init__(self, channels, skip_rescale=False, init_scale=0. ,groups=32):
     super().__init__()
-    self.GroupNorm_0 = nn.GroupNorm(num_groups=min(channels // 4, 16), num_channels=channels,
+    self.GroupNorm_0 = nn.GroupNorm(num_groups=min(channels // 4, groups), num_channels=channels,
                                   eps=1e-6)
     self.NIN_0 = NIN(channels, channels)
     self.NIN_1 = NIN(channels, channels)
@@ -167,16 +167,16 @@ class ResnetBlockDDPMpp(nn.Module):
   """ResBlock adapted from DDPM."""
 
   def __init__(self, act, in_ch, out_ch=None, temb_dim=None, conv_shortcut=False,
-               dropout=0.1, skip_rescale=False, init_scale=0.):
+               dropout=0.1, skip_rescale=False, init_scale=0. ,groups=32):
     super().__init__()
     out_ch = out_ch if out_ch else in_ch
-    self.GroupNorm_0 = nn.GroupNorm(num_groups=min(in_ch // 4, 16), num_channels=in_ch, eps=1e-6)
+    self.GroupNorm_0 = nn.GroupNorm(num_groups=min(in_ch // 4, groups), num_channels=in_ch, eps=1e-6)
     self.Conv_0 = conv3x3(in_ch, out_ch)
     if temb_dim is not None:
       self.Dense_0 = nn.Linear(temb_dim, out_ch)
       self.Dense_0.weight.data = default_init()(self.Dense_0.weight.data.shape)
       nn.init.zeros_(self.Dense_0.bias)
-    self.GroupNorm_1 = nn.GroupNorm(num_groups=min(out_ch // 4, 16), num_channels=out_ch, eps=1e-6)
+    self.GroupNorm_1 = nn.GroupNorm(num_groups=min(out_ch // 4, groups), num_channels=out_ch, eps=1e-6)
     self.Dropout_0 = nn.Dropout(dropout)
     self.Conv_1 = conv3x3(out_ch, out_ch, init_scale=init_scale)
     if in_ch != out_ch:
@@ -212,11 +212,11 @@ class ResnetBlockDDPMpp(nn.Module):
 class ResnetBlockBigGANpp(nn.Module):
   def __init__(self, act, in_ch, out_ch=None, temb_dim=None, up=False, down=False,
                dropout=0.1, fir=False, fir_kernel=(1, 3, 3, 1),
-               skip_rescale=True, init_scale=0.):
+               skip_rescale=True, init_scale=0. , groups=32):
     super().__init__()
 
     out_ch = out_ch if out_ch else in_ch
-    self.GroupNorm_0 = nn.GroupNorm(num_groups=min(in_ch // 4, 16), num_channels=in_ch, eps=1e-6)
+    self.GroupNorm_0 = nn.GroupNorm(num_groups=min(in_ch // 4, groups), num_channels=in_ch, eps=1e-6)
     self.up = up
     self.down = down
     self.fir = fir
@@ -228,7 +228,7 @@ class ResnetBlockBigGANpp(nn.Module):
       self.Dense_0.weight.data = default_init()(self.Dense_0.weight.shape)
       nn.init.zeros_(self.Dense_0.bias)
 
-    self.GroupNorm_1 = nn.GroupNorm(num_groups=min(out_ch // 4, 16), num_channels=out_ch, eps=1e-6)
+    self.GroupNorm_1 = nn.GroupNorm(num_groups=min(out_ch // 4, groups), num_channels=out_ch, eps=1e-6)
     self.Dropout_0 = nn.Dropout(dropout)
     self.Conv_1 = conv3x3(out_ch, out_ch, init_scale=init_scale)
     if in_ch != out_ch or up or down:
