@@ -13,6 +13,7 @@ parser.add_argument('--eps', type=float, default=1e-3)
 parser.add_argument('--root', type=str, default="/scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_split_graph_exp/")
 parser.add_argument('--distance_func', type=str, default="pixel_distance")
 parser.add_argument('--pixel_threshold', type=int, default=1)
+parser.add_argument('--interval_num', type=int, default=3)
 args = parser.parse_args()
 
 nodes= args.nodes
@@ -157,7 +158,21 @@ def solve_tryall(nodes, similarity, interval_list = l, interval_num = 3, type = 
                         objective = calculate_objective(similarity, connected_graph)
                         if objective > objective_max:
                             t_optimal_idx = (idx_t1, idx_t2, idx_t3, idx_t4, idx_t5)
-                            objective_max = objective            
+                            objective_max = objective     
+    elif interval_num == 5:
+        idx_t1 = 0
+        idx_t6 = nodes
+        for idx_t2, t2 in enumerate(interval_list):
+            for idx_t3, t3 in enumerate(interval_list):
+                for idx_t4, t4 in enumerate(interval_list):
+                    for idx_t5, t5 in enumerate(interval_list):
+                        if idx_t2 > idx_t1 and idx_t3 > idx_t2 and idx_t4 > idx_t3 and idx_t5 > idx_t4 and idx_t6 > idx_t5:
+                            connected_graph = generate_graph((idx_t1, idx_t2, idx_t3, idx_t4, idx_t5, idx_t6), nodes)
+                            objective = calculate_objective(similarity, connected_graph)
+                            if objective > objective_max:
+                                t_optimal_idx = (idx_t1, idx_t2, idx_t3, idx_t4, idx_t5, idx_t6)
+                                objective_max = objective    
+                                   
     idx = 1
     print(f"The {idx}th is from [0, {interval_list[t_optimal_idx [idx]- 1] + 0.025})")
     for idx in range(2, interval_num):
@@ -230,7 +245,7 @@ else:
     
 # vis_similarity(similarity)
 # solve(nodes, similarity, interval_list = l, interval_num = 3)
-solve_tryall(nodes, similarity, interval_list = l, interval_num = 4, type = "sum")
+solve_tryall(nodes, similarity, interval_list = l, interval_num = args.interval_num, type = "sum")
             
             
         
