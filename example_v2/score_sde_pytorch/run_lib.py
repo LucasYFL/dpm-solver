@@ -40,6 +40,7 @@ from torchvision.utils import make_grid, save_image
 from utils import save_checkpoint, restore_checkpoint
 import pytorch_fid.fid_score as FID_score
 import glob
+import utils
 
 FLAGS = flags.FLAGS
 local_rank = int(os.environ["LOCAL_RANK"])
@@ -65,6 +66,7 @@ def train(config, workdir):
 
   # Initialize model.
   score_model = mutils.create_model(config, local_rank)
+  utils.get_parameter_num(score_model)
   ema = ExponentialMovingAverage(score_model.parameters(), decay=config.model.ema_rate)
   optimizer = losses.get_optimizer(config, score_model.parameters())
   state = dict(optimizer=optimizer, model=score_model, ema=ema, step=0)

@@ -27,3 +27,8 @@ def save_checkpoint(ckpt_dir, state):
     'step': state['step']
   }
   torch.save(saved_state, ckpt_dir)
+  
+def get_parameter_num(model):
+  total_num = sum(p.numel() for p in model.parameters())
+  trainable_num = sum(p.numel() for p in model.parameters() if p.requires_grad)
+  logging.info(f"the total number of parameters for the model is {total_num}, trainable number of parameters is {trainable_num}")
