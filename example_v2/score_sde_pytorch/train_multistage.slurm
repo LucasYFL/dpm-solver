@@ -4,11 +4,11 @@
 #SBATCH --job-name=DPM
 #SBATCH --nodes=1
 #SBATCH --mem=40GB
-#SBATCH --time=04-00:00:00
+#SBATCH --time=00-08:00:00
 #SBATCH --account=qingqu1
 #SBATCH --partition=spgpu
 #SBATCH --gpus=a40:2
-#SBATCH --output=multgn16v2.out
+#SBATCH --output=multgn16v2_2.out
 #SBATCH --cpus-per-task=8
 echo $EXP_FEWER_STEPS
 module purge

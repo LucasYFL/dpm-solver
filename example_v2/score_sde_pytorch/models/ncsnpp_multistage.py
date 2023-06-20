@@ -41,6 +41,7 @@ class NCSNpp_multimodel(nn.Module):
     self.act = act = get_act(config)
     self.register_buffer('sigmas', torch.tensor(utils.get_sigmas(config)))
     # self.nf = nf = config.model.nf
+    self.groups = config.model.group
     self.en_nf = config.model.en_nf
     self.stage_num = config.model.stage_num
     self.de_nfs = config.model.de_nfs
@@ -90,7 +91,7 @@ class NCSNpp_multimodel(nn.Module):
 
     AttnBlock = functools.partial(layerspp.AttnBlockpp,
                                   init_scale=init_scale,
-                                  skip_rescale=skip_rescale)
+                                  skip_rescale=skip_rescale,groups = self.groups)
 
     Upsample = functools.partial(layerspp.Upsample,
                                  with_conv=resamp_with_conv, fir=fir, fir_kernel=fir_kernel)
@@ -116,7 +117,7 @@ class NCSNpp_multimodel(nn.Module):
                                       dropout=dropout,
                                       init_scale=init_scale,
                                       skip_rescale=skip_rescale,
-                                      temb_dim=self.en_nf * 4)
+                                      temb_dim=self.en_nf * 4,groups = self.groups)
 
     elif resblock_type == 'biggan':
       ResnetBlock = functools.partial(ResnetBlockBigGAN,
@@ -126,7 +127,7 @@ class NCSNpp_multimodel(nn.Module):
                                       fir_kernel=fir_kernel,
                                       init_scale=init_scale,
                                       skip_rescale=skip_rescale,
-                                      temb_dim=self.en_nf * 4)
+                                      temb_dim=self.en_nf * 4,groups = self.groups)
 
     else:
       raise ValueError(f'resblock type {resblock_type} unrecognized.')
@@ -196,12 +197,12 @@ class NCSNpp_multimodel(nn.Module):
         if progressive != 'none':
           if i_level == num_resolutions - 1:
             if progressive == 'output_skip':
-              de_modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, 16),
+              de_modules.append(nn.GroupNorm(num_groups=min(in_ch // 4,  self.groups),
                                           num_channels=in_ch, eps=1e-6))
               de_modules.append(conv3x3(in_ch, channels, init_scale=init_scale))
               pyramid_ch = channels
             elif progressive == 'residual':
-              de_modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, 16),
+              de_modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, self.groups),
                                           num_channels=in_ch, eps=1e-6))
               de_modules.append(conv3x3(in_ch, in_ch, bias=True))
               pyramid_ch = in_ch
@@ -209,7 +210,7 @@ class NCSNpp_multimodel(nn.Module):
               raise ValueError(f'{progressive} is not a valid name.')
           else:
             if progressive == 'output_skip':
-              de_modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, 16),
+              de_modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, self.groups),
                                           num_channels=in_ch, eps=1e-6))
               de_modules.append(conv3x3(in_ch, channels, bias=True, init_scale=init_scale))
               pyramid_ch = channels
@@ -228,7 +229,7 @@ class NCSNpp_multimodel(nn.Module):
       assert not hs_c_copy
 
       if progressive != 'output_skip':
-        de_modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, 16),
+        de_modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, self.groups),
                                     num_channels=in_ch, eps=1e-6))
         de_modules.append(conv3x3(in_ch, channels, init_scale=init_scale))
 
