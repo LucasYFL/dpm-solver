@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser(description='Process some integers.')
 parser.add_argument('--nodes', type=int, default=21)
 parser.add_argument('--eps', type=float, default=1e-3)
 parser.add_argument('--root', type=str, default="/scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_distance_exp/")
-parser.add_argument('--distance_func', type=str, default="l2_distance")
+parser.add_argument('--distance_func', type=str, default="l1_distance")
 parser.add_argument('--interval', nargs=2, type=float)
 args = parser.parse_args()
 
@@ -45,14 +45,14 @@ def l2_distance(f1, f2):
     similar = torch.pow(f1 - f2, 2)
     similar = similar.reshape((num, -1)).to(torch.float32)
     pixel_num = similar.shape[1]
-    return -(similar[torch.logical_not(similar.isnan())].mean()) * num
+    return (similar[torch.logical_not(similar.isnan())].mean()) * num
 
 def l1_distance(f1, f2):
     num = f1.shape[0]
     similar = torch.abs(f1 - f2)
     similar = similar.reshape((num, -1))
     pixel_num = similar.shape[1]
-    return -(similar.to(torch.float32).mean(dim=1)).sum()
+    return (similar.to(torch.float32).mean(dim=1)).sum()
 
 dis_sum = 0
 for t in l:
