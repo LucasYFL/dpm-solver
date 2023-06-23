@@ -20,6 +20,7 @@ import torch.nn as nn
 import functools
 import torch
 import numpy as np
+import logging
 
 ResnetBlockDDPM = layerspp.ResnetBlockDDPMpp
 ResnetBlockBigGAN = layerspp.ResnetBlockBigGANpp
@@ -236,8 +237,18 @@ class NCSNpp_multimodel(nn.Module):
       de_modules = nn.ModuleList(de_modules)
       self.de_modules.append(de_modules)
     self.de_modules = nn.ModuleList(self.de_modules)
+    self._log_param()
     
-
+  def _log_param(self):
+    en_param_num = sum(p.numel() for p in self.en_modules.parameters())
+    for idx in range(self.stage_num):
+      idx_stage = idx + 1
+      de_param_num = sum(p.numel() for p in self.de_modules[idx].parameters())
+      total_params = en_param_num + de_param_num
+      logging.info(f"For stage {idx_stage}, the total params are {total_params}")
+    total_params = sum(p.numel() for p in self.parameters())  
+    logging.info(f"Total params are {total_params}")  
+    
   def forward(self, x, time_cond):
     # timestep/noise_level embedding; only for continuous training
     ## currently for each batch, only consider case for all 
@@ -397,3 +408,411 @@ class NCSNpp_multimodel(nn.Module):
       h = h / used_sigmas
 
     return h
+
+
+@utils.register_model(name='ncsnpp_multistage_serial')
+class NCSNpp(nn.Module):
+  """NCSN++ model"""
+
+  def __init__(self, config):
+    super().__init__()
+    self.config = config
+    self.act = act = get_act(config)
+    self.register_buffer('sigmas', torch.tensor(utils.get_sigmas(config)))
+    self.groups = config.model.group
+    self.en_nf = en_nf = config.model.en_nf
+    ch_mult = config.model.ch_mult
+    self.num_res_blocks = num_res_blocks = config.model.num_res_blocks
+    self.attn_resolutions = attn_resolutions = config.model.attn_resolutions
+    dropout = config.model.dropout
+    resamp_with_conv = config.model.resamp_with_conv
+    self.num_resolutions = num_resolutions = len(ch_mult)
+    self.all_resolutions = all_resolutions = [config.data.image_size // (2 ** i) for i in range(num_resolutions)]
+
+    self.conditional = conditional = config.model.conditional  # noise-conditional
+    fir = config.model.fir
+    fir_kernel = config.model.fir_kernel
+    self.skip_rescale = skip_rescale = config.model.skip_rescale
+    self.resblock_type = resblock_type = config.model.resblock_type.lower()
+    self.progressive = progressive = config.model.progressive.lower()
+    self.progressive_input = progressive_input = config.model.progressive_input.lower()
+    self.embedding_type = embedding_type = config.model.embedding_type.lower()
+    self.de_embed2image_num_res_block = config.model.de_embed2image_num_res_block
+    self.stage_interval = config.model.stage_interval
+    self.stage_num = config.model.stage_num
+    self.de_nfs = config.model.de_nfs
+    init_scale = config.model.init_scale
+    assert progressive in ['none', 'output_skip', 'residual']
+    assert progressive_input in ['none', 'input_skip', 'residual']
+    assert embedding_type in ['fourier', 'positional']
+    assert len(config.model.ch_mult) == config.model.stage_num
+    assert len(config.model.de_nfs) == config.model.stage_num
+    combine_method = config.model.progressive_combine.lower()
+    combiner = functools.partial(Combine, method=combine_method)
+
+    en_modules = []
+    # timestep/noise_level embedding; only for continuous training
+    if embedding_type == 'fourier':
+      # Gaussian Fourier features embeddings.
+      assert config.training.continuous, "Fourier features are only used for continuous training."
+
+      en_modules.append(layerspp.GaussianFourierProjection(
+        embedding_size=en_nf, scale=config.model.fourier_scale
+      ))
+      embed_dim = 2 * en_nf
+
+    elif embedding_type == 'positional':
+      embed_dim = en_nf
+
+    else:
+      raise ValueError(f'embedding type {embedding_type} unknown.')
+
+    if conditional:
+      en_modules.append(nn.Linear(embed_dim, en_nf * 4))
+      en_modules[-1].weight.data = default_initializer()(en_modules[-1].weight.shape)
+      nn.init.zeros_(en_modules[-1].bias)
+      en_modules.append(nn.Linear(en_nf * 4, en_nf * 4))
+      en_modules[-1].weight.data = default_initializer()(en_modules[-1].weight.shape)
+      nn.init.zeros_(en_modules[-1].bias)
+
+    AttnBlock = functools.partial(layerspp.AttnBlockpp,
+                                  init_scale=init_scale,
+                                  skip_rescale=skip_rescale,groups=self.groups)
+
+    Upsample = functools.partial(layerspp.Upsample,
+                                 with_conv=resamp_with_conv, fir=fir, fir_kernel=fir_kernel)
+
+    if progressive == 'output_skip':
+      self.pyramid_upsample = layerspp.Upsample(fir=fir, fir_kernel=fir_kernel, with_conv=False)
+    elif progressive == 'residual':
+      pyramid_upsample = functools.partial(layerspp.Upsample,
+                                           fir=fir, fir_kernel=fir_kernel, with_conv=True)
+
+    Downsample = functools.partial(layerspp.Downsample,
+                                   with_conv=resamp_with_conv, fir=fir, fir_kernel=fir_kernel)
+
+    if progressive_input == 'input_skip':
+      self.pyramid_downsample = layerspp.Downsample(fir=fir, fir_kernel=fir_kernel, with_conv=False)
+    elif progressive_input == 'residual':
+      pyramid_downsample = functools.partial(layerspp.Downsample,
+                                             fir=fir, fir_kernel=fir_kernel, with_conv=True)
+
+    if resblock_type == 'ddpm':
+      ResnetBlock = functools.partial(ResnetBlockDDPM,
+                                      act=act,
+                                      dropout=dropout,
+                                      init_scale=init_scale,
+                                      skip_rescale=skip_rescale,
+                                      temb_dim=en_nf * 4,groups=self.groups)
+
+    elif resblock_type == 'biggan':
+      ResnetBlock = functools.partial(ResnetBlockBigGAN,
+                                      act=act,
+                                      dropout=dropout,
+                                      fir=fir,
+                                      fir_kernel=fir_kernel,
+                                      init_scale=init_scale,
+                                      skip_rescale=skip_rescale,
+                                      temb_dim=en_nf * 4,groups=self.groups)
+
+    else:
+      raise ValueError(f'resblock type {resblock_type} unrecognized.')
+
+    # Downsampling block
+
+    channels = config.data.num_channels
+    if progressive_input != 'none':
+      input_pyramid_ch = channels
+
+    en_modules.append(conv3x3(channels, en_nf))
+    hs_c = [en_nf]
+
+    in_ch = en_nf
+    for i_level in range(num_resolutions):
+      # Residual blocks for this resolution
+      for i_block in range(num_res_blocks):
+        out_ch = en_nf * ch_mult[i_level]
+        en_modules.append(ResnetBlock(in_ch=in_ch, out_ch=out_ch))
+        in_ch = out_ch
+
+        if all_resolutions[i_level] in attn_resolutions:
+          en_modules.append(AttnBlock(channels=in_ch))
+        hs_c.append(in_ch)
+
+      if i_level != num_resolutions - 1:
+        if resblock_type == 'ddpm':
+          en_modules.append(Downsample(in_ch=in_ch))
+        else:
+          en_modules.append(ResnetBlock(down=True, in_ch=in_ch))
+
+        if progressive_input == 'input_skip':
+          en_modules.append(combiner(dim1=input_pyramid_ch, dim2=in_ch))
+          if combine_method == 'cat':
+            in_ch *= 2
+
+        elif progressive_input == 'residual':
+          en_modules.append(pyramid_downsample(in_ch=input_pyramid_ch, out_ch=in_ch))
+          input_pyramid_ch = in_ch
+
+        hs_c.append(in_ch)
+
+    in_ch = hs_c[-1]
+    en_modules.append(ResnetBlock(in_ch=in_ch))
+    en_modules.append(AttnBlock(channels=in_ch))
+    en_modules.append(ResnetBlock(in_ch=in_ch))
+
+    self.en_modules = nn.ModuleList(en_modules)
+    pyramid_ch = 0
+    
+    def up_sample2image(in_ch, num_res_blocks, upsample_power):
+      # upsample_power is the log_2(upsample_scale)
+      modules = []
+      out_ch = in_ch
+      for _ in range(upsample_power):
+        for i_block in range(num_res_blocks):
+          modules.append(ResnetBlock(in_ch=in_ch,
+                                     out_ch=out_ch))
+        if resblock_type == 'ddpm':
+          modules.append(Upsample(in_ch=in_ch))
+        else:
+          modules.append(ResnetBlock(in_ch=in_ch, up=True))
+      for i_block in range(num_res_blocks):
+        modules.append(ResnetBlock(in_ch=in_ch,
+                                    out_ch=out_ch))          
+      modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, self.groups),
+                                  num_channels=in_ch, eps=1e-6))
+      modules.append(conv3x3(in_ch, channels, init_scale=init_scale))
+            
+      return nn.ModuleList(modules)
+    
+    self.de_modules = []
+    self.embed2image_modules = []
+    # Upsampling block
+    for idx_stage, i_level in enumerate(reversed(range(num_resolutions))):
+      de_modules = []
+      embed2image_modules = []
+      for i_block in range(num_res_blocks + 1):
+        out_ch = self.de_nfs[i_level] * ch_mult[i_level]
+        de_modules.append(ResnetBlock(in_ch=in_ch + hs_c.pop(),
+                                   out_ch=out_ch))
+        in_ch = out_ch
+      if all_resolutions[i_level] in attn_resolutions:
+        de_modules.append(AttnBlock(channels=in_ch))
+
+      if progressive != 'none':
+        if i_level == num_resolutions - 1:
+          if progressive == 'output_skip':
+            de_modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, self.groups),
+                                        num_channels=in_ch, eps=1e-6))
+            de_modules.append(conv3x3(in_ch, channels, init_scale=init_scale))
+            pyramid_ch = channels
+          elif progressive == 'residual':
+            de_modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, self.groups),
+                                        num_channels=in_ch, eps=1e-6))
+            de_modules.append(conv3x3(in_ch, in_ch, bias=True))
+            pyramid_ch = in_ch
+          else:
+            raise ValueError(f'{progressive} is not a valid name.')
+        else:
+          if progressive == 'output_skip':
+            de_modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, self.groups),
+                                        num_channels=in_ch, eps=1e-6))
+            de_modules.append(conv3x3(in_ch, channels, bias=True, init_scale=init_scale))
+            pyramid_ch = channels
+          elif progressive == 'residual':
+            de_modules.append(pyramid_upsample(in_ch=pyramid_ch, out_ch=in_ch))
+            pyramid_ch = in_ch
+          else:
+            raise ValueError(f'{progressive} is not a valid name')
+
+      if i_level != 0:
+        if resblock_type == 'ddpm':
+          de_modules.append(Upsample(in_ch=in_ch))
+        else:
+          de_modules.append(ResnetBlock(in_ch=in_ch, up=True))
+      upsample_power = i_level - 1
+      num_res_blocks_de_embed2image = self.de_embed2image_num_res_block[i_level]
+      
+      self.embed2image_modules.append(up_sample2image(in_ch, num_res_blocks_de_embed2image, upsample_power))
+      self.de_modules.append(nn.ModuleList(de_modules))
+    assert not hs_c
+    self.embed2image_modules.reverse()
+    self.embed2image_modules = nn.ModuleList(self.embed2image_modules)
+    self.de_modules = nn.ModuleList(self.de_modules)
+    # if progressive != 'output_skip':
+    #   modules.append(nn.GroupNorm(num_groups=min(in_ch // 4, self.groups),
+    #                               num_channels=in_ch, eps=1e-6))
+    #   modules.append(conv3x3(in_ch, channels, init_scale=init_scale))
+    self._log_param()
+    
+  def _log_param(self):
+    en_param_num = sum(p.numel() for p in self.en_modules.parameters())
+    de_param_num = 0
+    for idx_de, idx in enumerate(reversed(range(self.stage_num))):
+      idx_stage = idx + 1
+      de_param_num += sum(p.numel() for p in self.de_modules[idx_de].parameters())
+      up_sample2image_param_num = sum(p.numel() for p in self.embed2image_modules[idx].parameters())
+      total_params = en_param_num + de_param_num + up_sample2image_param_num 
+      logging.info(f"For stage {idx_stage}, the total params are {total_params}, upsample module params are {up_sample2image_param_num}")
+      
+    total_params = sum(p.numel() for p in self.parameters())  
+    logging.info(f"Total params are {total_params}")  
+    
+  def forward(self, x, time_cond):
+    # timestep/noise_level embedding; only for continuous training
+    for i_stage, intervals in enumerate(self.stage_interval):
+      for interval in intervals:
+        if time_cond[0] > interval[0]*1000 and time_cond[0] <= interval[1]*1000:
+          current_stage = i_stage
+    en_modules = self.en_modules
+
+    m_idx = 0
+    if self.embedding_type == 'fourier':
+      # Gaussian Fourier features embeddings.
+      used_sigmas = time_cond
+      temb = en_modules[m_idx](torch.log(used_sigmas))
+      m_idx += 1
+
+    elif self.embedding_type == 'positional':
+      # Sinusoidal positional embeddings.
+      timesteps = time_cond
+      used_sigmas = self.sigmas[time_cond.long()]
+      temb = layers.get_timestep_embedding(timesteps, self.en_nf)
+
+    else:
+      raise ValueError(f'embedding type {self.embedding_type} unknown.')
+
+    if self.conditional:
+      temb = en_modules[m_idx](temb)
+      m_idx += 1
+      temb = en_modules[m_idx](self.act(temb))
+      m_idx += 1
+    else:
+      temb = None
+
+    if not self.config.data.centered:
+      # If input data is in [0, 1]
+      x = 2 * x - 1.
+
+    # Downsampling block
+    input_pyramid = None
+    if self.progressive_input != 'none':
+      input_pyramid = x
+
+    hs = [en_modules[m_idx](x)]
+    m_idx += 1
+    for i_level in range(self.num_resolutions):
+      # Residual blocks for this resolution
+      for i_block in range(self.num_res_blocks):
+        h = en_modules[m_idx](hs[-1], temb)
+        m_idx += 1
+        if h.shape[-1] in self.attn_resolutions:
+          h = en_modules[m_idx](h)
+          m_idx += 1
+
+        hs.append(h)
+
+      if i_level != self.num_resolutions - 1:
+        if self.resblock_type == 'ddpm':
+          h = en_modules[m_idx](hs[-1])
+          m_idx += 1
+        else:
+          h = en_modules[m_idx](hs[-1], temb)
+          m_idx += 1
+
+        if self.progressive_input == 'input_skip':
+          input_pyramid = self.pyramid_downsample(input_pyramid)
+          h = en_modules[m_idx](input_pyramid, h)
+          m_idx += 1
+
+        elif self.progressive_input == 'residual':
+          input_pyramid = en_modules[m_idx](input_pyramid)
+          m_idx += 1
+          if self.skip_rescale:
+            input_pyramid = (input_pyramid + h) / np.sqrt(2.)
+          else:
+            input_pyramid = input_pyramid + h
+          h = input_pyramid
+
+        hs.append(h)
+
+    h = hs[-1]
+    h = en_modules[m_idx](h, temb)
+    m_idx += 1
+    h = en_modules[m_idx](h)
+    m_idx += 1
+    h = en_modules[m_idx](h, temb)
+    m_idx += 1
+
+    pyramid = None
+    # Upsampling block
+    for i_stage, i_level in enumerate(reversed(range(self.num_resolutions))):
+      
+      if i_level >= current_stage:
+        m_idx = 0
+        de_modules = self.de_modules[i_stage]   
+        
+        for i_block in range(self.num_res_blocks + 1):
+          h = de_modules[m_idx](torch.cat([h, hs.pop()], dim=1), temb)
+          m_idx += 1
+
+        if h.shape[-1] in self.attn_resolutions:
+          h = de_modules[m_idx](h)
+          m_idx += 1
+
+        if self.progressive != 'none':
+          if i_level == self.num_resolutions - 1:
+            if self.progressive == 'output_skip':
+              pyramid = self.act(de_modules[m_idx](h))
+              m_idx += 1
+              pyramid = de_modules[m_idx](pyramid)
+              m_idx += 1
+            elif self.progressive == 'residual':
+              pyramid = self.act(de_modules[m_idx](h))
+              m_idx += 1
+              pyramid = de_modules[m_idx](pyramid)
+              m_idx += 1
+            else:
+              raise ValueError(f'{self.progressive} is not a valid name.')
+          else:
+            if self.progressive == 'output_skip':
+              pyramid = self.pyramid_upsample(pyramid)
+              pyramid_h = self.act(de_modules[m_idx](h))
+              m_idx += 1
+              pyramid_h = de_modules[m_idx](pyramid_h)
+              m_idx += 1
+              pyramid = pyramid + pyramid_h
+            elif self.progressive == 'residual':
+              pyramid = de_modules[m_idx](pyramid)
+              m_idx += 1
+              if self.skip_rescale:
+                pyramid = (pyramid + h) / np.sqrt(2.)
+              else:
+                pyramid = pyramid + h
+              h = pyramid
+            else:
+              raise ValueError(f'{self.progressive} is not a valid name')
+
+        if i_level != 0:
+          if self.resblock_type == 'ddpm':
+            h = de_modules[m_idx](h)
+            m_idx += 1
+          else:
+            h = de_modules[m_idx](h, temb)
+            m_idx += 1
+    embed2image_modules = self.embed2image_modules[current_stage]
+    # assert not hs
+    # if self.progressive == 'output_skip':
+    #   h = pyramid
+    # else:
+    for m_idx in range(len(embed2image_modules) - 2):
+      h = embed2image_modules[m_idx](h)
+    h = self.act(embed2image_modules[-2](h))
+    h = embed2image_modules[-1](h)
+
+    # assert m_idx == len(modules)
+    if self.config.model.scale_by_sigma:
+      used_sigmas = used_sigmas.reshape((x.shape[0], *([1] * len(x.shape[1:]))))
+      h = h / used_sigmas
+    return h
+  
