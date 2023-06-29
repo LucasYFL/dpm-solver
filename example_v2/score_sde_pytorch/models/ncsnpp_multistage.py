@@ -246,6 +246,7 @@ class NCSNpp_multimodel(nn.Module):
       de_param_num = sum(p.numel() for p in self.de_modules[idx].parameters())
       total_params = en_param_num + de_param_num
       logging.info(f"For stage {idx_stage}, the total params are {total_params}")
+    logging.info(f"Encoder params are {en_param_num}")  
     total_params = sum(p.numel() for p in self.parameters())  
     logging.info(f"Total params are {total_params}")  
     
