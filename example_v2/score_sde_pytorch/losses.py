@@ -83,8 +83,8 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
       loss: A scalar that represents the average loss value across the mini-batch.
     """
     score_fn = mutils.get_score_fn(sde, model, train=train, continuous=continuous)
-    choose_stage = random.randint(0, len(model.module.stage_interval) - 1)
     if "multimodel" in model.module.__class__.__name__:
+      choose_stage = random.randint(0, len(model.module.stage_interval) - 1)
       intervals = model.module.stage_interval[choose_stage]
       t_rand = [random.uniform(*random.choices(intervals, weights=[r[1]-r[0] for r in intervals])[0]) for i in range(batch.shape[0])]
       t = torch.tensor(t_rand, device=batch.device) * (sde.T - eps) + eps
