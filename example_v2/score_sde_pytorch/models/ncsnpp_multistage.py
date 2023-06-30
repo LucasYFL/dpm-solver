@@ -21,6 +21,7 @@ import functools
 import torch
 import numpy as np
 import logging
+from torch.profiler import profile, record_function, ProfilerActivity
 
 ResnetBlockDDPM = layerspp.ResnetBlockDDPMpp
 ResnetBlockBigGAN = layerspp.ResnetBlockBigGANpp
@@ -246,8 +247,19 @@ class NCSNpp_multimodel(nn.Module):
       de_param_num = sum(p.numel() for p in self.de_modules[idx].parameters())
       total_params = en_param_num + de_param_num
       logging.info(f"For stage {idx_stage}, the total params are {total_params}")
+    logging.info(f"Encoder params are {en_param_num}")  
     total_params = sum(p.numel() for p in self.parameters())  
     logging.info(f"Total params are {total_params}")  
+
+    # for idx in range(self.stage_num):
+    #   logging.info(f"For stage {idx}")
+    #   perturbed_data = torch.randn((self.config.training.batch_size, self.config.data.num_channels, self.config.data.image_size, self.config.data.image_size))
+    #   t = torch.ones((self.config.training.batch_size)) * (self.stage_interval[idx][0][0] + self.stage_interval[idx][0][1])/2
+    #   print(t)
+    #   with profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], record_shapes=True,with_flops=True, use_cuda=True) as prof:
+    #       with record_function("model_inference"):
+    #           self.forward(perturbed_data,t)
+    #   print(prof.key_averages().table(sort_by="self_cuda_time_total", row_limit=-1))
     
   def forward(self, x, time_cond):
     # timestep/noise_level embedding; only for continuous training
