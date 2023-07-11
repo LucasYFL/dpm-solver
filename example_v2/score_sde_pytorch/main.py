@@ -19,7 +19,7 @@ import os
 local_rank = int(os.environ["LOCAL_RANK"])
 total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
 
-
+import json
 import run_lib
 from absl import app
 from absl import flags
@@ -57,6 +57,11 @@ def main(argv):
       logger = logging.getLogger()
       logger.addHandler(handler)
       logger.setLevel('INFO')
+      out_file = open(os.path.join(FLAGS.workdir,"train_config.json"), "w")
+  
+      json.dump(FLAGS.config.to_json_best_effort(), out_file, indent = 6)
+        
+      out_file.close()
     # Run the training pipeline
     run_lib.train(FLAGS.config, FLAGS.workdir)
   elif FLAGS.mode == "eval":

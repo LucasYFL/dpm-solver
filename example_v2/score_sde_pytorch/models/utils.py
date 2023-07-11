@@ -85,15 +85,18 @@ def get_ddpm_params(config):
   }
 
 
-def create_model(config, local_rank):
+def create_model(config, local_rank=None):
   """Create the score model."""
   model_name = config.model.name
   score_model = get_model(model_name)(config)
-  score_model = score_model.to(f"{config.device}:{local_rank}")
-  # score_model = score_model.cuda()
-  """if torch.__version__ >= "2.0.0":
-     score_model = torch.compile(score_model)"""
-  score_model = torch.nn.parallel.DistributedDataParallel(score_model, find_unused_parameters=True, device_ids = [local_rank])
+  if local_rank is None:
+      score_model = score_model.cuda()
+  else:
+    score_model = score_model.to(f"{config.device}:{local_rank}")
+    
+    """if torch.__version__ >= "2.0.0":
+      score_model = torch.compile(score_model)"""
+    score_model = torch.nn.parallel.DistributedDataParallel(score_model, find_unused_parameters=True, device_ids = [local_rank])
   return score_model
 
 

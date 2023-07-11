@@ -8,7 +8,7 @@
 #SBATCH --account=qingqu1
 #SBATCH --partition=spgpu
 #SBATCH --gpus=a40:2
-#SBATCH --output=one_stage2.out
+#SBATCH --output=uniformv2.out
 #SBATCH --cpus-per-task=8
 echo $EXP_FEWER_STEPS
 module purge
@@ -18,6 +18,6 @@ conda activate dpm2
 cd /home/yifulu/work/dpm-solver/example_v2/score_sde_pytorch
 #torchrun --nproc_per_node=2 --master_port=29600 main.py --config ./configs/vp/uniform.py --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage/uniform_interval --mode train --config.training.batch_size=128 
 #torchrun --nproc_per_node=2 --master_port=29600 main.py --config ./configs/vp/cifar10_ncsnpp_multistage_deep_continuous_v2.py --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage/multistage_gn16_v2 --mode train --config.training.batch_size=128 
-torchrun --nproc_per_node=2 --master_port=29600 main.py --config ./configs/vp/cifar10_ncsnpp_multistage_deep_continuous_compare.py --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage/one_stage --mode train --config.training.batch_size=128 
-
+#torchrun --nproc_per_node=2 --master_port=29600 main.py --config ./configs/vp/cifar10_ncsnpp_multistage_deep_continuous_compare.py --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage/one_stage --mode train --config.training.batch_size=128 
+torchrun --nproc_per_node=2 --master_port=29600 main.py --config ./configs/vp/cifar10_ncsnpp_multistage_deep_continuous_3stage_uniform.py --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage/uniform_intervalv2 --mode train --config.training.batch_size=128 
 #torchrun --nproc_per_node=2 --master_port=29600 main.py --config ./configs/vp/cifar10_ncsnpp_multistage_serial_deep_continuous.py --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage/serial --mode train --config.training.batch_size=128 
