@@ -70,7 +70,7 @@ total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
 torch.cuda.set_device(local_rank)
 torch.distributed.init_process_group(backend='nccl')
 def evaluate(config,
-             workdir,m1,m2=None,config1=None,config2=None,
+             workdir,m1,m2=None,config1=None,
              eval_folder="eval"):
   """Evaluate trained models.
 
@@ -193,7 +193,7 @@ def main(argv):
   config_fewer = FLAGS.config
   config1 = FLAGS.config1
   # Run the evaluation pipeline
-  evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,FLAGS.m3,config1,FLAGS.config2, FLAGS.eval_folder)
+  evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2, FLAGS.config1, FLAGS.eval_folder)
  
 
 
