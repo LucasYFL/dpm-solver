@@ -49,7 +49,9 @@ def get_config():
   # data
   data = config.data
   data.centered = True
-
+  evaluate = config.eval
+  evaluate.t_tuples = (0.376, 0.476,0.626,0.776)
+  evaluate.t_converge = (0,0,0,0,0)
   # model
   model = config.model
   model.name = 'ncsnpp_multistage'

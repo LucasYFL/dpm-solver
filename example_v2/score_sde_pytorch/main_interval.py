@@ -54,12 +54,12 @@ config_flags.DEFINE_config_file(
   "config", None, "Training configuration.", lock_config=True)
 config_flags.DEFINE_config_file(
   "config1", None, "Training configuration.", lock_config=True)
-config_flags.DEFINE_config_file(
-  "config2", None, "Training configuration.", lock_config=True)
+# config_flags.DEFINE_config_file(
+#   "config2", None, "Training configuration.", lock_config=True)
 flags.DEFINE_string("workdir", None, "Work directory.")
 flags.DEFINE_string("m1", None, "Model 1 directory.")
 flags.DEFINE_string("m2", None, "Model 2  directory.")
-flags.DEFINE_string("m3", None, "Model 3 directory.")
+# flags.DEFINE_string("m3", None, "Model 3 directory.")
 flags.DEFINE_string("eval_folder", "eval",
                     "The folder name for storing evaluation results")
 flags.mark_flags_as_required(["workdir", "config", 'm1'])
@@ -70,7 +70,7 @@ total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
 torch.cuda.set_device(local_rank)
 torch.distributed.init_process_group(backend='nccl')
 def evaluate(config,
-             workdir,m1,m2=None,m3=None,config1=None,config2=None,
+             workdir,m1,m2=None,config1=None,config2=None,
              eval_folder="eval"):
   """Evaluate trained models.
 
@@ -101,10 +101,10 @@ def evaluate(config,
   optimizers = []
   emas = []
   states = []
-  mdir = (m1,m2,m3)
+  mdir = (m1,m2)
   checkpoint_dirs = []
   logging.info(config.eval.t_tuples)
-  configs = (config,)*3 if config1 is None else (config,config1,config2)
+  configs = (config,)*3 if config1 is None else (config,config1)
 
   # Setup SDEs
   if config.training.sde.lower() == 'vpsde':
@@ -118,15 +118,17 @@ def evaluate(config,
     sampling_eps = 1e-5
   else:
     raise NotImplementedError(f"SDE {config.training.sde} unknown.")
+  temp_model = [mutils.create_model(con,local_rank) for con in configs]
   for i in range(len(config.eval.t_tuples)+1):
-    s = mutils.create_model(configs[i],local_rank)
+    conv = config.eval.t_converge[i]
+    s = temp_model[conv] 
     score_models.append(s)
     opt = losses.get_optimizer(config, s.parameters())
     optimizers.append(opt)
     ema = ExponentialMovingAverage(s.parameters(), decay=config.model.ema_rate)
     emas.append(ema)
     states.append(dict(optimizer=opt, model=s, ema=ema, step=0))
-    checkpoint_dirs.append( os.path.join(workdir,mdir[i], "checkpoints"))
+    checkpoint_dirs.append( os.path.join(workdir,mdir[conv], "checkpoints"))
 
   # Build the sampling function when sampling is enabled
   if config.eval.enable_sampling:

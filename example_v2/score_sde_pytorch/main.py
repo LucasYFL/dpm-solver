@@ -46,6 +46,7 @@ def main(argv):
     # Create the working directory
     # Set logger so that it outputs to both console and file
     # Make logging work for both disk and Google Cloud Storage
+    
     FLAGS.config.training.batch_size = int(FLAGS.config.training.batch_size / total_rank)
     # print(FLAGS.config.training.batch_size)
     if local_rank == 0:
@@ -59,9 +60,10 @@ def main(argv):
       logger.setLevel('INFO')
       out_file = open(os.path.join(FLAGS.workdir,"train_config.json"), "w")
   
-      json.dump(FLAGS.config.to_json_best_effort(), out_file, indent = 6)
+      json.dump(FLAGS.config.to_json_best_effort(), out_file, indent = 6,separators=(',\n', ': '))
         
       out_file.close()
+      logger.info(FLAGS.config)
     # Run the training pipeline
     run_lib.train(FLAGS.config, FLAGS.workdir)
   elif FLAGS.mode == "eval":
