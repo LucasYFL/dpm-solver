@@ -423,7 +423,7 @@ class NCSNpp_multimodel(nn.Module):
 
 
 @utils.register_model(name='ncsnpp_multistage_serial')
-class NCSNpp(nn.Module):
+class NCSNpp_serial(nn.Module):
   """NCSN++ model"""
 
   def __init__(self, config):

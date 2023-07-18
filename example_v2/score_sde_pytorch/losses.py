@@ -71,7 +71,13 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
     A loss function.
   """
   reduce_op = torch.mean if reduce_mean else lambda *args, **kwargs: 0.5 * torch.sum(*args, **kwargs)
-
+  biased = int(os.environ.get('BIASED_SAMPLE', 0))
+  num_scales = sde.N
+  sig_min = sde.sigma(torch.tensor(eps))
+  sig_max = sde.sigma(torch.tensor(sde.T))
+  rho = 7
+  if biased:
+    print("biased sample")
   def loss_fn(model, batch):
     """Compute the loss function.
 
@@ -83,11 +89,33 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
       loss: A scalar that represents the average loss value across the mini-batch.
     """
     score_fn = mutils.get_score_fn(sde, model, train=train, continuous=continuous)
+    
     if "multimodel" in model.module.__class__.__name__:
-      choose_stage = random.randint(0, len(model.module.stage_interval) - 1)
-      intervals = model.module.stage_interval[choose_stage]
-      t_rand = [random.uniform(*random.choices(intervals, weights=[r[1]-r[0] for r in intervals])[0]) for i in range(batch.shape[0])]
-      t = torch.tensor(t_rand, device=batch.device) * (sde.T - eps) + eps
+      if biased:
+        indices = torch.randint(
+            0, num_scales - 1, (1,), device=batch.device
+        )
+        t = sig_max ** (1 / rho) + indices / (num_scales - 1) * (
+            sig_min ** (1 / rho) - sig_max ** (1 / rho)
+        )
+        t = t**rho
+        t = sde.inv_sig(t)
+        choose_stage = 0
+        chose_interval = None
+        for i_stage, intervals in enumerate(model.module.stage_interval):
+          for interval in intervals:
+            if t > interval[0] and t <= interval[1]:
+              choose_stage = i_stage
+              chose_interval = interval
+        t_rand = [random.uniform(*random.choices(intervals, weights=[r[1]-r[0] for r in intervals])[0]) for i in range(batch.shape[0])]
+        t = torch.tensor(t_rand, device=batch.device) * (sde.T - eps) + eps
+        
+      else:
+
+        choose_stage = random.randint(0, len(model.module.stage_interval) - 1)
+        intervals = model.module.stage_interval[choose_stage]
+        t_rand = [random.uniform(*random.choices(intervals, weights=[r[1]-r[0] for r in intervals])[0]) for i in range(batch.shape[0])]
+        t = torch.tensor(t_rand, device=batch.device) * (sde.T - eps) + eps
     else:
       t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
     z = torch.randn_like(batch)

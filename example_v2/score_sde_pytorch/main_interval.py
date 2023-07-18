@@ -193,7 +193,7 @@ def main(argv):
   config_fewer = FLAGS.config
   config1 = FLAGS.config1
   # Run the evaluation pipeline
-  evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,FLAGS.m3,config1,FLAGS.config2, FLAGS.eval_folder)
+  evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,config1,FLAGS.config2, FLAGS.eval_folder)
  
 
 

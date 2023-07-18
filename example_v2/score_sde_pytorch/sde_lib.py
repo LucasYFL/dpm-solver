@@ -146,7 +146,13 @@ class VPSDE(SDE):
 
   def prior_sampling(self, shape):
     return torch.randn(*shape)
-
+  def sigma(self,t):
+    sig = torch.sqrt(torch.exp(0.5*(self.beta_1-self.beta_0)*t**2+self.beta_0*t)-1)
+    return sig
+  def inv_sig(self,sig):
+    c =-1*(torch.log(sig**2+1)*2/(self.beta_1-self.beta_0))
+    b = self.beta_0*2/(self.beta_1-self.beta_0)
+    return (torch.sqrt(b**2-4*c)-b)/2
   def prior_logp(self, z):
     shape = z.shape
     N = np.prod(shape[1:])
