@@ -70,6 +70,8 @@ local_rank = int(os.environ["LOCAL_RANK"])
 total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
 torch.cuda.set_device(local_rank)
 torch.distributed.init_process_group(backend='nccl')
+
+#torchrun --nproc_per_node=1 main_sample.py --config ./configs/vp/cifar10_ncsnpp_multistage_deep_continuous_4stage_v1.py   --m1 4stages  --workdir /home/ubuntu/exp/multistage  --seed_path /home/ubuntu/exp/multistage/phenomenon/seed.pth --eval_folder 4stages_sample --config.eval.t_tuples="()" --config.eval.t_converge="(0,)" --config.eval.begin_ckpt=1 --config.eval.end_ckpt=11 --config.eval.batch_size=64 --config.sampling.steps=20  --config.sampling.eps=1e-4 --config.eval.converge_epoch=8 --config.eval.num_samples=64
 def sample(config,
              workdir,m1,m2=None,config1=None,
              eval_folder="eval"):
@@ -82,7 +84,7 @@ def sample(config,
       "eval".
   """
   # Create directory to eval_folder
-  eval_dir = os.path.join(os.path.abspath(FLAGS.seed_path), eval_folder)
+  eval_dir = os.path.join(os.path.dirname(FLAGS.seed_path), eval_folder)
   os.makedirs(eval_dir, exist_ok=True)
 
   # Build data pipeline
@@ -138,9 +140,9 @@ def sample(config,
                       config.data.image_size, config.data.image_size)
     sampling_fn = sampling.get_sampling_fn(config, sde, sampling_shape, inverse_scaler, sampling_eps, local_rank)
     if os.path.exists(FLAGS.seed_path):
-      seed = torch.load(FLAGS.seed_path)
+      seed = torch.load(FLAGS.seed_path).to(f"cuda:{local_rank}")
     else:
-      seed = sampling_fn.prior_sampling(sampling_shape)
+      seed = sde.prior_sampling(sampling_shape)
       torch.save(seed, FLAGS.seed_path)
     
   begin_ckpt = config.eval.begin_ckpt
