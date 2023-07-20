@@ -74,8 +74,8 @@ def get_config():
   model.embedding_type = 'positional'
   model.init_scale = 0.0
   model.conv_size = 3
-  model.en_nf = 192
-  model.de_nfs = [128, 64, 16]
+  model.en_nf = 160
+  model.de_nfs = [160, 128, 16]
   model.stage_num = 3
   model.stage_interval = [
     [[0, 0.4260]], [[0.4260, 0.6260]], [[0.6260, 1]]

@@ -23,7 +23,7 @@ import torch
 from torch.utils import tensorboard
 from torchvision.utils import make_grid, save_image
 from utils import save_checkpoint, restore_checkpoint
-from configs.vp import cifar10_ncsnpp_multistage_deep_continuous_v3 as configs
+from configs.vp import cifar10_ncsnpp_multistage_deep_continuous_5stage_v1 as configs
 from sde_lib import VESDE, VPSDE, subVPSDE
 from torchstat import stat
 
@@ -51,7 +51,7 @@ sampling_shape = (config.eval.batch_size,
 
 batch = torch.rand(sampling_shape).to(config.device)
 batch = scaler(batch)
-lst_steps=torch.tensor([0.5])*1000
+lst_steps=torch.tensor([0.8])*1000
 t = lst_steps.to('cpu')#.repeat(batch.shape[0])
 class mfn(torch.nn.Module):
     def __init__(self,m):

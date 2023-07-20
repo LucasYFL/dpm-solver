@@ -601,6 +601,8 @@ class NCSNpp_serial(nn.Module):
     self.embed2image_modules = []
     # Upsampling block
     for idx_stage, i_level in enumerate(reversed(range(num_resolutions))):
+      ## idx_stage = [0, 1, 2, ..]
+      # i_level = [..., 2, 1, 0]
       de_modules = []
       embed2image_modules = []
       for i_block in range(num_res_blocks + 1):

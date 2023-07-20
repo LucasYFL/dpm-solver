@@ -49,7 +49,9 @@ def get_config():
   # data
   data = config.data
   data.centered = True
-
+  evaluate = config.eval
+  evaluate.t_tuples = (0.376, 0.476,0.626,0.776)
+  evaluate.t_converge = (0,0,0,0,0)
   # model
   model = config.model
   model.name = 'ncsnpp_multistage'
@@ -74,11 +76,11 @@ def get_config():
   model.embedding_type = 'positional'
   model.init_scale = 0.0
   model.conv_size = 3
-  model.en_nf = 192
-  model.de_nfs = [128, 64, 16]
-  model.stage_num = 3
+  model.en_nf = 64
+  model.de_nfs = [224, 160, 160, 64, 48]
+  model.stage_num = 5
   model.stage_interval = [
-    [[0, 0.4260]], [[0.4260, 0.6260]], [[0.6260, 1]]
+    [[0, 0.376]], [[0.376, 0.476]], [[0.476, 0.626]], [[0.626, 0.776]], [[0.776, 1]]
   ]
   model.group = 16
   return config

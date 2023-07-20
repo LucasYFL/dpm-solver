@@ -75,7 +75,7 @@ def get_config():
   model.init_scale = 0.0
   model.conv_size = 3
   model.en_nf = 192
-  model.de_nfs = [128, 64, 16]
+  model.de_nfs = [144, 112, 16]
   model.stage_num = 3
   model.stage_interval = [
     [[0, 0.4260]], [[0.4260, 0.6260]], [[0.6260, 1]]
