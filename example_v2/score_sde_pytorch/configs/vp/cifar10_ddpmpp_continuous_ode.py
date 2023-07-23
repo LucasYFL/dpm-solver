@@ -26,25 +26,15 @@ def get_config():
   training.sde = 'vpsde'
   training.continuous = True
   training.reduce_mean = True
-  training.n_iters = 950001
 
   # sampling
   sampling = config.sampling
-
+  sampling.method = 'ode'
   sampling.eps = 1e-4
-  sampling.method = 'dpm_solver'
-  sampling.dpm_solver_method = 'singlestep'
-  sampling.dpm_solver_order = 3
-  sampling.algorithm_type = 'dpmsolver'
-  sampling.thresholding = False
   sampling.noise_removal = False
-  sampling.steps = 20
-  sampling.skip_type = 'logSNR'
-  sampling.rtol = 0.05
 
   sampling.rk45_rtol = 1e-5
   sampling.rk45_atol = 1e-5
-
   # data
   data = config.data
   data.centered = True
@@ -58,7 +48,7 @@ def get_config():
   model.nonlinearity = 'swish'
   model.nf = 128
   model.ch_mult = (1, 2, 2, 2)
-  model.num_res_blocks = 8
+  model.num_res_blocks = 4
   model.attn_resolutions = (16,)
   model.resamp_with_conv = True
   model.conditional = True

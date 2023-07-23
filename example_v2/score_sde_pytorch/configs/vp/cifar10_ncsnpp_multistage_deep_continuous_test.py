@@ -14,7 +14,7 @@
 # limitations under the License.
 
 # Lint as: python3
-"""Training NCSNv3 on CIFAR-10 with continuous sigmas."""
+"""Training NCSN++ on CIFAR-10."""
 
 from configs.default_cifar10_configs import get_default_configs
 
@@ -25,54 +25,60 @@ def get_config():
   training = config.training
   training.sde = 'vpsde'
   training.continuous = True
-  training.reduce_mean = True
   training.n_iters = 950001
+  training.reduce_mean = True
 
   # sampling
   sampling = config.sampling
-
-  sampling.eps = 1e-4
+  """
+  sampling.method = 'pc'
+  sampling.predictor = 'euler_maruyama'
+  sampling.corrector = 'none'
+  """
+  sampling.eps = 1e-3
   sampling.method = 'dpm_solver'
   sampling.dpm_solver_method = 'singlestep'
   sampling.dpm_solver_order = 3
   sampling.algorithm_type = 'dpmsolver'
   sampling.thresholding = False
   sampling.noise_removal = False
-  sampling.steps = 20
+  sampling.steps = 10
   sampling.skip_type = 'logSNR'
   sampling.rtol = 0.05
-
-  sampling.rk45_rtol = 1e-5
-  sampling.rk45_atol = 1e-5
-
+  
   # data
   data = config.data
   data.centered = True
 
   # model
   model = config.model
-  model.name = 'ncsnpp'
+  model.name = 'ncsnpp_multistage'
+  model.fourier_scale = 16
   model.scale_by_sigma = False
   model.ema_rate = 0.9999
   model.normalization = 'GroupNorm'
   model.nonlinearity = 'swish'
-  model.nf = 128
   model.ch_mult = (1, 2, 2, 2)
   model.num_res_blocks = 8
   model.attn_resolutions = (16,)
   model.resamp_with_conv = True
   model.conditional = True
-  model.fir = False
+  model.fir = True
   model.fir_kernel = [1, 3, 3, 1]
   model.skip_rescale = True
   model.resblock_type = 'biggan'
   model.progressive = 'none'
-  model.progressive_input = 'none'
+  model.progressive_input = 'residual'
   model.progressive_combine = 'sum'
   model.attention_type = 'ddpm'
-  model.init_scale = 0.
   model.embedding_type = 'positional'
-  model.fourier_scale = 16
+  model.init_scale = 0.0
   model.conv_size = 3
-
+  model.en_nf = 64
+  model.de_nfs = [208, 96, 144, 48, 64]
+  model.stage_num = 5
+  model.stage_interval = [
+    [[0, 0.376]], [[0.376, 0.476]], [[0.476, 0.626]], [[0.626, 0.776]], [[0.776, 1]]
+  ]
+  model.group = 16
   return config

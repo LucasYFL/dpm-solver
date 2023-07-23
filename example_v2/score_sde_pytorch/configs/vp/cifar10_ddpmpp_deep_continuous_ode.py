@@ -30,21 +30,12 @@ def get_config():
 
   # sampling
   sampling = config.sampling
-
+  sampling.method = 'ode'
   sampling.eps = 1e-4
-  sampling.method = 'dpm_solver'
-  sampling.dpm_solver_method = 'singlestep'
-  sampling.dpm_solver_order = 3
-  sampling.algorithm_type = 'dpmsolver'
-  sampling.thresholding = False
   sampling.noise_removal = False
-  sampling.steps = 20
-  sampling.skip_type = 'logSNR'
-  sampling.rtol = 0.05
 
   sampling.rk45_rtol = 1e-5
   sampling.rk45_atol = 1e-5
-
   # data
   data = config.data
   data.centered = True

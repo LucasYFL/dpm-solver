@@ -71,7 +71,9 @@ total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
 torch.cuda.set_device(local_rank)
 torch.distributed.init_process_group(backend='nccl')
 
-#torchrun --nproc_per_node=1 main_sample.py --config ./configs/vp/cifar10_ncsnpp_multistage_deep_continuous_4stage_v1.py   --m1 4stages  --workdir /home/ubuntu/exp/multistage  --seed_path /home/ubuntu/exp/multistage/phenomenon/seed.pth --eval_folder 4stages_sample --config.eval.t_tuples="()" --config.eval.t_converge="(0,)" --config.eval.begin_ckpt=1 --config.eval.end_ckpt=11 --config.eval.batch_size=64 --config.sampling.steps=20  --config.sampling.eps=1e-4 --config.eval.converge_epoch=8 --config.eval.num_samples=64
+
+
+#--config.sampling.steps=20  --config.sampling.eps=1e-4
 def sample(config,
              workdir,m1,m2=None,config1=None,
              eval_folder="eval"):
@@ -167,7 +169,7 @@ def sample(config,
         
       if local_rank == 0:
         logging.info(eval_dir)
-      num_sampling_rounds = config.eval.num_samples // config.eval.batch_size + 1
+      num_sampling_rounds = config.eval.num_samples // config.eval.batch_size
       for r in range(num_sampling_rounds):
         if local_rank == 0:
           logging.info("sampling -- ckpt: %d, round: %d" % (ckpt, r))

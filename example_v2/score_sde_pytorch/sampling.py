@@ -404,17 +404,21 @@ def get_pc_sampler(sde, shape, predictor, corrector, inverse_scaler, snr,
                                           snr=snr,
                                           n_steps=n_steps)
 
-  def pc_sampler(model):
+  def pc_sampler(model, compare_step, seed=None):
     """ The PC sampler funciton.
-
+    
     Args:
       model: A score model.
     Returns:
       Samples, number of function evaluations.
     """
+    model = model[0]
     with torch.no_grad():
       # Initial sample
-      x = sde.prior_sampling(shape).to(device)
+      if seed is not None:
+        x = seed
+      else:
+        x = sde.prior_sampling(shape).to(device)
       timesteps = torch.linspace(sde.T, eps, sde.N, device=device)
 
       for i in range(sde.N):
@@ -463,22 +467,23 @@ def get_ode_sampler(sde, shape, inverse_scaler,
     rsde = sde.reverse(score_fn, probability_flow=True)
     return rsde.sde(x, t)[0]
 
-  def ode_sampler(model, z=None):
+  def ode_sampler(model, compare_step, seed=None):
     """The probability flow ODE sampler with black-box ODE solver.
 
     Args:
       model: A score model.
-      z: If present, generate samples from latent code `z`.
+      seed: If present, generate samples from latent code `seed`.
     Returns:
       samples, number of function evaluations.
     """
+    model = model[0]
     with torch.no_grad():
       # Initial sample
-      if z is None:
+      if seed is None:
         # If not represent, sample the latent code from the prior distibution of the SDE.
         x = sde.prior_sampling(shape).to(device)
       else:
-        x = z
+        x = seed
 
       def ode_func(t, x):
         x = from_flattened_numpy(x, shape).to(device).type(torch.float32)
