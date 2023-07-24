@@ -31,7 +31,8 @@ def get_config():
   sampling = config.sampling
   sampling.method = 'pc'
   sampling.predictor = 'reverse_diffusion'
-  sampling.corrector = 'langevin'
+  sampling.corrector = 'identity'
+  sampling.probability_flow = True
 
   # model
   model = config.model

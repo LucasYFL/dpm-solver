@@ -14,7 +14,7 @@
 # limitations under the License.
 
 # Lint as: python3
-"""Training NCSN++ on CIFAR-10 with SMLD."""
+"""Training NCSN++ on CIFAR-10 with VE SDE."""
 
 from configs.default_cifar10_configs import get_default_configs
 
@@ -24,25 +24,29 @@ def get_config():
   # training
   training = config.training
   training.sde = 'vesde'
-  training.continuous = False
+  training.continuous = True
+  training.n_iters = 950001
 
   # sampling
   sampling = config.sampling
-  sampling.method = 'pc'
-  sampling.predictor = 'reverse_diffusion'
-  sampling.corrector = 'langevin'
-  sampling.probability_flow = True
-  
+  sampling.method = 'ode'
+  sampling.eps = 1e-4
+  sampling.noise_removal = False
+
+  sampling.rk45_rtol = 1e-5
+  sampling.rk45_atol = 1e-5
+
   # model
   model = config.model
   model.name = 'ncsnpp'
+  model.fourier_scale = 16
   model.scale_by_sigma = True
   model.ema_rate = 0.999
   model.normalization = 'GroupNorm'
   model.nonlinearity = 'swish'
   model.nf = 128
   model.ch_mult = (1, 2, 2, 2)
-  model.num_res_blocks = 4
+  model.num_res_blocks = 8
   model.attn_resolutions = (16,)
   model.resamp_with_conv = True
   model.conditional = True
@@ -55,7 +59,6 @@ def get_config():
   model.progressive_combine = 'sum'
   model.attention_type = 'ddpm'
   model.init_scale = 0.0
-  model.embedding_type = 'positional'
   model.conv_size = 3
 
   return config

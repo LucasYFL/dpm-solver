@@ -28,11 +28,14 @@ def get_config():
 
   # sampling
   sampling = config.sampling
-  sampling.method = 'pc'
-  sampling.predictor = 'reverse_diffusion'
-  sampling.corrector = 'langevin'
-  sampling.probability_flow = True
-  
+  sampling.method = 'ode'
+  sampling.eps = 1e-4
+  sampling.noise_removal = False
+
+  sampling.rk45_rtol = 1e-5
+  sampling.rk45_atol = 1e-5
+
+
   # model
   model = config.model
   model.name = 'ncsnpp'

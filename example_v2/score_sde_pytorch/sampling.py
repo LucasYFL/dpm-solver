@@ -297,6 +297,18 @@ class LangevinCorrector(Corrector):
       x = x_mean + torch.sqrt(step_size * 2)[:, None, None, None] * noise
 
     return x, x_mean
+  
+@register_corrector(name='identity')
+class Identity(Corrector):
+  def __init__(self, sde, score_fn, snr, n_steps):
+    super().__init__(sde, score_fn, snr, n_steps)
+    if not isinstance(sde, sde_lib.VPSDE) \
+        and not isinstance(sde, sde_lib.VESDE) \
+        and not isinstance(sde, sde_lib.subVPSDE):
+      raise NotImplementedError(f"SDE class {sde.__class__.__name__} not yet supported.")
+  
+  def update_fn(self, x, t):
+    return x, x
 
 
 @register_corrector(name='ald')
