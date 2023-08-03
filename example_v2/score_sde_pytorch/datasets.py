@@ -21,6 +21,7 @@ import torchvision
 import torchvision.transforms as TF
 import torch
 import os
+import PIL
 
 
 def get_data_scaler(config):
@@ -92,25 +93,25 @@ def get_dataset(config, uniform_dequantization=False, evaluation=False):
   # shuffle_buffer_size = 10000
   # prefetch_size = tf.data.experimental.AUTOTUNE
   # num_epochs = None if not evaluation else 1
-  root = "./dataset"
+  root = config.data.root
   if not os.path.isdir(root):
     os.mkdir(root)
+  train_transforms = [
+    TF.PILToTensor(),
+    TF.ConvertImageDtype(torch.float),
+    TF.Resize((config.data.image_size, config.data.image_size)),
+  ]
+  eval_trainforms = train_transforms.copy()
+  if config.data.random_flip:
+    train_transforms.append(TF.RandomHorizontalFlip())
+  train_transforms = TF.Compose(train_transforms)
+  eval_trainforms = TF.Compose(eval_trainforms)
   # Create dataset builders for each dataset.
   if config.data.dataset == 'CIFAR10':
     if not os.path.isdir(os.path.join(root, config.data.dataset)):
       os.mkdir(os.path.join(root, config.data.dataset))
     download = 'cifar-10-batches-py' not in os.listdir(os.path.join(root, config.data.dataset))
     
-    train_transforms = [
-      TF.PILToTensor(),
-      TF.ConvertImageDtype(torch.float),
-      TF.Resize((config.data.image_size, config.data.image_size)),
-    ]
-    eval_trainforms = train_transforms.copy()
-    if config.data.random_flip:
-      train_transforms.append(TF.RandomHorizontalFlip())
-    train_transforms = TF.Compose(train_transforms)
-    eval_trainforms = TF.Compose(eval_trainforms)
     train_ds = torchvision.datasets.CIFAR10(root = os.path.join(root, config.data.dataset),
                                             transform=train_transforms, 
                                             train = True, 
@@ -119,23 +120,38 @@ def get_dataset(config, uniform_dequantization=False, evaluation=False):
                                            transform=eval_trainforms, 
                                            train = False, 
                                            download = download)
-
-  #   def resize_op(img):
-  #     img = tf.image.convert_image_dtype(img, tf.float32)
-  #     return tf.image.resize(img, [config.data.image_size, config.data.image_size], antialias=True)
-
-  # def preprocess_fn(d):
-  #   ## TODO change to pytorch
-  #   """Basic preprocessing function scales data to [0, 1) and randomly flips."""
-  #   img = resize_op(d['image'])
-  #   if config.data.random_flip and not evaluation:
-  #     img = tf.image.random_flip_left_right(img)
-  #   if uniform_dequantization:
-  #     img = (tf.random.uniform(img.shape, dtype=tf.float32) + img * 255.) / 256.
-
-  #   return dict(image=img, label=d.get('label', None))
+  elif config.data.dataset == 'CELEBA':
+    train_ds = torchvision.datasets.CelebA(root = root,
+                              transform=train_transforms, 
+                              split = "train", 
+                              download = False)
+    eval_ds = torchvision.datasets.CelebA(root = root, 
+                            transform=eval_trainforms, 
+                            split = "valid", 
+                            download = False)    
 
   return train_ds, eval_ds
+
+# class CelebANoLabel(torchvision.datasets.CelebA):
+#   def __init__(
+#       self,
+#       root,
+#       split = "train",
+#       target_type = "attr",
+#       transform = None,
+#       target_transform = None,
+#       download = False,
+#   ):
+#       super().__init__(root, split=split, target_type=target_type, 
+#                         transform=transform,
+#                         target_transform=target_transform,
+#                         download=download)  
+  
+#   def __getitem__(self, index: int):
+#     X = PIL.Image.open(os.path.join(self.root, self.base_folder, "img_align_celeba", self.filename[index]))
+#     if self.transform is not None:
+#         X = self.transform(X)
+#     return X
 
 def distributed_dataset(ds, config, drop_last = False):
   sampler = torch.utils.data.distributed.DistributedSampler(ds, shuffle = True)
@@ -146,4 +162,5 @@ def distributed_dataset(ds, config, drop_last = False):
   dataset_iter = iter(dataloader)
   
   return dataset_iter
+
 

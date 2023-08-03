@@ -45,16 +45,18 @@ def get_default_configs():
   data.uniform_dequantization = False
   data.centered = False
   data.num_channels = 3
+  data.root = '/home/ubuntu/dataset/'
 
   # model
   config.model = model = ml_collections.ConfigDict()
-  model.sigma_max = 90.
   model.sigma_min = 0.01
+  model.sigma_max = 50
   model.num_scales = 1000
   model.beta_min = 0.1
   model.beta_max = 20.
   model.dropout = 0.1
   model.embedding_type = 'fourier'
+  model.group = 32
 
   # optimization
   config.optim = optim = ml_collections.ConfigDict()
@@ -67,6 +69,6 @@ def get_default_configs():
   optim.grad_clip = 1.
 
   config.seed = 42
-  config.device = torch.device('cuda:0') if torch.cuda.is_available() else torch.device('cpu')
+  config.device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
 
   return config
