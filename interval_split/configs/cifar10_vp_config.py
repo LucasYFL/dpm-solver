@@ -27,10 +27,10 @@ def get_config():
 
   # exp
   config.exp = exp = ml_collections.ConfigDict()
-  exp.sampling_num = 20
+  exp.sampling_num = 200
   exp.loss_func = "epsilon"
-  exp.num_save = 20
-  exp.save_dir = "/scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_split_graph_exp/"
+  exp.num_save = 200
+  exp.save_dir = "/scratch/qingqu_root/qingqu1/shared_data/multistage/interval_split_graph_exp_v2/"
   
   #host
   config.host_id = 1
