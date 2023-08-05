@@ -23,7 +23,7 @@ import numpy as np
 from models import utils as mutils
 from sde_lib import VESDE, VPSDE
 import random
-
+import logging
 
 def get_optimizer(config, params):
   """Returns a flax optimizer object based on `config`."""
@@ -54,7 +54,7 @@ def optimization_manager(config):
   return optimize_fn
 
 
-def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_weighting=True, eps=1e-5):
+def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_weighting=True, eps=1e-5,t1=0,t2=0):
   """Create a loss function for training with arbirary SDEs.
 
   Args:
@@ -72,12 +72,15 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
   """
   reduce_op = torch.mean if reduce_mean else lambda *args, **kwargs: 0.5 * torch.sum(*args, **kwargs)
   biased = int(os.environ.get('BIASED_SAMPLE', 0))
+  fewer = int(os.environ.get("EXP_FEWER_STEPS",0))
   num_scales = sde.N
   sig_min = sde.sigma(torch.tensor(eps))
   sig_max = sde.sigma(torch.tensor(sde.T))
   rho = 7
   if biased:
     print("biased sample")
+  if fewer==4:
+    logging.info("({}, {}]".format(t1,t2))
   def loss_fn(model, batch):
     """Compute the loss function.
 
@@ -107,7 +110,7 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
             if t > interval[0] and t <= interval[1]:
               choose_stage = i_stage
               chose_interval = interval
-        t_rand = [random.uniform(*random.choices(intervals, weights=[r[1]-r[0] for r in intervals])[0]) for i in range(batch.shape[0])]
+        t_rand = [random.uniform(*random.choices(chose_interval, weights=[r[1]-r[0] for r in chose_interval])[0]) for i in range(batch.shape[0])]
         t = torch.tensor(t_rand, device=batch.device) * (sde.T - eps) + eps
         
       else:
@@ -117,7 +120,10 @@ def get_sde_loss_fn(sde, train, reduce_mean=True, continuous=True, likelihood_we
         t_rand = [random.uniform(*random.choices(intervals, weights=[r[1]-r[0] for r in intervals])[0]) for i in range(batch.shape[0])]
         t = torch.tensor(t_rand, device=batch.device) * (sde.T - eps) + eps
     else:
-      t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
+      if fewer==4:
+        t = torch.rand(batch.shape[0], device=batch.device) * (t2-t1-eps) + eps+t1
+      else:
+        t = torch.rand(batch.shape[0], device=batch.device) * (sde.T - eps) + eps
     z = torch.randn_like(batch)
     mean, std = sde.marginal_prob(batch, t)
     perturbed_data = mean + std[:, None, None, None] * z
@@ -159,7 +165,7 @@ def get_ddpm_loss_fn(vpsde, train, reduce_mean=True):
   return loss_fn
 
 
-def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True, likelihood_weighting=False):
+def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True, likelihood_weighting=False,t1=0,t2=1):
   """Create a one-step training/evaluation function.
 
   Args:
@@ -175,7 +181,7 @@ def get_step_fn(sde, train, optimize_fn=None, reduce_mean=False, continuous=True
   """
   if continuous:
     loss_fn = get_sde_loss_fn(sde, train, reduce_mean=reduce_mean,
-                              continuous=True, likelihood_weighting=likelihood_weighting)
+                              continuous=True, likelihood_weighting=likelihood_weighting,t1=t1,t2=t2)
   else:
     assert not likelihood_weighting, "Likelihood weighting is not supported for original SMLD/DDPM training."
     if isinstance(sde, VESDE):

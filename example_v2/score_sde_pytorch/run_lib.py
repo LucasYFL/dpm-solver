@@ -109,10 +109,10 @@ def train(config, workdir):
   likelihood_weighting = config.training.likelihood_weighting
   train_step_fn = losses.get_step_fn(sde, train=True, optimize_fn=optimize_fn,
                                      reduce_mean=reduce_mean, continuous=continuous,
-                                     likelihood_weighting=likelihood_weighting)
+                                     likelihood_weighting=likelihood_weighting,t1=float(config.training.t0), t2=float(config.training.t1))
   eval_step_fn = losses.get_step_fn(sde, train=False, optimize_fn=optimize_fn,
                                     reduce_mean=reduce_mean, continuous=continuous,
-                                    likelihood_weighting=likelihood_weighting)
+                                    likelihood_weighting=likelihood_weighting,t1=float(config.training.t0), t2=float(config.training.t1))
 
   # Building sampling functions
   if config.training.snapshot_sampling:

@@ -228,7 +228,14 @@ class NCSNpp(nn.Module):
       modules.append(conv3x3(in_ch, channels, init_scale=init_scale))
 
     self.all_modules = nn.ModuleList(modules)
-
+    self._log_param()
+  def _log_param(self):
+    import logging
+    logging.info('init')
+    print('init')
+    total_params = sum(p.numel() for p in self.parameters())  
+    logging.info(f"Total params are {total_params}")  
+    print(total_params)
   def forward(self, x, time_cond):
     # timestep/noise_level embedding; only for continuous training
     modules = self.all_modules

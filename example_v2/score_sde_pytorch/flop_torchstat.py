@@ -4,27 +4,15 @@ import os
 import time
 import sys
 sys.path.append("../")
-import numpy as np
-import tensorflow as tf
-import tensorflow_gan as tfgan
-import logging
 # Keep the import below for registering all model definitions
 from models import ddpm,ncsnpp,ncsnpp_multistage
 import losses
-import sampling
 from models import utils as mutils
 from models.ema import ExponentialMovingAverage
 import datasets
-import evaluation
-import likelihood
-import sde_lib
-from absl import flags
 import torch
-from torch.utils import tensorboard
-from torchvision.utils import make_grid, save_image
-from utils import save_checkpoint, restore_checkpoint
-from configs.vp import cifar10_ncsnpp_multistage_deep_continuous_5stage_v1 as configs
-from sde_lib import VESDE, VPSDE, subVPSDE
+
+from configs.vp import cifar10_ddpmpp_deep_continuous as configs
 from torchstat import stat
 
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'

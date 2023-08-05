@@ -1,0 +1,181 @@
+
+[W socket.cpp:426] [c10d] The server socket cannot be initialized on [::]:29600 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:29600 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:29600 (errno: 97 - Address family not supported by protocol).
+2023-07-23 05:29:14.794245: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-07-23 05:29:20.990780: I tensorflow/core/util/port.cc:104] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2023-07-23 05:29:41.945204: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-07-23 05:29:41.945962: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-07-23 05:29:41.945985: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:98: UserWarning: unable to load libtensorflow_io_plugins.so: unable to open file: libtensorflow_io_plugins.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so: undefined symbol: _ZN3tsl6StatusC1EN10tensorflow5error4CodeESt17basic_string_viewIcSt11char_traitsIcEENS_18SourceLocationImplE']
+  warnings.warn(f"unable to load libtensorflow_io_plugins.so: {e}")
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:104: UserWarning: file system plugins are not loaded: unable to open file: libtensorflow_io.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so: undefined symbol: _ZTVN3tsl13GcsFileSystemE']
+  warnings.warn(f"file system plugins are not loaded: {e}")
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:29600 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:29600 (errno: 97 - Address family not supported by protocol).
+I0723 05:31:00.113354 22385001514816 main_interval.py:106] ()
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/torchvision/transforms/functional.py:1603: UserWarning: The default value of the antialias parameter of all the resizing transforms (Resize(), RandomResizedCrop(), etc.) will change from None to True in v0.17, in order to be consistent across the PIL and Tensor backends. To suppress this warning, directly pass antialias=True (recommended, future default), antialias=None (current default, which means False for Tensors and True for PIL), or antialias=False (only works on Tensors - PIL will still use antialiasing). This also applies if you are using the inference transforms from the models weights: update the call to weights.transforms(antialias=True).
+  warnings.warn(
+I0723 05:31:03.995965 22385001514816 ncsnpp_multistage.py:249] For stage 1, the total params are 169478467
+I0723 05:31:03.997256 22385001514816 ncsnpp_multistage.py:249] For stage 2, the total params are 107521411
+I0723 05:31:03.998307 22385001514816 ncsnpp_multistage.py:249] For stage 3, the total params are 47134707
+I0723 05:31:03.998384 22385001514816 ncsnpp_multistage.py:250] Encoder params are 43482624
+I0723 05:31:04.002308 22385001514816 ncsnpp_multistage.py:252] Total params are 237169337
+I0723 05:31:47.979959 22385001514816 ncsnpp_multistage.py:249] For stage 1, the total params are 169478467
+I0723 05:31:47.981244 22385001514816 ncsnpp_multistage.py:249] For stage 2, the total params are 107521411
+I0723 05:31:47.982303 22385001514816 ncsnpp_multistage.py:249] For stage 3, the total params are 47134707
+I0723 05:31:47.982381 22385001514816 ncsnpp_multistage.py:250] Encoder params are 43482624
+I0723 05:31:47.986253 22385001514816 ncsnpp_multistage.py:252] Total params are 237169337
+I0723 05:31:51.546744 22385001514816 ncsnpp_multistage.py:249] For stage 1, the total params are 169478467
+I0723 05:31:51.547874 22385001514816 ncsnpp_multistage.py:249] For stage 2, the total params are 107521411
+I0723 05:31:51.548761 22385001514816 ncsnpp_multistage.py:249] For stage 3, the total params are 47134707
+I0723 05:31:51.548830 22385001514816 ncsnpp_multistage.py:250] Encoder params are 43482624
+I0723 05:31:51.552428 22385001514816 ncsnpp_multistage.py:252] Total params are 237169337
+I0723 05:31:52.115994 22385001514816 main_interval.py:142] begin checkpoint: 5
+I0723 05:31:52.116184 22385001514816 main_interval.py:150] /scratch/qingqu_root/qingqu1/shared_data/multistage/multistage_gn16_v2_new_interval/checkpoints/checkpoint_5.pth
+I0723 05:32:39.519644 22385001514816 main_interval.py:161] /scratch/qingqu_root/qingqu1/shared_data/multistage/multistage_gn16_v2_new_interval/test
+I0723 05:32:39.532767 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 0
+I0723 05:34:23.180774 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 1
+I0723 05:35:03.162472 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 2
+I0723 05:35:43.323661 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 3
+I0723 05:36:23.527685 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 4
+I0723 05:37:03.763710 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 5
+I0723 05:37:44.007504 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 6
+I0723 05:38:24.276041 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 7
+I0723 05:39:04.543149 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 8
+I0723 05:39:44.799843 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 9
+I0723 05:40:25.057228 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 10
+I0723 05:41:05.492660 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 11
+I0723 05:41:45.788372 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 12
+I0723 05:42:26.073323 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 13
+I0723 05:43:06.346297 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 14
+I0723 05:43:46.617175 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 15
+I0723 05:44:26.879831 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 16
+I0723 05:45:07.147383 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 17
+I0723 05:45:47.474366 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 18
+I0723 05:46:27.744029 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 19
+I0723 05:47:08.025395 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 20
+I0723 05:47:48.283731 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 21
+I0723 05:48:28.548774 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 22
+I0723 05:49:08.811843 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 23
+I0723 05:49:49.057044 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 24
+I0723 05:50:29.316271 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 25
+I0723 05:51:09.791736 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 26
+I0723 05:51:50.089043 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 27
+I0723 05:52:30.382152 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 28
+I0723 05:53:10.662569 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 29
+I0723 05:53:50.935060 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 30
+I0723 05:54:31.191157 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 31
+I0723 05:55:11.447904 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 32
+I0723 05:55:51.712492 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 33
+I0723 05:56:31.978964 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 34
+I0723 05:57:12.244011 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 35
+I0723 05:57:52.519723 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 36
+I0723 05:58:32.812042 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 37
+I0723 05:59:13.090768 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 38
+I0723 05:59:53.392989 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 39
+I0723 06:00:33.694068 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 40
+I0723 06:01:14.005592 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 41
+I0723 06:01:54.296618 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 42
+I0723 06:02:34.579494 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 43
+I0723 06:03:14.874289 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 44
+I0723 06:03:55.182551 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 45
+I0723 06:04:35.473476 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 46
+I0723 06:05:15.789090 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 47
+I0723 06:05:56.126487 22385001514816 main_interval.py:165] sampling -- ckpt: 5, round: 48
+2023-07-23 06:06:50.921837: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-07-23 06:06:51.179666: I tensorflow/core/util/port.cc:104] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2023-07-23 06:06:52.677733: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-07-23 06:06:52.678174: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-07-23 06:06:52.678191: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:98: UserWarning: unable to load libtensorflow_io_plugins.so: unable to open file: libtensorflow_io_plugins.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so: undefined symbol: _ZN3tsl6StatusC1EN10tensorflow5error4CodeESt17basic_string_viewIcSt11char_traitsIcEENS_18SourceLocationImplE']
+  warnings.warn(f"unable to load libtensorflow_io_plugins.so: {e}")
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:104: UserWarning: file system plugins are not loaded: unable to open file: libtensorflow_io.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so: undefined symbol: _ZTVN3tsl13GcsFileSystemE']
+  warnings.warn(f"file system plugins are not loaded: {e}")
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/absl/flags/_validators.py:254: UserWarning: Flag --eval_folder has a non-None default value; therefore, mark_flag_as_required will pass even if flag is not specified in the command line!
+  mark_flag_as_required(flag_name, flag_values)
+I0723 06:06:59.782092 22836384704320 resolver.py:108] Using /tmp/tfhub_modules to cache modules.
+I0723 06:06:59.782888 22836384704320 resolver.py:419] Downloading TF-Hub Module 'https://tfhub.dev/tensorflow/tfgan/eval/inception/1'.
+I0723 06:07:05.438473 22836384704320 resolver.py:157] Downloaded https://tfhub.dev/tensorflow/tfgan/eval/inception/1, Total size: 273.09MB
+I0723 06:07:05.439101 22836384704320 resolver.py:434] Downloaded TF-Hub Module 'https://tfhub.dev/tensorflow/tfgan/eval/inception/1'.
+2023-07-23 06:07:10.095896: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1613] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 43087 MB memory:  -> device: 0, name: NVIDIA A40, pci bus id: 0000:22:00.0, compute capability: 8.6
+I0723 06:07:12.683614 22836384704320 evaluation_fromsample.py:48] begin checkpoint: 5
+I0723 06:07:12.683902 22836384704320 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/multistage_gn16_v2_new_interval/test
+I0723 06:07:12.684596 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 0
+I0723 06:07:14.008782 22836384704320 xla_bridge.py:440] Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0723 06:07:14.009020 22836384704320 xla_bridge.py:440] Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0723 06:07:14.090881 22836384704320 xla_bridge.py:440] Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
+I0723 06:07:14.091115 22836384704320 xla_bridge.py:440] Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
+W0723 06:07:14.091199 22836384704320 xla_bridge.py:448] No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow/python/autograph/pyct/static_analysis/liveness.py:83: Analyzer.lamba_check (from tensorflow.python.autograph.pyct.static_analysis.liveness) is deprecated and will be removed after 2023-09-23.
+Instructions for updating:
+Lambda fuctions will be no more assumed to be used in the statement where they are used, or at least in the same block. https://github.com/tensorflow/tensorflow/issues/56089
+W0723 06:07:15.265483 22836384704320 deprecation.py:350] From /home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow/python/autograph/pyct/static_analysis/liveness.py:83: Analyzer.lamba_check (from tensorflow.python.autograph.pyct.static_analysis.liveness) is deprecated and will be removed after 2023-09-23.
+Instructions for updating:
+Lambda fuctions will be no more assumed to be used in the statement where they are used, or at least in the same block. https://github.com/tensorflow/tensorflow/issues/56089
+2023-07-23 06:07:22.238363: I tensorflow/compiler/xla/stream_executor/cuda/cuda_dnn.cc:428] Loaded cuDNN version 8700
+2023-07-23 06:07:24.807807: W tensorflow/core/kernels/gpu_utils.cc:50] Failed to allocate memory for convolution redzone checking; skipping this check. This is benign and only means that we won't check cudnn for out-of-bounds reads and writes. This message will only be printed once.
+2023-07-23 06:07:31.566023: I tensorflow/compiler/xla/stream_executor/cuda/cuda_blas.cc:630] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow/python/util/nest.py:917: UserWarning: `tf.layers.flatten` is deprecated and will be removed in a future version. Please use `tf.keras.layers.Flatten` instead.
+  structure[0], [func(*x) for x in entries],
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/keras/legacy_tf_layers/base.py:627: UserWarning: `layer.updates` will be removed in a future version. This property should not be used in TensorFlow 2.0, as `updates` are applied automatically.
+  self.updates, tf.compat.v1.GraphKeys.UPDATE_OPS
+I0723 06:07:32.212312 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 1
+I0723 06:07:33.777651 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 10
+I0723 06:07:35.265653 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 11
+I0723 06:07:36.804820 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 12
+I0723 06:07:38.350837 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 13
+I0723 06:07:39.846128 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 14
+I0723 06:07:41.366108 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 15
+I0723 06:07:42.917708 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 16
+I0723 06:07:44.430235 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 17
+I0723 06:07:45.938517 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 18
+I0723 06:07:47.494841 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 19
+I0723 06:07:49.013808 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 2
+I0723 06:07:50.499346 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 20
+I0723 06:07:52.043298 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 21
+I0723 06:07:53.573995 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 22
+I0723 06:07:55.076958 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 23
+I0723 06:07:56.621441 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 24
+I0723 06:07:58.138393 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 25
+I0723 06:07:59.658631 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 26
+I0723 06:08:01.207947 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 27
+I0723 06:08:02.722527 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 28
+I0723 06:08:04.231563 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 29
+I0723 06:08:05.787347 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 3
+I0723 06:08:07.311681 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 30
+I0723 06:08:08.794758 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 31
+I0723 06:08:10.346657 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 32
+I0723 06:08:11.874027 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 33
+I0723 06:08:13.356007 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 34
+I0723 06:08:14.917406 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 35
+I0723 06:08:16.447868 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 36
+I0723 06:08:17.933346 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 37
+I0723 06:08:19.498119 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 38
+I0723 06:08:21.027782 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 39
+I0723 06:08:22.514042 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 4
+I0723 06:08:24.076860 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 40
+I0723 06:08:25.631976 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 41
+I0723 06:08:27.136516 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 42
+I0723 06:08:28.659648 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 43
+I0723 06:08:30.206002 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 44
+I0723 06:08:31.745085 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 45
+I0723 06:08:33.246080 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 46
+I0723 06:08:34.764254 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 47
+I0723 06:08:36.245356 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 48
+I0723 06:08:37.722964 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 5
+I0723 06:08:39.276559 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 6
+I0723 06:08:40.821531 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 7
+I0723 06:08:42.327100 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 8
+I0723 06:08:43.902287 22836384704320 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 9
+I0723 06:09:06.346865 22836384704320 evaluation_fromsample.py:105] ckpt-5 --- FID: 3.707886e+00
