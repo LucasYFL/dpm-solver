@@ -1,14 +1,14 @@
 #!/bin/bash
 # The interpreter used to execute the script
 #“#SBATCH” directives that convey submission options:
-#SBATCH --job-name=old
+#SBATCH --job-name=i0double
 #SBATCH --nodes=1
 #SBATCH --mem=20GB
 #SBATCH --time=01-00:00:00
 #SBATCH --account=qingqu1
 #SBATCH --partition=spgpu
 #SBATCH --gpus=a40:1
-#SBATCH --output=gn16v2_oldinterval.out
+#SBATCH --output=i0d.out
 #SBATCH --cpus-per-task=8
 echo $EXP_FEWER_STEPS
 module purge
@@ -33,5 +33,7 @@ cd /home/yifulu/work/dpm-solver/example_v2/score_sde_pytorch
 #torchrun --nproc_per_node=1 --master_port=29601 main_interval.py --config "configs/vp/cifar10_ncsnpp_multistage_deep_continuous_v2_new_interval_biased.py" --m1 multistage_gn16_v2_new_interval_biased  --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage --eval_folder multistage_gn16_v2_new_interval_biased/eval --config.eval.t_tuples="()" --config.eval.t_converge="(0,)" --config.eval.begin_ckpt=13 --config.eval.end_ckpt=16 --config.eval.batch_size=1024 --config.sampling.steps=20  --config.sampling.eps=1e-4 --config.eval.converge_epoch=8
 # torchrun --nproc_per_node=1 --master_port=29600 main_interval.py --config "configs/vp/cifar10_ncsnpp_multistage_deep_continuous_v2_new_interval.py" --m1 multistage_gn16_v2_new_interval_c  --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage --eval_folder multistage_gn16_v2_new_interval_c/eval --config.eval.t_tuples="()" --config.eval.t_converge="(0,)" --config.eval.begin_ckpt=1 --config.eval.end_ckpt=12 --config.eval.batch_size=1024 --config.sampling.steps=20  --config.sampling.eps=1e-4 --config.eval.converge_epoch=8
 # python evaluation_fromsample.py --config "configs/vp/cifar10_ncsnpp_multistage_deep_continuous_v2_new_interval.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage --eval_folder multistage_gn16_v2_new_interval_c/eval  --config.eval.begin_ckpt=1 --config.eval.end_ckpt=12 --config.eval.batch_size=1024
-torchrun --nproc_per_node=1 --master_port=29600 main_interval.py --config "configs/vp/cifar10_ncsnpp_multistage_deep_continuous_v2.py" --m1 multistage_gn16_v2_old_interval  --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage --eval_folder multistage_gn16_v2_old_interval/eval --config.eval.t_tuples="()" --config.eval.t_converge="(0,)" --config.eval.begin_ckpt=1 --config.eval.end_ckpt=12 --config.eval.batch_size=1024 --config.sampling.steps=20  --config.sampling.eps=1e-4 --config.eval.converge_epoch=8
-python evaluation_fromsample.py --config "configs/vp/cifar10_ncsnpp_multistage_deep_continuous_v2.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage --eval_folder multistage_gn16_v2_old_interval/eval  --config.eval.begin_ckpt=1 --config.eval.end_ckpt=12 --config.eval.batch_size=1024
+torchrun --nproc_per_node=1 --master_port=29600 main_interval.py --config "configs/vp/cifar10_ddpmpp_deep_continuous.py" --config1 "configs/vp/cifar10_ddpmpp_deep_continuous.py" --config.model.nf=160 --m1 new_interval/dpm_deep_I0_d --m2 dpm_deep --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage --eval_folder new_interval/interval0d --config.eval.t_tuples="(0.442,)" --config.eval.t_converge="(0,1)" --config.eval.begin_ckpt=1 --config.eval.end_ckpt=10 --config.eval.batch_size=1024 --config.sampling.steps=20  --config.sampling.eps=1e-4 --config.eval.converge_epoch=8
+python evaluation_fromsample.py --config "configs/vp/cifar10_ddpmpp_deep_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage --eval_folder new_interval/interval0d  --config.eval.begin_ckpt=1 --config.eval.end_ckpt=10 --config.eval.batch_size=1024
+torchrun --nproc_per_node=1 --master_port=29600 main_interval.py --config "configs/vp/cifar10_ddpmpp_deep_continuous.py" --config1 "configs/vp/cifar10_ddpmpp_deep_continuous.py" --config.model.nf=160 --m1 new_interval/dpm_deep_I0_d --m2 dpm_deep --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage --eval_folder new_interval/interval0d --config.eval.t_tuples="(0.442,)" --config.eval.t_converge="(0,1)" --config.eval.begin_ckpt=15 --config.eval.end_ckpt=40 --config.eval.ckpt_freq=5 --config.eval.batch_size=1024 --config.sampling.steps=20  --config.sampling.eps=1e-4 --config.eval.converge_epoch=8
+python evaluation_fromsample.py --config "configs/vp/cifar10_ddpmpp_deep_continuous.py" --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage --eval_folder new_interval/interval0d  --config.eval.begin_ckpt=15 --config.eval.end_ckpt=40 --config.eval.ckpt_freq=5 --config.eval.batch_size=1024

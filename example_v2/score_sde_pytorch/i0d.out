@@ -1,0 +1,1804 @@
+
+[W socket.cpp:426] [c10d] The server socket cannot be initialized on [::]:29600 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:29600 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:29600 (errno: 97 - Address family not supported by protocol).
+2023-08-08 01:45:33.186118: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-08-08 01:45:40.130942: I tensorflow/core/util/port.cc:104] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2023-08-08 01:46:02.363242: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-08-08 01:46:02.363950: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-08-08 01:46:02.363972: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:98: UserWarning: unable to load libtensorflow_io_plugins.so: unable to open file: libtensorflow_io_plugins.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so: undefined symbol: _ZN3tsl6StatusC1EN10tensorflow5error4CodeESt17basic_string_viewIcSt11char_traitsIcEENS_18SourceLocationImplE']
+  warnings.warn(f"unable to load libtensorflow_io_plugins.so: {e}")
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:104: UserWarning: file system plugins are not loaded: unable to open file: libtensorflow_io.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so: undefined symbol: _ZTVN3tsl13GcsFileSystemE']
+  warnings.warn(f"file system plugins are not loaded: {e}")
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:29600 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:29600 (errno: 97 - Address family not supported by protocol).
+I0808 01:46:58.258405 22575202051904 main_interval.py:103] (0.442,)
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/torchvision/transforms/functional.py:1603: UserWarning: The default value of the antialias parameter of all the resizing transforms (Resize(), RandomResizedCrop(), etc.) will change from None to True in v0.17, in order to be consistent across the PIL and Tensor backends. To suppress this warning, directly pass antialias=True (recommended, future default), antialias=None (current default, which means False for Tensors and True for PIL), or antialias=False (only works on Tensors - PIL will still use antialiasing). This also applies if you are using the inference transforms from the models weights: update the call to weights.transforms(antialias=True).
+  warnings.warn(
+I0808 01:47:01.087821 22575202051904 ncsnpp.py:234] init
+init
+I0808 01:47:01.090181 22575202051904 ncsnpp.py:237] Total params are 166560483
+166560483
+I0808 01:48:03.443013 22575202051904 ncsnpp.py:234] init
+init
+I0808 01:48:03.445147 22575202051904 ncsnpp.py:237] Total params are 106632579
+106632579
+I0808 01:48:03.690575 22575202051904 main_interval.py:139] begin checkpoint: 1
+I0808 01:48:03.690736 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_1.pth
+I0808 01:48:40.930348 22575202051904 main_interval.py:143] 1 is converged model
+I0808 01:48:40.944056 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 01:49:05.580186 22575202051904 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 01:49:05.606498 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 0
+I0808 01:50:35.428426 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 1
+I0808 01:51:23.057633 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 2
+I0808 01:52:10.820435 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 3
+I0808 01:52:58.648091 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 4
+I0808 01:53:46.503957 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 5
+I0808 01:54:34.373332 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 6
+I0808 01:55:22.243207 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 7
+I0808 01:56:10.116749 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 8
+I0808 01:56:57.993112 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 9
+I0808 01:57:45.887072 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 10
+I0808 01:58:33.773933 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 11
+I0808 01:59:21.662226 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 12
+I0808 02:00:09.556956 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 13
+I0808 02:00:57.447556 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 14
+I0808 02:01:45.333385 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 15
+I0808 02:02:33.218595 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 16
+I0808 02:03:21.102713 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 17
+I0808 02:04:08.988136 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 18
+I0808 02:04:56.874793 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 19
+I0808 02:05:44.771779 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 20
+I0808 02:06:32.651714 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 21
+I0808 02:07:20.542770 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 22
+I0808 02:08:08.439029 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 23
+I0808 02:08:56.338943 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 24
+I0808 02:09:44.226738 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 25
+I0808 02:10:32.118744 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 26
+I0808 02:11:20.001006 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 27
+I0808 02:12:07.885131 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 28
+I0808 02:12:55.769981 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 29
+I0808 02:13:43.659548 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 30
+I0808 02:14:31.593286 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 31
+I0808 02:15:19.483331 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 32
+I0808 02:16:07.383395 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 33
+I0808 02:16:55.282398 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 34
+I0808 02:17:43.173771 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 35
+I0808 02:18:31.058063 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 36
+I0808 02:19:18.943745 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 37
+I0808 02:20:06.828824 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 38
+I0808 02:20:54.707768 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 39
+I0808 02:21:42.588921 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 40
+I0808 02:22:30.472331 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 41
+I0808 02:23:18.356174 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 42
+I0808 02:24:06.248394 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 43
+I0808 02:24:54.125828 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 44
+I0808 02:25:42.006111 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 45
+I0808 02:26:29.891745 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 46
+I0808 02:27:17.780609 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 47
+I0808 02:28:05.659902 22575202051904 main_interval.py:162] sampling -- ckpt: 1, round: 48
+I0808 02:28:53.541331 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_2.pth
+I0808 02:29:28.875428 22575202051904 main_interval.py:143] 1 is converged model
+I0808 02:29:28.886867 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 02:29:54.538067 22575202051904 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 02:29:54.540840 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 0
+I0808 02:30:42.395008 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 1
+I0808 02:31:30.172465 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 2
+I0808 02:32:18.024224 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 3
+I0808 02:33:05.888810 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 4
+I0808 02:33:53.765364 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 5
+I0808 02:34:41.650154 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 6
+I0808 02:35:29.547944 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 7
+I0808 02:36:17.452680 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 8
+I0808 02:37:05.356061 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 9
+I0808 02:37:53.266439 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 10
+I0808 02:38:41.166810 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 11
+I0808 02:39:29.063508 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 12
+I0808 02:40:16.957117 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 13
+I0808 02:41:04.854435 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 14
+I0808 02:41:52.752536 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 15
+I0808 02:42:40.648726 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 16
+I0808 02:43:28.597593 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 17
+I0808 02:44:16.503325 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 18
+I0808 02:45:04.411723 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 19
+I0808 02:45:52.314116 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 20
+I0808 02:46:40.238311 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 21
+I0808 02:47:28.144807 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 22
+I0808 02:48:16.044963 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 23
+I0808 02:49:03.952284 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 24
+I0808 02:49:51.857137 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 25
+I0808 02:50:39.756787 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 26
+I0808 02:51:27.666597 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 27
+I0808 02:52:15.572191 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 28
+I0808 02:53:03.472422 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 29
+I0808 02:53:51.369488 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 30
+I0808 02:54:39.273162 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 31
+I0808 02:55:27.179996 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 32
+I0808 02:56:15.086249 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 33
+I0808 02:57:02.983879 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 34
+I0808 02:57:50.889533 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 35
+I0808 02:58:38.793121 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 36
+I0808 02:59:26.699286 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 37
+I0808 03:00:14.605577 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 38
+I0808 03:01:02.521373 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 39
+I0808 03:01:50.427460 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 40
+I0808 03:02:38.336474 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 41
+I0808 03:03:26.244149 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 42
+I0808 03:04:14.163905 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 43
+I0808 03:05:02.065837 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 44
+I0808 03:05:49.972117 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 45
+I0808 03:06:37.880804 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 46
+I0808 03:07:25.787985 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 47
+I0808 03:08:13.699274 22575202051904 main_interval.py:162] sampling -- ckpt: 2, round: 48
+I0808 03:09:01.603840 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_3.pth
+I0808 03:09:38.001166 22575202051904 main_interval.py:143] 1 is converged model
+I0808 03:09:38.011334 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 03:10:03.529423 22575202051904 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 03:10:03.557061 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 0
+I0808 03:10:51.414892 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 1
+I0808 03:11:39.217619 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 2
+I0808 03:12:27.058980 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 3
+I0808 03:13:14.946083 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 4
+I0808 03:14:02.849159 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 5
+I0808 03:14:50.744543 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 6
+I0808 03:15:38.654495 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 7
+I0808 03:16:26.569725 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 8
+I0808 03:17:14.481480 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 9
+I0808 03:18:02.397932 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 10
+I0808 03:18:50.308678 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 11
+I0808 03:19:38.240664 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 12
+I0808 03:20:26.146526 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 13
+I0808 03:21:14.045053 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 14
+I0808 03:22:01.935552 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 15
+I0808 03:22:49.832194 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 16
+I0808 03:23:37.734571 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 17
+I0808 03:24:25.641335 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 18
+I0808 03:25:13.541120 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 19
+I0808 03:26:01.440876 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 20
+I0808 03:26:49.360385 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 21
+I0808 03:27:37.271612 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 22
+I0808 03:28:25.188955 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 23
+I0808 03:29:13.104441 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 24
+I0808 03:30:01.010142 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 25
+I0808 03:30:48.925457 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 26
+I0808 03:31:36.836062 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 27
+I0808 03:32:24.753440 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 28
+I0808 03:33:12.674493 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 29
+I0808 03:34:00.581179 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 30
+I0808 03:34:48.483639 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 31
+I0808 03:35:36.401555 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 32
+I0808 03:36:24.314728 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 33
+I0808 03:37:12.229231 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 34
+I0808 03:38:00.141717 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 35
+I0808 03:38:48.057973 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 36
+I0808 03:39:35.965575 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 37
+I0808 03:40:23.883736 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 38
+I0808 03:41:11.789682 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 39
+I0808 03:41:59.700505 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 40
+I0808 03:42:47.619920 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 41
+I0808 03:43:35.541682 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 42
+I0808 03:44:23.455518 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 43
+I0808 03:45:11.375626 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 44
+I0808 03:45:59.291107 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 45
+I0808 03:46:47.206957 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 46
+I0808 03:47:35.125755 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 47
+I0808 03:48:23.034777 22575202051904 main_interval.py:162] sampling -- ckpt: 3, round: 48
+I0808 03:49:10.949582 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_4.pth
+I0808 03:49:49.020056 22575202051904 main_interval.py:143] 1 is converged model
+I0808 03:49:49.027421 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 03:50:14.762017 22575202051904 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 03:50:14.773034 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 0
+I0808 03:51:02.640081 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 1
+I0808 03:51:50.427302 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 2
+I0808 03:52:38.301672 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 3
+I0808 03:53:26.203386 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 4
+I0808 03:54:14.123488 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 5
+I0808 03:55:02.033455 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 6
+I0808 03:55:49.947566 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 7
+I0808 03:56:37.858756 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 8
+I0808 03:57:25.771771 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 9
+I0808 03:58:13.692924 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 10
+I0808 03:59:01.607563 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 11
+I0808 03:59:49.523494 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 12
+I0808 04:00:37.428343 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 13
+I0808 04:01:25.342910 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 14
+I0808 04:02:13.254932 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 15
+I0808 04:03:01.173022 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 16
+I0808 04:03:49.102788 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 17
+I0808 04:04:37.020119 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 18
+I0808 04:05:24.943773 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 19
+I0808 04:06:12.858864 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 20
+I0808 04:07:00.778347 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 21
+I0808 04:07:48.689511 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 22
+I0808 04:08:36.615979 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 23
+I0808 04:09:24.524287 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 24
+I0808 04:10:12.448474 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 25
+I0808 04:11:00.382035 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 26
+I0808 04:11:48.298846 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 27
+I0808 04:12:36.218821 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 28
+I0808 04:13:24.128670 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 29
+I0808 04:14:12.054498 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 30
+I0808 04:14:59.982426 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 31
+I0808 04:15:47.904654 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 32
+I0808 04:16:35.824294 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 33
+I0808 04:17:23.718792 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 34
+I0808 04:18:11.617927 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 35
+I0808 04:18:59.507532 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 36
+I0808 04:19:47.407015 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 37
+I0808 04:20:35.309531 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 38
+I0808 04:21:23.217067 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 39
+I0808 04:22:11.126559 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 40
+I0808 04:22:59.045504 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 41
+I0808 04:23:46.962903 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 42
+I0808 04:24:34.874855 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 43
+I0808 04:25:22.786667 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 44
+I0808 04:26:10.695905 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 45
+I0808 04:26:58.614214 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 46
+I0808 04:27:46.526938 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 47
+I0808 04:28:34.453788 22575202051904 main_interval.py:162] sampling -- ckpt: 4, round: 48
+I0808 04:29:22.369091 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_5.pth
+I0808 04:29:57.366125 22575202051904 main_interval.py:143] 1 is converged model
+I0808 04:29:57.377050 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 04:30:20.591016 22575202051904 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 04:30:20.606487 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 0
+I0808 04:31:08.496280 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 1
+I0808 04:31:56.287907 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 2
+I0808 04:32:44.142156 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 3
+I0808 04:33:32.035517 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 4
+I0808 04:34:19.945405 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 5
+I0808 04:35:07.863733 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 6
+I0808 04:35:55.785069 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 7
+I0808 04:36:43.709982 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 8
+I0808 04:37:31.625253 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 9
+I0808 04:38:19.545858 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 10
+I0808 04:39:07.463219 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 11
+I0808 04:39:55.378714 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 12
+I0808 04:40:43.299000 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 13
+I0808 04:41:31.217885 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 14
+I0808 04:42:19.127088 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 15
+I0808 04:43:07.031657 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 16
+I0808 04:43:54.933388 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 17
+I0808 04:44:42.833156 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 18
+I0808 04:45:30.744332 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 19
+I0808 04:46:18.653709 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 20
+I0808 04:47:06.565396 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 21
+I0808 04:47:54.478345 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 22
+I0808 04:48:42.395616 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 23
+I0808 04:49:30.320635 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 24
+I0808 04:50:18.244149 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 25
+I0808 04:51:06.161580 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 26
+I0808 04:51:54.081167 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 27
+I0808 04:52:41.999789 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 28
+I0808 04:53:29.914633 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 29
+I0808 04:54:17.830580 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 30
+I0808 04:55:05.760188 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 31
+I0808 04:55:53.677724 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 32
+I0808 04:56:41.602405 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 33
+I0808 04:57:29.522411 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 34
+I0808 04:58:17.448579 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 35
+I0808 04:59:05.385298 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 36
+I0808 04:59:53.315976 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 37
+I0808 05:00:41.235313 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 38
+I0808 05:01:29.177835 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 39
+I0808 05:02:17.099469 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 40
+I0808 05:03:05.024286 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 41
+I0808 05:03:52.957223 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 42
+I0808 05:04:40.875845 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 43
+I0808 05:05:28.795144 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 44
+I0808 05:06:16.719538 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 45
+I0808 05:07:04.632822 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 46
+I0808 05:07:52.546869 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 47
+I0808 05:08:40.445530 22575202051904 main_interval.py:162] sampling -- ckpt: 5, round: 48
+I0808 05:09:28.360238 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_6.pth
+I0808 05:10:09.372113 22575202051904 main_interval.py:143] 1 is converged model
+I0808 05:10:09.384486 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 05:10:36.311398 22575202051904 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 05:10:36.321548 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 0
+I0808 05:11:24.166899 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 1
+I0808 05:12:11.969112 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 2
+I0808 05:12:59.827008 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 3
+I0808 05:13:47.712544 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 4
+I0808 05:14:35.614632 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 5
+I0808 05:15:23.528901 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 6
+I0808 05:16:11.451234 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 7
+I0808 05:16:59.371998 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 8
+I0808 05:17:47.296137 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 9
+I0808 05:18:35.207572 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 10
+I0808 05:19:23.123879 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 11
+I0808 05:20:11.044178 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 12
+I0808 05:20:58.960999 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 13
+I0808 05:21:46.879933 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 14
+I0808 05:22:34.793756 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 15
+I0808 05:23:22.728006 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 16
+I0808 05:24:10.658091 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 17
+I0808 05:24:58.577636 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 18
+I0808 05:25:46.505429 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 19
+I0808 05:26:34.432109 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 20
+I0808 05:27:22.353590 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 21
+I0808 05:28:10.270075 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 22
+I0808 05:28:58.191701 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 23
+I0808 05:29:46.103055 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 24
+I0808 05:30:34.019250 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 25
+I0808 05:31:21.939317 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 26
+I0808 05:32:09.851604 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 27
+I0808 05:32:57.770879 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 28
+I0808 05:33:45.692210 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 29
+I0808 05:34:33.616513 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 30
+I0808 05:35:21.548670 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 31
+I0808 05:36:09.484177 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 32
+I0808 05:36:57.405621 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 33
+I0808 05:37:45.334089 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 34
+I0808 05:38:33.253835 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 35
+I0808 05:39:21.184474 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 36
+I0808 05:40:09.110103 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 37
+I0808 05:40:57.037393 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 38
+I0808 05:41:44.963561 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 39
+I0808 05:42:32.890479 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 40
+I0808 05:43:20.810086 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 41
+I0808 05:44:08.729423 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 42
+I0808 05:44:56.639610 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 43
+I0808 05:45:44.553909 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 44
+I0808 05:46:32.472315 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 45
+I0808 05:47:20.383051 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 46
+I0808 05:48:08.299828 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 47
+I0808 05:48:56.215443 22575202051904 main_interval.py:162] sampling -- ckpt: 6, round: 48
+I0808 05:49:44.131861 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_7.pth
+I0808 05:50:21.250457 22575202051904 main_interval.py:143] 1 is converged model
+I0808 05:50:21.266922 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 05:50:47.347013 22575202051904 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 05:50:47.354205 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 0
+I0808 05:51:35.234024 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 1
+I0808 05:52:23.023002 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 2
+I0808 05:53:10.884101 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 3
+I0808 05:53:58.785884 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 4
+I0808 05:54:46.698496 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 5
+I0808 05:55:34.624431 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 6
+I0808 05:56:22.537115 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 7
+I0808 05:57:10.422574 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 8
+I0808 05:57:58.313824 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 9
+I0808 05:58:46.200510 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 10
+I0808 05:59:34.103218 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 11
+I0808 06:00:22.005168 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 12
+I0808 06:01:09.916885 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 13
+I0808 06:01:57.833944 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 14
+I0808 06:02:45.751042 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 15
+I0808 06:03:33.670290 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 16
+I0808 06:04:21.592828 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 17
+I0808 06:05:09.510107 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 18
+I0808 06:05:57.419708 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 19
+I0808 06:06:45.351311 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 20
+I0808 06:07:33.257323 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 21
+I0808 06:08:21.155928 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 22
+I0808 06:09:09.045261 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 23
+I0808 06:09:56.920681 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 24
+I0808 06:10:44.814378 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 25
+I0808 06:11:32.710172 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 26
+I0808 06:12:20.611255 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 27
+I0808 06:13:08.517267 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 28
+I0808 06:13:56.423669 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 29
+I0808 06:14:44.318434 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 30
+I0808 06:15:32.219108 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 31
+I0808 06:16:20.119286 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 32
+I0808 06:17:08.022357 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 33
+I0808 06:17:55.934000 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 34
+I0808 06:18:43.831919 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 35
+I0808 06:19:31.736750 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 36
+I0808 06:20:19.627000 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 37
+I0808 06:21:07.510640 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 38
+I0808 06:21:55.391220 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 39
+I0808 06:22:43.271873 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 40
+I0808 06:23:31.151859 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 41
+I0808 06:24:19.039345 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 42
+I0808 06:25:06.922606 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 43
+I0808 06:25:54.816771 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 44
+I0808 06:26:42.711785 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 45
+I0808 06:27:30.610831 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 46
+I0808 06:28:18.521704 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 47
+I0808 06:29:06.426153 22575202051904 main_interval.py:162] sampling -- ckpt: 7, round: 48
+I0808 06:29:54.325961 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_8.pth
+I0808 06:30:29.887306 22575202051904 main_interval.py:143] 1 is converged model
+I0808 06:30:29.916330 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 06:30:55.538212 22575202051904 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 06:30:55.553697 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 0
+I0808 06:31:43.424453 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 1
+I0808 06:32:31.203760 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 2
+I0808 06:33:19.020719 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 3
+I0808 06:34:06.870025 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 4
+I0808 06:34:54.723194 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 5
+I0808 06:35:42.590027 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 6
+I0808 06:36:30.465589 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 7
+I0808 06:37:18.345261 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 8
+I0808 06:38:06.231574 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 9
+I0808 06:38:54.130443 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 10
+I0808 06:39:42.051774 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 11
+I0808 06:40:29.946077 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 12
+I0808 06:41:17.855593 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 13
+I0808 06:42:05.754874 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 14
+I0808 06:42:53.642706 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 15
+I0808 06:43:41.524516 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 16
+I0808 06:44:29.414944 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 17
+I0808 06:45:17.299207 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 18
+I0808 06:46:05.167057 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 19
+I0808 06:46:53.044181 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 20
+I0808 06:47:40.914608 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 21
+I0808 06:48:28.796090 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 22
+I0808 06:49:16.695865 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 23
+I0808 06:50:04.587761 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 24
+I0808 06:50:52.476622 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 25
+I0808 06:51:40.375211 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 26
+I0808 06:52:28.275975 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 27
+I0808 06:53:16.180860 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 28
+I0808 06:54:04.080102 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 29
+I0808 06:54:51.982804 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 30
+I0808 06:55:39.878746 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 31
+I0808 06:56:27.774349 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 32
+I0808 06:57:15.650625 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 33
+I0808 06:58:03.522397 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 34
+I0808 06:58:51.392481 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 35
+I0808 06:59:39.266407 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 36
+I0808 07:00:27.140287 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 37
+I0808 07:01:15.018096 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 38
+I0808 07:02:02.906262 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 39
+I0808 07:02:50.796015 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 40
+I0808 07:03:38.692375 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 41
+I0808 07:04:26.591135 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 42
+I0808 07:05:14.485738 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 43
+I0808 07:06:02.384240 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 44
+I0808 07:06:50.291961 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 45
+I0808 07:07:38.199421 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 46
+I0808 07:08:26.100868 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 47
+I0808 07:09:13.987813 22575202051904 main_interval.py:162] sampling -- ckpt: 8, round: 48
+I0808 07:10:01.857067 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_9.pth
+I0808 07:10:35.565204 22575202051904 main_interval.py:143] 1 is converged model
+I0808 07:10:35.574898 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 07:10:58.828129 22575202051904 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 07:10:58.837570 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 0
+I0808 07:11:46.712240 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 1
+I0808 07:12:34.510264 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 2
+I0808 07:13:22.344611 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 3
+I0808 07:14:10.207813 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 4
+I0808 07:14:58.098629 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 5
+I0808 07:15:46.010844 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 6
+I0808 07:16:33.920036 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 7
+I0808 07:17:21.813058 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 8
+I0808 07:18:09.723395 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 9
+I0808 07:18:57.626862 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 10
+I0808 07:19:45.537925 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 11
+I0808 07:20:33.444452 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 12
+I0808 07:21:21.332809 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 13
+I0808 07:22:09.220129 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 14
+I0808 07:22:57.085438 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 15
+I0808 07:23:44.941570 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 16
+I0808 07:24:32.813112 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 17
+I0808 07:25:20.696476 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 18
+I0808 07:26:08.581686 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 19
+I0808 07:26:56.460202 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 20
+I0808 07:27:44.345868 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 21
+I0808 07:28:32.230356 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 22
+I0808 07:29:20.114964 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 23
+I0808 07:30:08.015535 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 24
+I0808 07:30:55.908931 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 25
+I0808 07:31:43.808621 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 26
+I0808 07:32:31.711436 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 27
+I0808 07:33:19.606769 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 28
+I0808 07:34:07.491700 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 29
+I0808 07:34:55.371323 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 30
+I0808 07:35:43.247536 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 31
+I0808 07:36:31.127158 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 32
+I0808 07:37:19.011531 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 33
+I0808 07:38:06.898855 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 34
+I0808 07:38:54.791572 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 35
+I0808 07:39:42.687552 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 36
+I0808 07:40:30.586669 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 37
+I0808 07:41:18.482699 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 38
+I0808 07:42:06.383238 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 39
+I0808 07:42:54.280430 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 40
+I0808 07:43:42.181916 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 41
+I0808 07:44:30.092687 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 42
+I0808 07:45:17.998385 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 43
+I0808 07:46:05.898668 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 44
+I0808 07:46:53.776066 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 45
+I0808 07:47:41.659612 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 46
+I0808 07:48:29.544786 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 47
+I0808 07:49:17.415504 22575202051904 main_interval.py:162] sampling -- ckpt: 9, round: 48
+I0808 07:50:05.297942 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_10.pth
+I0808 07:50:38.672447 22575202051904 main_interval.py:143] 1 is converged model
+I0808 07:50:38.692032 22575202051904 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 07:51:02.236026 22575202051904 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 07:51:02.246433 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 0
+I0808 07:51:50.119036 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 1
+I0808 07:52:37.894385 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 2
+I0808 07:53:25.729007 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 3
+I0808 07:54:13.607461 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 4
+I0808 07:55:01.533743 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 5
+I0808 07:55:49.474004 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 6
+I0808 07:56:37.397299 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 7
+I0808 07:57:25.276744 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 8
+I0808 07:58:13.144095 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 9
+I0808 07:59:00.998094 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 10
+I0808 07:59:48.853271 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 11
+I0808 08:00:36.703238 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 12
+I0808 08:01:24.550035 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 13
+I0808 08:02:12.411909 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 14
+I0808 08:03:00.254389 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 15
+I0808 08:03:48.098326 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 16
+I0808 08:04:35.944335 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 17
+I0808 08:05:23.770178 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 18
+I0808 08:06:11.588179 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 19
+I0808 08:06:59.418977 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 20
+I0808 08:07:47.251712 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 21
+I0808 08:08:35.095377 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 22
+I0808 08:09:22.920192 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 23
+I0808 08:10:10.740233 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 24
+I0808 08:10:58.573668 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 25
+I0808 08:11:46.410636 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 26
+I0808 08:12:34.244593 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 27
+I0808 08:13:22.100431 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 28
+I0808 08:14:09.951136 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 29
+I0808 08:14:57.801501 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 30
+I0808 08:15:45.642098 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 31
+I0808 08:16:33.462155 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 32
+I0808 08:17:21.273993 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 33
+I0808 08:18:09.105037 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 34
+I0808 08:18:56.933431 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 35
+I0808 08:19:44.765245 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 36
+I0808 08:20:32.595612 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 37
+I0808 08:21:20.438992 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 38
+I0808 08:22:08.273794 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 39
+I0808 08:22:56.085565 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 40
+I0808 08:23:43.908982 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 41
+I0808 08:24:31.746495 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 42
+I0808 08:25:19.587403 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 43
+I0808 08:26:07.419746 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 44
+I0808 08:26:55.256941 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 45
+I0808 08:27:43.086491 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 46
+I0808 08:28:30.918436 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 47
+I0808 08:29:18.740432 22575202051904 main_interval.py:162] sampling -- ckpt: 10, round: 48
+2023-08-08 08:30:23.919873: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-08-08 08:30:24.062476: I tensorflow/core/util/port.cc:104] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2023-08-08 08:30:26.005909: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-08-08 08:30:26.006010: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-08-08 08:30:26.006025: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:98: UserWarning: unable to load libtensorflow_io_plugins.so: unable to open file: libtensorflow_io_plugins.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so: undefined symbol: _ZN3tsl6StatusC1EN10tensorflow5error4CodeESt17basic_string_viewIcSt11char_traitsIcEENS_18SourceLocationImplE']
+  warnings.warn(f"unable to load libtensorflow_io_plugins.so: {e}")
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:104: UserWarning: file system plugins are not loaded: unable to open file: libtensorflow_io.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so: undefined symbol: _ZTVN3tsl13GcsFileSystemE']
+  warnings.warn(f"file system plugins are not loaded: {e}")
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/absl/flags/_validators.py:254: UserWarning: Flag --eval_folder has a non-None default value; therefore, mark_flag_as_required will pass even if flag is not specified in the command line!
+  mark_flag_as_required(flag_name, flag_values)
+I0808 08:30:35.913338 22975746803520 resolver.py:108] Using /tmp/tfhub_modules to cache modules.
+I0808 08:30:35.914491 22975746803520 resolver.py:419] Downloading TF-Hub Module 'https://tfhub.dev/tensorflow/tfgan/eval/inception/1'.
+I0808 08:30:40.711002 22975746803520 resolver.py:157] Downloaded https://tfhub.dev/tensorflow/tfgan/eval/inception/1, Total size: 273.09MB
+I0808 08:30:40.711584 22975746803520 resolver.py:434] Downloaded TF-Hub Module 'https://tfhub.dev/tensorflow/tfgan/eval/inception/1'.
+2023-08-08 08:30:43.749812: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1613] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 43087 MB memory:  -> device: 0, name: NVIDIA A40, pci bus id: 0000:23:00.0, compute capability: 8.6
+I0808 08:30:46.090386 22975746803520 evaluation_fromsample.py:48] begin checkpoint: 1
+I0808 08:30:46.090663 22975746803520 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 08:30:46.091341 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 0
+I0808 08:30:47.538876 22975746803520 xla_bridge.py:440] Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0808 08:30:47.539077 22975746803520 xla_bridge.py:440] Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0808 08:30:47.638720 22975746803520 xla_bridge.py:440] Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
+I0808 08:30:47.638915 22975746803520 xla_bridge.py:440] Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
+W0808 08:30:47.638986 22975746803520 xla_bridge.py:448] No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow/python/autograph/pyct/static_analysis/liveness.py:83: Analyzer.lamba_check (from tensorflow.python.autograph.pyct.static_analysis.liveness) is deprecated and will be removed after 2023-09-23.
+Instructions for updating:
+Lambda fuctions will be no more assumed to be used in the statement where they are used, or at least in the same block. https://github.com/tensorflow/tensorflow/issues/56089
+W0808 08:30:48.259312 22975746803520 deprecation.py:350] From /home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow/python/autograph/pyct/static_analysis/liveness.py:83: Analyzer.lamba_check (from tensorflow.python.autograph.pyct.static_analysis.liveness) is deprecated and will be removed after 2023-09-23.
+Instructions for updating:
+Lambda fuctions will be no more assumed to be used in the statement where they are used, or at least in the same block. https://github.com/tensorflow/tensorflow/issues/56089
+2023-08-08 08:30:54.091361: I tensorflow/compiler/xla/stream_executor/cuda/cuda_dnn.cc:428] Loaded cuDNN version 8700
+2023-08-08 08:30:55.690468: W tensorflow/core/kernels/gpu_utils.cc:50] Failed to allocate memory for convolution redzone checking; skipping this check. This is benign and only means that we won't check cudnn for out-of-bounds reads and writes. This message will only be printed once.
+2023-08-08 08:31:02.601478: I tensorflow/compiler/xla/stream_executor/cuda/cuda_blas.cc:630] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow/python/util/nest.py:917: UserWarning: `tf.layers.flatten` is deprecated and will be removed in a future version. Please use `tf.keras.layers.Flatten` instead.
+  structure[0], [func(*x) for x in entries],
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/keras/legacy_tf_layers/base.py:627: UserWarning: `layer.updates` will be removed in a future version. This property should not be used in TensorFlow 2.0, as `updates` are applied automatically.
+  self.updates, tf.compat.v1.GraphKeys.UPDATE_OPS
+I0808 08:31:03.264747 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 1
+I0808 08:31:04.768122 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 10
+I0808 08:31:06.284171 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 11
+I0808 08:31:07.815341 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 12
+I0808 08:31:09.317177 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 13
+I0808 08:31:10.835542 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 14
+I0808 08:31:12.327585 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 15
+I0808 08:31:13.821272 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 16
+I0808 08:31:15.310823 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 17
+I0808 08:31:16.806256 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 18
+I0808 08:31:18.315186 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 19
+I0808 08:31:19.813420 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 2
+I0808 08:31:21.346482 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 20
+I0808 08:31:22.857421 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 21
+I0808 08:31:24.362914 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 22
+I0808 08:31:25.872624 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 23
+I0808 08:31:27.369186 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 24
+I0808 08:31:28.884888 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 25
+I0808 08:31:30.374090 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 26
+I0808 08:31:31.866960 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 27
+I0808 08:31:33.355613 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 28
+I0808 08:31:34.849103 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 29
+I0808 08:31:36.337622 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 3
+I0808 08:31:37.863545 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 30
+I0808 08:31:39.352316 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 31
+I0808 08:31:40.859471 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 32
+I0808 08:31:42.355802 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 33
+I0808 08:31:43.865345 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 34
+I0808 08:31:45.357947 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 35
+I0808 08:31:46.845717 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 36
+I0808 08:31:48.343118 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 37
+I0808 08:31:49.826083 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 38
+I0808 08:31:51.323014 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 39
+I0808 08:31:52.812492 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 4
+I0808 08:31:54.330756 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 40
+I0808 08:31:55.821634 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 41
+I0808 08:31:57.317258 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 42
+I0808 08:31:58.806203 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 43
+I0808 08:32:00.315679 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 44
+I0808 08:32:01.807522 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 45
+I0808 08:32:03.290867 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 46
+I0808 08:32:04.776298 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 47
+I0808 08:32:06.287421 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 48
+I0808 08:32:07.794622 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 5
+I0808 08:32:09.287610 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 6
+I0808 08:32:10.782971 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 7
+I0808 08:32:12.269451 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 8
+I0808 08:32:13.751346 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 1, round: 9
+I0808 08:32:27.810832 22975746803520 evaluation_fromsample.py:105] ckpt-1 --- FID: 1.641706e+01
+I0808 08:32:27.812266 22975746803520 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 08:32:27.812994 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 0
+I0808 08:32:29.372392 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 1
+I0808 08:32:30.873466 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 10
+I0808 08:32:32.402320 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 11
+I0808 08:32:33.898410 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 12
+I0808 08:32:35.392608 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 13
+I0808 08:32:36.888097 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 14
+I0808 08:32:38.393675 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 15
+I0808 08:32:39.890223 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 16
+I0808 08:32:41.387551 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 17
+I0808 08:32:42.883939 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 18
+I0808 08:32:44.401137 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 19
+I0808 08:32:45.908097 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 2
+I0808 08:32:47.400239 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 20
+I0808 08:32:48.888438 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 21
+I0808 08:32:50.438467 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 22
+I0808 08:32:51.961568 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 23
+I0808 08:32:53.464285 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 24
+I0808 08:32:54.965333 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 25
+I0808 08:32:56.485766 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 26
+I0808 08:32:57.990871 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 27
+I0808 08:32:59.488233 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 28
+I0808 08:33:00.986036 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 29
+I0808 08:33:02.484263 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 3
+I0808 08:33:03.999908 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 30
+I0808 08:33:05.489193 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 31
+I0808 08:33:06.982181 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 32
+I0808 08:33:08.493437 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 33
+I0808 08:33:10.015888 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 34
+I0808 08:33:11.537489 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 35
+I0808 08:33:13.033520 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 36
+I0808 08:33:14.529676 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 37
+I0808 08:33:16.022138 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 38
+I0808 08:33:17.533674 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 39
+I0808 08:33:19.025526 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 4
+I0808 08:33:20.541778 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 40
+I0808 08:33:22.066520 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 41
+I0808 08:33:23.579963 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 42
+I0808 08:33:25.079417 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 43
+I0808 08:33:26.582742 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 44
+I0808 08:33:28.083590 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 45
+I0808 08:33:29.572995 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 46
+I0808 08:33:31.128176 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 47
+I0808 08:33:32.618919 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 48
+I0808 08:33:34.151988 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 5
+I0808 08:33:35.662979 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 6
+I0808 08:33:37.192659 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 7
+I0808 08:33:38.694430 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 8
+I0808 08:33:40.197496 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 2, round: 9
+I0808 08:33:53.176681 22975746803520 evaluation_fromsample.py:105] ckpt-2 --- FID: 8.891440e+00
+I0808 08:33:53.178088 22975746803520 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 08:33:53.178786 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 0
+I0808 08:33:54.715227 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 1
+I0808 08:33:56.212368 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 10
+I0808 08:33:57.702378 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 11
+I0808 08:33:59.413451 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 12
+I0808 08:34:00.907065 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 13
+I0808 08:34:02.399691 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 14
+I0808 08:34:03.919668 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 15
+I0808 08:34:05.414227 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 16
+I0808 08:34:06.945524 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 17
+I0808 08:34:08.442573 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 18
+I0808 08:34:09.924353 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 19
+I0808 08:34:11.419534 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 2
+I0808 08:34:12.914399 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 20
+I0808 08:34:14.400559 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 21
+I0808 08:34:15.914355 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 22
+I0808 08:34:17.422604 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 23
+I0808 08:34:18.932818 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 24
+I0808 08:34:20.442226 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 25
+I0808 08:34:21.955592 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 26
+I0808 08:34:23.440351 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 27
+I0808 08:34:24.971796 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 28
+I0808 08:34:26.466079 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 29
+I0808 08:34:27.959694 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 3
+I0808 08:34:29.455046 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 30
+I0808 08:34:30.972536 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 31
+I0808 08:34:32.501125 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 32
+I0808 08:34:34.043652 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 33
+I0808 08:34:35.544528 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 34
+I0808 08:34:37.051160 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 35
+I0808 08:34:38.586031 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 36
+I0808 08:34:40.109281 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 37
+I0808 08:34:41.612524 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 38
+I0808 08:34:43.100691 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 39
+I0808 08:34:44.600277 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 4
+I0808 08:34:46.099697 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 40
+I0808 08:34:47.599711 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 41
+I0808 08:34:49.095062 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 42
+I0808 08:34:50.618727 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 43
+I0808 08:34:52.118680 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 44
+I0808 08:34:53.618318 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 45
+I0808 08:34:55.106187 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 46
+I0808 08:34:56.619461 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 47
+I0808 08:34:58.144607 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 48
+I0808 08:34:59.687208 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 5
+I0808 08:35:01.192812 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 6
+I0808 08:35:02.687280 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 7
+I0808 08:35:04.190226 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 8
+I0808 08:35:05.691594 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 3, round: 9
+I0808 08:35:18.317141 22975746803520 evaluation_fromsample.py:105] ckpt-3 --- FID: 6.341198e+00
+I0808 08:35:18.318613 22975746803520 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 08:35:18.319279 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 0
+I0808 08:35:19.874408 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 1
+I0808 08:35:21.363441 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 10
+I0808 08:35:22.857751 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 11
+I0808 08:35:24.415645 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 12
+I0808 08:35:25.918330 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 13
+I0808 08:35:27.422109 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 14
+I0808 08:35:28.943414 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 15
+I0808 08:35:30.444608 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 16
+I0808 08:35:31.961478 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 17
+I0808 08:35:33.486064 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 18
+I0808 08:35:34.985789 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 19
+I0808 08:35:36.475765 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 2
+I0808 08:35:37.966263 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 20
+I0808 08:35:39.455175 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 21
+I0808 08:35:40.949482 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 22
+I0808 08:35:42.454924 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 23
+I0808 08:35:43.947572 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 24
+I0808 08:35:45.438440 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 25
+I0808 08:35:46.948768 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 26
+I0808 08:35:48.451235 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 27
+I0808 08:35:49.955846 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 28
+I0808 08:35:51.452108 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 29
+I0808 08:35:52.972067 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 3
+I0808 08:35:54.468415 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 30
+I0808 08:35:55.967266 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 31
+I0808 08:35:57.467876 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 32
+I0808 08:35:58.976693 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 33
+I0808 08:36:00.497790 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 34
+I0808 08:36:01.988333 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 35
+I0808 08:36:03.490821 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 36
+I0808 08:36:04.996612 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 37
+I0808 08:36:06.496567 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 38
+I0808 08:36:07.990657 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 39
+I0808 08:36:09.509040 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 4
+I0808 08:36:11.035468 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 40
+I0808 08:36:12.531658 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 41
+I0808 08:36:14.021345 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 42
+I0808 08:36:15.514966 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 43
+I0808 08:36:17.005055 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 44
+I0808 08:36:18.497524 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 45
+I0808 08:36:20.000365 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 46
+I0808 08:36:21.525017 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 47
+I0808 08:36:23.022670 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 48
+I0808 08:36:24.510075 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 5
+I0808 08:36:26.002449 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 6
+I0808 08:36:27.507716 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 7
+I0808 08:36:29.023745 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 8
+I0808 08:36:30.525081 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 4, round: 9
+I0808 08:36:43.054066 22975746803520 evaluation_fromsample.py:105] ckpt-4 --- FID: 5.065056e+00
+I0808 08:36:43.055118 22975746803520 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 08:36:43.073570 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 0
+I0808 08:36:44.564491 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 1
+I0808 08:36:46.072767 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 10
+I0808 08:36:47.596468 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 11
+I0808 08:36:49.089529 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 12
+I0808 08:36:50.622149 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 13
+I0808 08:36:52.137197 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 14
+I0808 08:36:53.652548 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 15
+I0808 08:36:55.224754 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 16
+I0808 08:36:56.733870 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 17
+I0808 08:36:58.234339 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 18
+I0808 08:36:59.718787 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 19
+I0808 08:37:01.300114 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 2
+I0808 08:37:02.787032 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 20
+I0808 08:37:04.315534 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 21
+I0808 08:37:05.809452 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 22
+I0808 08:37:07.303150 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 23
+I0808 08:37:08.800097 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 24
+I0808 08:37:10.308935 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 25
+I0808 08:37:11.807733 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 26
+I0808 08:37:13.296557 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 27
+I0808 08:37:14.807685 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 28
+I0808 08:37:16.304772 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 29
+I0808 08:37:17.805451 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 3
+I0808 08:37:19.306740 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 30
+I0808 08:37:20.814110 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 31
+I0808 08:37:22.300052 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 32
+I0808 08:37:23.819430 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 33
+I0808 08:37:25.319487 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 34
+I0808 08:37:26.823544 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 35
+I0808 08:37:28.309537 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 36
+I0808 08:37:29.816676 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 37
+I0808 08:37:31.327330 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 38
+I0808 08:37:32.815706 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 39
+I0808 08:37:34.323193 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 4
+I0808 08:37:35.830823 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 40
+I0808 08:37:37.325842 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 41
+I0808 08:37:38.870447 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 42
+I0808 08:37:40.386611 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 43
+I0808 08:37:41.887851 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 44
+I0808 08:37:43.401165 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 45
+I0808 08:37:44.901835 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 46
+I0808 08:37:46.390048 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 47
+I0808 08:37:47.912158 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 48
+I0808 08:37:49.403156 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 5
+I0808 08:37:50.901610 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 6
+I0808 08:37:52.413558 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 7
+I0808 08:37:53.923825 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 8
+I0808 08:37:55.435471 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 5, round: 9
+I0808 08:38:08.071180 22975746803520 evaluation_fromsample.py:105] ckpt-5 --- FID: 4.327884e+00
+I0808 08:38:08.072211 22975746803520 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 08:38:08.072739 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 0
+I0808 08:38:09.561586 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 1
+I0808 08:38:11.088018 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 10
+I0808 08:38:12.600802 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 11
+I0808 08:38:14.120996 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 12
+I0808 08:38:15.633985 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 13
+I0808 08:38:17.174994 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 14
+I0808 08:38:18.675564 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 15
+I0808 08:38:20.216764 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 16
+I0808 08:38:21.743856 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 17
+I0808 08:38:23.250846 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 18
+I0808 08:38:24.763858 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 19
+I0808 08:38:26.235636 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 2
+I0808 08:38:27.693382 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 20
+I0808 08:38:29.149166 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 21
+I0808 08:38:30.615313 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 22
+I0808 08:38:32.123507 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 23
+I0808 08:38:33.613349 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 24
+I0808 08:38:35.099598 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 25
+I0808 08:38:36.640263 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 26
+I0808 08:38:38.144973 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 27
+I0808 08:38:39.647046 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 28
+I0808 08:38:41.138321 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 29
+I0808 08:38:42.643162 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 3
+I0808 08:38:44.135919 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 30
+I0808 08:38:45.645749 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 31
+I0808 08:38:47.147036 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 32
+I0808 08:38:48.641679 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 33
+I0808 08:38:50.132329 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 34
+I0808 08:38:51.626990 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 35
+I0808 08:38:53.129240 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 36
+I0808 08:38:54.644347 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 37
+I0808 08:38:56.137063 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 38
+I0808 08:38:57.643298 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 39
+I0808 08:38:59.127925 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 4
+I0808 08:39:00.649303 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 40
+I0808 08:39:02.152724 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 41
+I0808 08:39:03.662634 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 42
+I0808 08:39:05.189996 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 43
+I0808 08:39:06.687601 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 44
+I0808 08:39:08.207294 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 45
+I0808 08:39:09.715103 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 46
+I0808 08:39:11.219869 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 47
+I0808 08:39:12.745505 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 48
+I0808 08:39:14.261124 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 5
+I0808 08:39:15.755203 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 6
+I0808 08:39:17.267725 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 7
+I0808 08:39:18.775422 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 8
+I0808 08:39:20.289244 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 6, round: 9
+I0808 08:39:32.932822 22975746803520 evaluation_fromsample.py:105] ckpt-6 --- FID: 3.921685e+00
+I0808 08:39:32.933845 22975746803520 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 08:39:32.934357 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 0
+I0808 08:39:34.468631 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 1
+I0808 08:39:35.971800 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 10
+I0808 08:39:37.464688 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 11
+I0808 08:39:38.977554 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 12
+I0808 08:39:40.495713 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 13
+I0808 08:39:42.005964 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 14
+I0808 08:39:43.510257 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 15
+I0808 08:39:45.001292 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 16
+I0808 08:39:46.518841 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 17
+I0808 08:39:48.016768 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 18
+I0808 08:39:49.521067 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 19
+I0808 08:39:51.026344 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 2
+I0808 08:39:52.523136 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 20
+I0808 08:39:54.088029 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 21
+I0808 08:39:55.602483 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 22
+I0808 08:39:57.091885 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 23
+I0808 08:39:58.598789 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 24
+I0808 08:40:00.095780 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 25
+I0808 08:40:01.596216 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 26
+I0808 08:40:03.089877 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 27
+I0808 08:40:04.619656 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 28
+I0808 08:40:06.119440 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 29
+I0808 08:40:07.637449 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 3
+I0808 08:40:09.135336 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 30
+I0808 08:40:10.640939 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 31
+I0808 08:40:12.134750 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 32
+I0808 08:40:13.653614 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 33
+I0808 08:40:15.150707 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 34
+I0808 08:40:16.661233 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 35
+I0808 08:40:18.160533 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 36
+I0808 08:40:19.668735 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 37
+I0808 08:40:21.159028 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 38
+I0808 08:40:22.651187 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 39
+I0808 08:40:24.157479 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 4
+I0808 08:40:25.667528 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 40
+I0808 08:40:27.159294 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 41
+I0808 08:40:28.645688 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 42
+I0808 08:40:30.141024 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 43
+I0808 08:40:31.629373 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 44
+I0808 08:40:33.189967 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 45
+I0808 08:40:34.690600 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 46
+I0808 08:40:36.188277 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 47
+I0808 08:40:37.683075 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 48
+I0808 08:40:39.241861 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 5
+I0808 08:40:40.768284 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 6
+I0808 08:40:42.259624 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 7
+I0808 08:40:43.764618 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 8
+I0808 08:40:45.253578 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 7, round: 9
+I0808 08:40:57.654614 22975746803520 evaluation_fromsample.py:105] ckpt-7 --- FID: 3.566023e+00
+I0808 08:40:57.655636 22975746803520 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 08:40:57.656167 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 0
+I0808 08:40:59.154575 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 1
+I0808 08:41:00.653337 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 10
+I0808 08:41:02.149936 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 11
+I0808 08:41:03.652229 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 12
+I0808 08:41:05.142776 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 13
+I0808 08:41:06.633980 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 14
+I0808 08:41:08.127210 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 15
+I0808 08:41:09.637815 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 16
+I0808 08:41:11.120666 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 17
+I0808 08:41:12.616567 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 18
+I0808 08:41:14.133045 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 19
+I0808 08:41:15.628495 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 2
+I0808 08:41:17.129124 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 20
+I0808 08:41:18.621459 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 21
+I0808 08:41:20.133808 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 22
+I0808 08:41:21.634573 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 23
+I0808 08:41:23.169484 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 24
+I0808 08:41:24.674769 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 25
+I0808 08:41:26.177753 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 26
+I0808 08:41:27.700358 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 27
+I0808 08:41:29.189367 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 28
+I0808 08:41:30.698767 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 29
+I0808 08:41:32.241829 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 3
+I0808 08:41:33.742815 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 30
+I0808 08:41:35.247326 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 31
+I0808 08:41:36.732186 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 32
+I0808 08:41:38.229586 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 33
+I0808 08:41:39.720571 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 34
+I0808 08:41:41.219227 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 35
+I0808 08:41:42.707466 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 36
+I0808 08:41:44.195101 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 37
+I0808 08:41:45.706461 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 38
+I0808 08:41:47.199012 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 39
+I0808 08:41:48.694272 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 4
+I0808 08:41:50.194787 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 40
+I0808 08:41:51.700432 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 41
+I0808 08:41:53.186978 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 42
+I0808 08:41:54.676723 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 43
+I0808 08:41:56.166466 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 44
+I0808 08:41:57.747985 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 45
+I0808 08:41:59.247936 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 46
+I0808 08:42:00.762903 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 47
+I0808 08:42:02.254850 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 48
+I0808 08:42:03.751001 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 5
+I0808 08:42:05.243923 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 6
+I0808 08:42:06.761080 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 7
+I0808 08:42:08.251899 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 8
+I0808 08:42:09.742967 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 8, round: 9
+I0808 08:42:21.965024 22975746803520 evaluation_fromsample.py:105] ckpt-8 --- FID: 3.367969e+00
+I0808 08:42:21.966063 22975746803520 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 08:42:21.966600 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 0
+I0808 08:42:23.525285 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 1
+I0808 08:42:25.020451 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 10
+I0808 08:42:26.533409 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 11
+I0808 08:42:28.046109 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 12
+I0808 08:42:29.548515 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 13
+I0808 08:42:31.042968 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 14
+I0808 08:42:32.536071 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 15
+I0808 08:42:34.022683 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 16
+I0808 08:42:35.515270 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 17
+I0808 08:42:37.021657 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 18
+I0808 08:42:38.518381 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 19
+I0808 08:42:40.019869 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 2
+I0808 08:42:41.521871 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 20
+I0808 08:42:43.016396 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 21
+I0808 08:42:44.506762 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 22
+I0808 08:42:46.001838 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 23
+I0808 08:42:47.489550 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 24
+I0808 08:42:48.977238 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 25
+I0808 08:42:50.469814 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 26
+I0808 08:42:51.963967 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 27
+I0808 08:42:53.462091 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 28
+I0808 08:42:54.965002 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 29
+I0808 08:42:56.466308 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 3
+I0808 08:42:57.967741 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 30
+I0808 08:42:59.461473 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 31
+I0808 08:43:00.954122 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 32
+I0808 08:43:02.456935 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 33
+I0808 08:43:03.952917 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 34
+I0808 08:43:05.455276 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 35
+I0808 08:43:06.953463 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 36
+I0808 08:43:08.458732 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 37
+I0808 08:43:09.950994 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 38
+I0808 08:43:11.479094 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 39
+I0808 08:43:12.980998 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 4
+I0808 08:43:14.476621 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 40
+I0808 08:43:15.972600 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 41
+I0808 08:43:17.467521 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 42
+I0808 08:43:18.964474 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 43
+I0808 08:43:20.470057 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 44
+I0808 08:43:21.961137 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 45
+I0808 08:43:23.471879 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 46
+I0808 08:43:24.960539 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 47
+I0808 08:43:26.490251 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 48
+I0808 08:43:28.004881 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 5
+I0808 08:43:29.515715 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 6
+I0808 08:43:31.027500 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 7
+I0808 08:43:32.543074 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 8
+I0808 08:43:34.046126 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 9, round: 9
+I0808 08:43:46.455263 22975746803520 evaluation_fromsample.py:105] ckpt-9 --- FID: 3.195253e+00
+I0808 08:43:46.456322 22975746803520 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 08:43:46.456864 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 0
+I0808 08:43:47.956186 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 1
+I0808 08:43:49.460432 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 10
+I0808 08:43:50.956450 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 11
+I0808 08:43:52.456526 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 12
+I0808 08:43:53.973704 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 13
+I0808 08:43:55.535651 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 14
+I0808 08:43:57.036139 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 15
+I0808 08:43:58.572212 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 16
+I0808 08:44:00.062599 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 17
+I0808 08:44:01.568861 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 18
+I0808 08:44:03.056304 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 19
+I0808 08:44:04.550831 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 2
+I0808 08:44:06.091120 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 20
+I0808 08:44:07.577795 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 21
+I0808 08:44:09.084552 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 22
+I0808 08:44:10.574915 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 23
+I0808 08:44:12.080572 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 24
+I0808 08:44:13.587377 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 25
+I0808 08:44:15.089740 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 26
+I0808 08:44:16.594691 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 27
+I0808 08:44:18.110177 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 28
+I0808 08:44:19.607283 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 29
+I0808 08:44:21.109836 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 3
+I0808 08:44:22.632617 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 30
+I0808 08:44:24.132285 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 31
+I0808 08:44:25.622264 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 32
+I0808 08:44:27.129305 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 33
+I0808 08:44:28.655282 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 34
+I0808 08:44:30.176028 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 35
+I0808 08:44:31.673879 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 36
+I0808 08:44:33.191119 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 37
+I0808 08:44:34.730937 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 38
+I0808 08:44:36.233642 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 39
+I0808 08:44:37.751990 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 4
+I0808 08:44:39.266535 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 40
+I0808 08:44:40.788462 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 41
+I0808 08:44:42.286706 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 42
+I0808 08:44:43.786792 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 43
+I0808 08:44:45.280411 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 44
+I0808 08:44:46.806668 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 45
+I0808 08:44:48.302876 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 46
+I0808 08:44:49.813215 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 47
+I0808 08:44:51.310460 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 48
+I0808 08:44:52.824680 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 5
+I0808 08:44:54.311596 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 6
+I0808 08:44:55.804741 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 7
+I0808 08:44:57.297662 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 8
+I0808 08:44:58.788982 22975746803520 evaluation_fromsample.py:67] evaluation -- ckpt: 10, round: 9
+I0808 08:45:13.488603 22975746803520 evaluation_fromsample.py:105] ckpt-10 --- FID: 3.088654e+00
+[W socket.cpp:426] [c10d] The server socket cannot be initialized on [::]:29600 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:29600 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:29600 (errno: 97 - Address family not supported by protocol).
+2023-08-08 08:45:18.111658: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-08-08 08:45:18.239026: I tensorflow/core/util/port.cc:104] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2023-08-08 08:45:19.258434: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-08-08 08:45:19.258552: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-08-08 08:45:19.258568: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:98: UserWarning: unable to load libtensorflow_io_plugins.so: unable to open file: libtensorflow_io_plugins.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so: undefined symbol: _ZN3tsl6StatusC1EN10tensorflow5error4CodeESt17basic_string_viewIcSt11char_traitsIcEENS_18SourceLocationImplE']
+  warnings.warn(f"unable to load libtensorflow_io_plugins.so: {e}")
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:104: UserWarning: file system plugins are not loaded: unable to open file: libtensorflow_io.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so: undefined symbol: _ZTVN3tsl13GcsFileSystemE']
+  warnings.warn(f"file system plugins are not loaded: {e}")
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:29600 (errno: 97 - Address family not supported by protocol).
+[W socket.cpp:601] [c10d] The client socket cannot be initialized to connect to [localhost]:29600 (errno: 97 - Address family not supported by protocol).
+I0808 08:45:27.416221 23429411415872 main_interval.py:103] (0.442,)
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/torchvision/transforms/functional.py:1603: UserWarning: The default value of the antialias parameter of all the resizing transforms (Resize(), RandomResizedCrop(), etc.) will change from None to True in v0.17, in order to be consistent across the PIL and Tensor backends. To suppress this warning, directly pass antialias=True (recommended, future default), antialias=None (current default, which means False for Tensors and True for PIL), or antialias=False (only works on Tensors - PIL will still use antialiasing). This also applies if you are using the inference transforms from the models weights: update the call to weights.transforms(antialias=True).
+  warnings.warn(
+I0808 08:45:29.758458 23429411415872 ncsnpp.py:234] init
+init
+I0808 08:45:29.760923 23429411415872 ncsnpp.py:237] Total params are 166560483
+166560483
+I0808 08:45:31.556890 23429411415872 ncsnpp.py:234] init
+init
+I0808 08:45:31.559319 23429411415872 ncsnpp.py:237] Total params are 106632579
+106632579
+I0808 08:45:31.797233 23429411415872 main_interval.py:139] begin checkpoint: 15
+I0808 08:45:31.797417 23429411415872 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_15.pth
+I0808 08:46:08.936203 23429411415872 main_interval.py:143] 1 is converged model
+I0808 08:46:08.952231 23429411415872 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 08:46:33.478647 23429411415872 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 08:46:33.489690 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 0
+I0808 08:47:22.754806 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 1
+I0808 08:48:10.431348 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 2
+I0808 08:48:58.189107 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 3
+I0808 08:49:45.964335 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 4
+I0808 08:50:33.757526 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 5
+I0808 08:51:21.544361 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 6
+I0808 08:52:09.341558 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 7
+I0808 08:52:57.144322 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 8
+I0808 08:53:44.935920 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 9
+I0808 08:54:32.731778 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 10
+I0808 08:55:20.518420 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 11
+I0808 08:56:08.303255 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 12
+I0808 08:56:56.081508 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 13
+I0808 08:57:43.860853 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 14
+I0808 08:58:31.644211 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 15
+I0808 08:59:19.435935 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 16
+I0808 09:00:07.251744 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 17
+I0808 09:00:55.062248 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 18
+I0808 09:01:42.889187 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 19
+I0808 09:02:30.705148 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 20
+I0808 09:03:18.524244 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 21
+I0808 09:04:06.348870 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 22
+I0808 09:04:54.193191 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 23
+I0808 09:05:42.050295 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 24
+I0808 09:06:29.891985 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 25
+I0808 09:07:17.698179 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 26
+I0808 09:08:05.492623 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 27
+I0808 09:08:53.273049 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 28
+I0808 09:09:41.063745 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 29
+I0808 09:10:28.869553 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 30
+I0808 09:11:16.669221 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 31
+I0808 09:12:04.478806 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 32
+I0808 09:12:52.281826 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 33
+I0808 09:13:40.090769 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 34
+I0808 09:14:27.902441 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 35
+I0808 09:15:15.715389 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 36
+I0808 09:16:03.523966 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 37
+I0808 09:16:51.346945 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 38
+I0808 09:17:39.150049 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 39
+I0808 09:18:26.963038 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 40
+I0808 09:19:14.752565 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 41
+I0808 09:20:02.544651 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 42
+I0808 09:20:50.322329 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 43
+I0808 09:21:38.114083 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 44
+I0808 09:22:25.907417 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 45
+I0808 09:23:13.721668 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 46
+I0808 09:24:01.526503 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 47
+I0808 09:24:49.318429 23429411415872 main_interval.py:162] sampling -- ckpt: 15, round: 48
+I0808 09:25:37.108955 23429411415872 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_20.pth
+I0808 09:26:13.810112 23429411415872 main_interval.py:143] 1 is converged model
+I0808 09:26:13.819046 23429411415872 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 09:26:39.949446 23429411415872 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 09:26:39.964595 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 0
+I0808 09:27:27.733111 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 1
+I0808 09:28:15.429839 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 2
+I0808 09:29:03.215715 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 3
+I0808 09:29:51.008986 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 4
+I0808 09:30:38.813765 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 5
+I0808 09:31:26.649873 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 6
+I0808 09:32:14.484523 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 7
+I0808 09:33:02.315792 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 8
+I0808 09:33:50.151679 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 9
+I0808 09:34:37.992203 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 10
+I0808 09:35:25.843158 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 11
+I0808 09:36:13.709630 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 12
+I0808 09:37:01.574148 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 13
+I0808 09:37:49.430040 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 14
+I0808 09:38:37.264480 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 15
+I0808 09:39:25.091777 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 16
+I0808 09:40:12.918958 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 17
+I0808 09:41:00.754743 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 18
+I0808 09:41:48.595794 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 19
+I0808 09:42:36.436008 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 20
+I0808 09:43:24.273397 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 21
+I0808 09:44:12.108968 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 22
+I0808 09:44:59.943481 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 23
+I0808 09:45:47.787292 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 24
+I0808 09:46:35.615478 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 25
+I0808 09:47:23.467435 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 26
+I0808 09:48:11.320989 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 27
+I0808 09:48:59.176554 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 28
+I0808 09:49:47.011407 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 29
+I0808 09:50:34.839030 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 30
+I0808 09:51:22.659430 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 31
+I0808 09:52:10.479785 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 32
+I0808 09:52:58.305787 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 33
+I0808 09:53:46.138728 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 34
+I0808 09:54:33.967048 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 35
+I0808 09:55:22.030457 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 36
+I0808 09:56:09.869082 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 37
+I0808 09:56:57.701961 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 38
+I0808 09:57:45.541193 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 39
+I0808 09:58:33.374817 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 40
+I0808 09:59:21.216336 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 41
+I0808 10:00:09.060915 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 42
+I0808 10:00:56.919069 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 43
+I0808 10:01:44.756830 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 44
+I0808 10:02:32.597995 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 45
+I0808 10:03:20.448735 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 46
+I0808 10:04:08.263304 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 47
+I0808 10:04:56.077738 23429411415872 main_interval.py:162] sampling -- ckpt: 20, round: 48
+I0808 10:05:43.898471 23429411415872 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_25.pth
+I0808 10:06:18.276660 23429411415872 main_interval.py:143] 1 is converged model
+I0808 10:06:18.285718 23429411415872 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 10:06:41.961790 23429411415872 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 10:06:41.973330 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 0
+I0808 10:07:29.802584 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 1
+I0808 10:08:17.568269 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 2
+I0808 10:09:05.377903 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 3
+I0808 10:09:53.197970 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 4
+I0808 10:10:41.029332 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 5
+I0808 10:11:28.854707 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 6
+I0808 10:12:16.687019 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 7
+I0808 10:13:04.531883 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 8
+I0808 10:13:52.375919 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 9
+I0808 10:14:40.212821 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 10
+I0808 10:15:28.037434 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 11
+I0808 10:16:15.848656 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 12
+I0808 10:17:03.659902 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 13
+I0808 10:17:51.480662 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 14
+I0808 10:18:39.313628 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 15
+I0808 10:19:27.150161 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 16
+I0808 10:20:14.996752 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 17
+I0808 10:21:02.837172 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 18
+I0808 10:21:50.674648 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 19
+I0808 10:22:38.512731 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 20
+I0808 10:23:26.343297 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 21
+I0808 10:24:14.193186 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 22
+I0808 10:25:02.046347 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 23
+I0808 10:25:49.906186 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 24
+I0808 10:26:37.751788 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 25
+I0808 10:27:25.583338 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 26
+I0808 10:28:13.407995 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 27
+I0808 10:29:01.228779 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 28
+I0808 10:29:49.048796 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 29
+I0808 10:30:36.936382 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 30
+I0808 10:31:24.780174 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 31
+I0808 10:32:12.612357 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 32
+I0808 10:33:00.451600 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 33
+I0808 10:33:49.199176 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 34
+I0808 10:34:37.063390 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 35
+I0808 10:35:24.917359 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 36
+I0808 10:36:12.756019 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 37
+I0808 10:37:00.607168 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 38
+I0808 10:37:48.470681 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 39
+I0808 10:38:36.320439 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 40
+I0808 10:39:24.170826 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 41
+I0808 10:40:12.010291 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 42
+I0808 10:40:59.839027 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 43
+I0808 10:41:47.662709 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 44
+I0808 10:42:35.467242 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 45
+I0808 10:43:23.299773 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 46
+I0808 10:44:11.142414 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 47
+I0808 10:44:58.978741 23429411415872 main_interval.py:162] sampling -- ckpt: 25, round: 48
+I0808 10:45:46.842789 23429411415872 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_30.pth
+I0808 10:46:22.372780 23429411415872 main_interval.py:143] 1 is converged model
+I0808 10:46:22.394208 23429411415872 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 10:46:49.313128 23429411415872 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 10:46:49.322965 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 0
+I0808 10:47:37.148790 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 1
+I0808 10:48:24.875458 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 2
+I0808 10:49:12.639539 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 3
+I0808 10:50:00.460812 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 4
+I0808 10:50:48.297702 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 5
+I0808 10:51:36.144941 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 6
+I0808 10:52:24.000803 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 7
+I0808 10:53:11.848736 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 8
+I0808 10:53:59.690696 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 9
+I0808 10:54:47.540545 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 10
+I0808 10:55:35.462580 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 11
+I0808 10:56:23.329058 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 12
+I0808 10:57:11.188072 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 13
+I0808 10:57:59.046335 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 14
+I0808 10:58:46.903400 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 15
+I0808 10:59:34.730022 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 16
+I0808 11:00:22.560046 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 17
+I0808 11:01:10.390412 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 18
+I0808 11:01:58.202914 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 19
+I0808 11:02:46.023027 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 20
+I0808 11:03:33.866590 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 21
+I0808 11:04:21.704613 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 22
+I0808 11:05:09.551476 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 23
+I0808 11:05:57.391311 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 24
+I0808 11:06:45.234987 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 25
+I0808 11:07:33.085722 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 26
+I0808 11:08:20.923187 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 27
+I0808 11:09:08.768092 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 28
+I0808 11:09:56.611712 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 29
+I0808 11:10:44.466135 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 30
+I0808 11:11:32.307640 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 31
+I0808 11:12:20.143600 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 32
+I0808 11:13:07.958125 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 33
+I0808 11:13:55.773818 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 34
+I0808 11:14:43.598335 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 35
+I0808 11:15:31.430253 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 36
+I0808 11:16:19.268454 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 37
+I0808 11:17:07.114431 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 38
+I0808 11:17:54.950132 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 39
+I0808 11:18:42.789992 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 40
+I0808 11:19:30.628035 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 41
+I0808 11:20:18.469175 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 42
+I0808 11:21:06.307250 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 43
+I0808 11:21:54.140961 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 44
+I0808 11:22:41.992104 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 45
+I0808 11:23:29.843979 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 46
+I0808 11:24:17.692043 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 47
+I0808 11:25:05.517358 23429411415872 main_interval.py:162] sampling -- ckpt: 30, round: 48
+I0808 11:25:53.343400 23429411415872 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_35.pth
+I0808 11:26:28.908489 23429411415872 main_interval.py:143] 1 is converged model
+I0808 11:26:28.911921 23429411415872 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 11:26:52.935060 23429411415872 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 11:26:52.949508 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 0
+I0808 11:27:40.768824 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 1
+I0808 11:28:28.503252 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 2
+I0808 11:29:16.301508 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 3
+I0808 11:30:04.121959 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 4
+I0808 11:30:51.955838 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 5
+I0808 11:31:39.783585 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 6
+I0808 11:32:27.618957 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 7
+I0808 11:33:15.456832 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 8
+I0808 11:34:03.296559 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 9
+I0808 11:34:51.162489 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 10
+I0808 11:35:39.038094 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 11
+I0808 11:36:27.003021 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 12
+I0808 11:37:14.852385 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 13
+I0808 11:38:02.711253 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 14
+I0808 11:38:50.560900 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 15
+I0808 11:39:38.418260 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 16
+I0808 11:40:26.276308 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 17
+I0808 11:41:14.138556 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 18
+I0808 11:42:02.008092 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 19
+I0808 11:42:49.860498 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 20
+I0808 11:43:37.717651 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 21
+I0808 11:44:25.558094 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 22
+I0808 11:45:13.400118 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 23
+I0808 11:46:01.245787 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 24
+I0808 11:46:49.099438 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 25
+I0808 11:47:36.954692 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 26
+I0808 11:48:24.788694 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 27
+I0808 11:49:12.623480 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 28
+I0808 11:50:00.450725 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 29
+I0808 11:50:48.288010 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 30
+I0808 11:51:36.126349 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 31
+I0808 11:52:23.968787 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 32
+I0808 11:53:11.817141 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 33
+I0808 11:53:59.677946 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 34
+I0808 11:54:47.539762 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 35
+I0808 11:55:35.407142 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 36
+I0808 11:56:23.260591 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 37
+I0808 11:57:11.104177 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 38
+I0808 11:57:58.949616 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 39
+I0808 11:58:46.796466 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 40
+I0808 11:59:34.646768 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 41
+I0808 12:00:22.518598 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 42
+I0808 12:01:10.382105 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 43
+I0808 12:01:58.233547 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 44
+I0808 12:02:46.086286 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 45
+I0808 12:03:33.936299 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 46
+I0808 12:04:21.796329 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 47
+I0808 12:05:09.653727 23429411415872 main_interval.py:162] sampling -- ckpt: 35, round: 48
+I0808 12:05:57.509617 23429411415872 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I0_d/checkpoints/checkpoint_40.pth
+I0808 12:06:36.101167 23429411415872 main_interval.py:143] 1 is converged model
+I0808 12:06:36.114333 23429411415872 main_interval.py:147] /scratch/qingqu_root/qingqu1/shared_data/multistage/dpm_deep/checkpoints/checkpoint_8.pth
+I0808 12:07:00.280153 23429411415872 main_interval.py:158] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 12:07:00.293555 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 0
+I0808 12:07:48.121470 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 1
+I0808 12:08:35.855554 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 2
+I0808 12:09:23.664332 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 3
+I0808 12:10:11.492809 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 4
+I0808 12:10:59.316502 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 5
+I0808 12:11:47.156523 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 6
+I0808 12:12:35.029991 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 7
+I0808 12:13:22.876699 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 8
+I0808 12:14:10.727964 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 9
+I0808 12:14:58.583564 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 10
+I0808 12:15:46.436010 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 11
+I0808 12:16:34.480154 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 12
+I0808 12:17:22.316483 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 13
+I0808 12:18:10.151105 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 14
+I0808 12:18:57.989776 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 15
+I0808 12:19:45.821465 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 16
+I0808 12:20:33.650990 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 17
+I0808 12:21:21.476761 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 18
+I0808 12:22:09.307692 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 19
+I0808 12:22:57.143462 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 20
+I0808 12:23:44.982025 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 21
+I0808 12:24:32.832616 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 22
+I0808 12:25:20.689308 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 23
+I0808 12:26:08.533816 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 24
+I0808 12:26:56.385190 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 25
+I0808 12:27:44.236520 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 26
+I0808 12:28:32.088334 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 27
+I0808 12:29:19.923912 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 28
+I0808 12:30:07.770568 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 29
+I0808 12:30:55.615437 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 30
+I0808 12:31:43.689043 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 31
+I0808 12:32:31.525813 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 32
+I0808 12:33:19.348095 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 33
+I0808 12:34:07.173449 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 34
+I0808 12:34:54.995332 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 35
+I0808 12:35:42.819409 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 36
+I0808 12:36:30.660923 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 37
+I0808 12:37:18.517210 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 38
+I0808 12:38:06.374336 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 39
+I0808 12:38:54.226828 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 40
+I0808 12:39:42.061714 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 41
+I0808 12:40:29.908363 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 42
+I0808 12:41:17.744225 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 43
+I0808 12:42:05.586595 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 44
+I0808 12:42:53.430305 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 45
+I0808 12:43:41.286919 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 46
+I0808 12:44:29.145773 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 47
+I0808 12:45:17.002669 23429411415872 main_interval.py:162] sampling -- ckpt: 40, round: 48
+2023-08-08 12:46:13.639612: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F AVX512_VNNI FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-08-08 12:46:13.755081: I tensorflow/core/util/port.cc:104] oneDNN custom operations are on. You may see slightly different numerical results due to floating-point round-off errors from different computation orders. To turn them off, set the environment variable `TF_ENABLE_ONEDNN_OPTS=0`.
+2023-08-08 12:46:15.703239: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-08-08 12:46:15.703341: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-08-08 12:46:15.703356: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:98: UserWarning: unable to load libtensorflow_io_plugins.so: unable to open file: libtensorflow_io_plugins.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so: undefined symbol: _ZN3tsl6StatusC1EN10tensorflow5error4CodeESt17basic_string_viewIcSt11char_traitsIcEENS_18SourceLocationImplE']
+  warnings.warn(f"unable to load libtensorflow_io_plugins.so: {e}")
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:104: UserWarning: file system plugins are not loaded: unable to open file: libtensorflow_io.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so: undefined symbol: _ZTVN3tsl13GcsFileSystemE']
+  warnings.warn(f"file system plugins are not loaded: {e}")
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_gan/python/estimator/tpu_gan_estimator.py:42: The name tf.estimator.tpu.TPUEstimator is deprecated. Please use tf.compat.v1.estimator.tpu.TPUEstimator instead.
+
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/absl/flags/_validators.py:254: UserWarning: Flag --eval_folder has a non-None default value; therefore, mark_flag_as_required will pass even if flag is not specified in the command line!
+  mark_flag_as_required(flag_name, flag_values)
+I0808 12:46:26.318903 22847513429824 resolver.py:108] Using /tmp/tfhub_modules to cache modules.
+2023-08-08 12:46:29.194563: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1613] Created device /job:localhost/replica:0/task:0/device:GPU:0 with 43087 MB memory:  -> device: 0, name: NVIDIA A40, pci bus id: 0000:23:00.0, compute capability: 8.6
+I0808 12:46:31.324775 22847513429824 evaluation_fromsample.py:48] begin checkpoint: 15
+I0808 12:46:31.325047 22847513429824 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 12:46:31.325733 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 0
+I0808 12:46:32.438736 22847513429824 xla_bridge.py:440] Unable to initialize backend 'cuda': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0808 12:46:32.438899 22847513429824 xla_bridge.py:440] Unable to initialize backend 'rocm': module 'jaxlib.xla_extension' has no attribute 'GpuAllocatorConfig'
+I0808 12:46:32.460956 22847513429824 xla_bridge.py:440] Unable to initialize backend 'tpu': INVALID_ARGUMENT: TpuPlatform is not available.
+I0808 12:46:32.461066 22847513429824 xla_bridge.py:440] Unable to initialize backend 'plugin': xla_extension has no attributes named get_plugin_device_client. Compile TensorFlow with //tensorflow/compiler/xla/python:enable_plugin_device set to true (defaults to false) to enable this.
+W0808 12:46:32.461125 22847513429824 xla_bridge.py:448] No GPU/TPU found, falling back to CPU. (Set TF_CPP_MIN_LOG_LEVEL=0 and rerun for more info.)
+WARNING:tensorflow:From /home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow/python/autograph/pyct/static_analysis/liveness.py:83: Analyzer.lamba_check (from tensorflow.python.autograph.pyct.static_analysis.liveness) is deprecated and will be removed after 2023-09-23.
+Instructions for updating:
+Lambda fuctions will be no more assumed to be used in the statement where they are used, or at least in the same block. https://github.com/tensorflow/tensorflow/issues/56089
+W0808 12:46:32.756409 22847513429824 deprecation.py:350] From /home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow/python/autograph/pyct/static_analysis/liveness.py:83: Analyzer.lamba_check (from tensorflow.python.autograph.pyct.static_analysis.liveness) is deprecated and will be removed after 2023-09-23.
+Instructions for updating:
+Lambda fuctions will be no more assumed to be used in the statement where they are used, or at least in the same block. https://github.com/tensorflow/tensorflow/issues/56089
+2023-08-08 12:46:37.235400: I tensorflow/compiler/xla/stream_executor/cuda/cuda_dnn.cc:428] Loaded cuDNN version 8700
+2023-08-08 12:46:38.654678: W tensorflow/core/kernels/gpu_utils.cc:50] Failed to allocate memory for convolution redzone checking; skipping this check. This is benign and only means that we won't check cudnn for out-of-bounds reads and writes. This message will only be printed once.
+2023-08-08 12:46:45.366125: I tensorflow/compiler/xla/stream_executor/cuda/cuda_blas.cc:630] TensorFloat-32 will be used for the matrix multiplication. This will only be logged once.
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow/python/util/nest.py:917: UserWarning: `tf.layers.flatten` is deprecated and will be removed in a future version. Please use `tf.keras.layers.Flatten` instead.
+  structure[0], [func(*x) for x in entries],
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/keras/legacy_tf_layers/base.py:627: UserWarning: `layer.updates` will be removed in a future version. This property should not be used in TensorFlow 2.0, as `updates` are applied automatically.
+  self.updates, tf.compat.v1.GraphKeys.UPDATE_OPS
+I0808 12:46:45.922064 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 1
+I0808 12:46:47.405753 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 10
+I0808 12:46:48.868573 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 11
+I0808 12:46:50.327531 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 12
+I0808 12:46:51.879851 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 13
+I0808 12:46:53.391695 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 14
+I0808 12:46:54.921057 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 15
+I0808 12:46:56.402885 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 16
+I0808 12:46:58.012463 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 17
+I0808 12:46:59.564525 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 18
+I0808 12:47:01.121760 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 19
+I0808 12:47:02.714091 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 2
+I0808 12:47:04.218740 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 20
+I0808 12:47:05.723361 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 21
+I0808 12:47:07.280398 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 22
+I0808 12:47:08.806773 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 23
+I0808 12:47:10.401895 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 24
+I0808 12:47:11.897810 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 25
+I0808 12:47:13.390650 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 26
+I0808 12:47:14.886667 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 27
+I0808 12:47:16.384922 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 28
+I0808 12:47:17.864144 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 29
+I0808 12:47:19.354035 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 3
+I0808 12:47:20.856635 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 30
+I0808 12:47:22.366843 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 31
+I0808 12:47:23.851469 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 32
+I0808 12:47:25.422663 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 33
+I0808 12:47:26.887910 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 34
+I0808 12:47:28.370430 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 35
+I0808 12:47:29.872579 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 36
+I0808 12:47:31.365653 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 37
+I0808 12:47:32.867728 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 38
+I0808 12:47:34.360084 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 39
+I0808 12:47:35.859887 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 4
+I0808 12:47:37.383230 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 40
+I0808 12:47:38.875915 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 41
+I0808 12:47:40.379034 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 42
+I0808 12:47:42.082451 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 43
+I0808 12:47:43.618775 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 44
+I0808 12:47:45.216196 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 45
+I0808 12:47:46.689247 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 46
+I0808 12:47:48.236869 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 47
+I0808 12:47:49.707681 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 48
+I0808 12:47:51.290706 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 5
+I0808 12:47:52.779822 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 6
+I0808 12:47:54.301801 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 7
+I0808 12:47:55.780016 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 8
+I0808 12:47:57.262850 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 15, round: 9
+I0808 12:48:11.456191 22847513429824 evaluation_fromsample.py:105] ckpt-15 --- FID: 2.627490e+00
+I0808 12:48:11.457591 22847513429824 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 12:48:11.458274 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 0
+I0808 12:48:12.973345 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 1
+I0808 12:48:14.441013 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 10
+I0808 12:48:15.926563 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 11
+I0808 12:48:17.479910 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 12
+I0808 12:48:18.976069 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 13
+I0808 12:48:20.458427 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 14
+I0808 12:48:22.044681 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 15
+I0808 12:48:23.529884 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 16
+I0808 12:48:25.058149 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 17
+I0808 12:48:26.555573 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 18
+I0808 12:48:28.045783 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 19
+I0808 12:48:29.558208 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 2
+I0808 12:48:31.194064 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 20
+I0808 12:48:32.800088 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 21
+I0808 12:48:34.353266 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 22
+I0808 12:48:35.872118 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 23
+I0808 12:48:37.370103 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 24
+I0808 12:48:38.869703 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 25
+I0808 12:48:40.360991 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 26
+I0808 12:48:41.852535 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 27
+I0808 12:48:43.412818 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 28
+I0808 12:48:44.916313 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 29
+I0808 12:48:46.499163 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 3
+I0808 12:48:48.009106 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 30
+I0808 12:48:49.493602 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 31
+I0808 12:48:50.980428 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 32
+I0808 12:48:52.450578 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 33
+I0808 12:48:53.925365 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 34
+I0808 12:48:55.474267 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 35
+I0808 12:48:56.983342 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 36
+I0808 12:48:58.477677 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 37
+I0808 12:48:59.977149 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 38
+I0808 12:49:01.482093 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 39
+I0808 12:49:03.028427 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 4
+I0808 12:49:04.516813 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 40
+I0808 12:49:06.062530 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 41
+I0808 12:49:07.586063 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 42
+I0808 12:49:09.105333 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 43
+I0808 12:49:10.626513 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 44
+I0808 12:49:12.098794 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 45
+I0808 12:49:13.726651 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 46
+I0808 12:49:15.443204 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 47
+I0808 12:49:17.047443 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 48
+I0808 12:49:18.506787 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 5
+I0808 12:49:20.001210 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 6
+I0808 12:49:21.505915 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 7
+I0808 12:49:23.070086 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 8
+I0808 12:49:24.583539 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 20, round: 9
+I0808 12:49:38.280339 22847513429824 evaluation_fromsample.py:105] ckpt-20 --- FID: 2.547645e+00
+I0808 12:49:38.281724 22847513429824 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 12:49:38.282425 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 0
+I0808 12:49:39.879795 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 1
+I0808 12:49:41.471411 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 10
+I0808 12:49:42.970574 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 11
+I0808 12:49:44.477425 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 12
+I0808 12:49:46.068108 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 13
+I0808 12:49:47.584533 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 14
+I0808 12:49:49.071523 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 15
+I0808 12:49:50.560403 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 16
+I0808 12:49:52.114773 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 17
+I0808 12:49:53.602155 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 18
+I0808 12:49:55.107736 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 19
+I0808 12:49:56.665679 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 2
+I0808 12:49:58.225945 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 20
+I0808 12:49:59.699460 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 21
+I0808 12:50:01.320421 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 22
+I0808 12:50:02.979725 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 23
+I0808 12:50:04.645327 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 24
+I0808 12:50:06.278408 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 25
+I0808 12:50:07.944917 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 26
+I0808 12:50:09.627062 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 27
+I0808 12:50:11.439793 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 28
+I0808 12:50:12.959267 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 29
+I0808 12:50:14.470513 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 3
+I0808 12:50:16.013615 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 30
+I0808 12:50:17.525644 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 31
+I0808 12:50:19.217961 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 32
+I0808 12:50:20.884059 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 33
+I0808 12:50:22.594827 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 34
+I0808 12:50:24.287472 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 35
+I0808 12:50:26.006972 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 36
+I0808 12:50:27.706839 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 37
+I0808 12:50:29.397349 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 38
+I0808 12:50:31.014368 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 39
+I0808 12:50:32.722030 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 4
+I0808 12:50:34.389305 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 40
+I0808 12:50:36.027918 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 41
+I0808 12:50:37.660061 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 42
+I0808 12:50:39.291010 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 43
+I0808 12:50:40.967815 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 44
+I0808 12:50:42.618468 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 45
+I0808 12:50:44.265475 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 46
+I0808 12:50:45.941976 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 47
+I0808 12:50:47.636313 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 48
+I0808 12:50:49.303854 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 5
+I0808 12:50:50.996673 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 6
+I0808 12:50:52.620880 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 7
+I0808 12:50:54.287323 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 8
+I0808 12:50:55.934143 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 25, round: 9
+I0808 12:51:09.201749 22847513429824 evaluation_fromsample.py:105] ckpt-25 --- FID: 2.761759e+00
+I0808 12:51:09.202807 22847513429824 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 12:51:09.203365 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 0
+I0808 12:51:10.738783 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 1
+I0808 12:51:12.263855 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 10
+I0808 12:51:13.728501 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 11
+I0808 12:51:15.268048 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 12
+I0808 12:51:16.755821 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 13
+I0808 12:51:18.250817 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 14
+I0808 12:51:19.763081 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 15
+I0808 12:51:21.307412 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 16
+I0808 12:51:22.922439 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 17
+I0808 12:51:24.391052 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 18
+I0808 12:51:25.865053 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 19
+I0808 12:51:27.336755 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 2
+I0808 12:51:28.886915 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 20
+I0808 12:51:30.379288 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 21
+I0808 12:51:31.954841 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 22
+I0808 12:51:33.455946 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 23
+I0808 12:51:34.986407 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 24
+I0808 12:51:36.505244 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 25
+I0808 12:51:38.041237 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 26
+I0808 12:51:39.603549 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 27
+I0808 12:51:41.112958 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 28
+I0808 12:51:42.631463 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 29
+I0808 12:51:44.230089 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 3
+I0808 12:51:45.729860 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 30
+I0808 12:51:47.317243 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 31
+I0808 12:51:48.817332 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 32
+I0808 12:51:50.322267 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 33
+I0808 12:51:51.805847 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 34
+I0808 12:51:53.298458 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 35
+I0808 12:51:54.785843 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 36
+I0808 12:51:56.267494 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 37
+I0808 12:51:57.760770 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 38
+I0808 12:51:59.231493 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 39
+I0808 12:52:00.781517 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 4
+I0808 12:52:02.281529 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 40
+I0808 12:52:03.807798 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 41
+I0808 12:52:05.278804 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 42
+I0808 12:52:06.825138 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 43
+I0808 12:52:08.320950 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 44
+I0808 12:52:09.823264 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 45
+I0808 12:52:11.335809 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 46
+I0808 12:52:12.839862 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 47
+I0808 12:52:14.343601 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 48
+I0808 12:52:15.810409 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 5
+I0808 12:52:17.414849 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 6
+I0808 12:52:18.896471 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 7
+I0808 12:52:20.372917 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 8
+I0808 12:52:21.844319 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 30, round: 9
+I0808 12:52:35.473768 22847513429824 evaluation_fromsample.py:105] ckpt-30 --- FID: 3.047605e+00
+I0808 12:52:35.474764 22847513429824 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 12:52:35.475290 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 0
+I0808 12:52:36.951143 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 1
+I0808 12:52:38.413198 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 10
+I0808 12:52:39.875344 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 11
+I0808 12:52:41.340692 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 12
+I0808 12:52:42.861513 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 13
+I0808 12:52:44.366617 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 14
+I0808 12:52:45.914234 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 15
+I0808 12:52:47.431522 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 16
+I0808 12:52:48.989379 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 17
+I0808 12:52:50.472471 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 18
+I0808 12:52:52.004107 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 19
+I0808 12:52:53.474930 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 2
+I0808 12:52:54.949906 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 20
+I0808 12:52:56.501664 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 21
+I0808 12:52:58.036364 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 22
+I0808 12:52:59.528394 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 23
+I0808 12:53:01.009473 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 24
+I0808 12:53:02.514286 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 25
+I0808 12:53:04.060342 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 26
+I0808 12:53:05.553334 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 27
+I0808 12:53:07.057950 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 28
+I0808 12:53:08.574908 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 29
+I0808 12:53:10.172131 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 3
+I0808 12:53:11.684113 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 30
+I0808 12:53:13.199500 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 31
+I0808 12:53:14.753889 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 32
+I0808 12:53:16.258147 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 33
+I0808 12:53:17.762221 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 34
+I0808 12:53:19.242652 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 35
+I0808 12:53:20.741839 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 36
+I0808 12:53:22.297432 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 37
+I0808 12:53:23.824186 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 38
+I0808 12:53:25.298659 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 39
+I0808 12:53:26.799494 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 4
+I0808 12:53:28.288227 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 40
+I0808 12:53:29.772257 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 41
+I0808 12:53:31.232841 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 42
+I0808 12:53:32.741712 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 43
+I0808 12:53:34.226537 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 44
+I0808 12:53:35.698427 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 45
+I0808 12:53:37.286799 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 46
+I0808 12:53:38.791505 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 47
+I0808 12:53:40.273709 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 48
+I0808 12:53:41.776973 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 5
+I0808 12:53:43.243030 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 6
+I0808 12:53:44.747347 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 7
+I0808 12:53:46.225414 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 8
+I0808 12:53:47.711922 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 35, round: 9
+I0808 12:54:01.438534 22847513429824 evaluation_fromsample.py:105] ckpt-35 --- FID: 3.294693e+00
+I0808 12:54:01.439556 22847513429824 evaluation_fromsample.py:52] /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/interval0d
+I0808 12:54:01.440088 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 0
+I0808 12:54:02.918824 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 1
+I0808 12:54:04.431170 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 10
+I0808 12:54:05.917582 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 11
+I0808 12:54:07.521324 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 12
+I0808 12:54:09.013970 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 13
+I0808 12:54:10.498253 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 14
+I0808 12:54:12.003848 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 15
+I0808 12:54:13.495706 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 16
+I0808 12:54:14.973827 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 17
+I0808 12:54:16.633505 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 18
+I0808 12:54:18.362165 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 19
+I0808 12:54:19.885666 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 2
+I0808 12:54:21.449462 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 20
+I0808 12:54:22.981914 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 21
+I0808 12:54:24.515640 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 22
+I0808 12:54:26.143469 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 23
+I0808 12:54:27.674504 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 24
+I0808 12:54:29.172118 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 25
+I0808 12:54:30.653260 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 26
+I0808 12:54:32.149763 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 27
+I0808 12:54:33.669183 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 28
+I0808 12:54:35.148505 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 29
+I0808 12:54:36.664820 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 3
+I0808 12:54:38.146489 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 30
+I0808 12:54:39.713810 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 31
+I0808 12:54:41.243785 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 32
+I0808 12:54:42.725990 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 33
+I0808 12:54:44.265710 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 34
+I0808 12:54:45.820070 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 35
+I0808 12:54:47.318543 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 36
+I0808 12:54:48.807046 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 37
+I0808 12:54:50.384743 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 38
+I0808 12:54:51.930903 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 39
+I0808 12:54:53.551882 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 4
+I0808 12:54:55.062315 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 40
+I0808 12:54:56.527157 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 41
+I0808 12:54:57.997445 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 42
+I0808 12:54:59.472570 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 43
+I0808 12:55:00.946142 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 44
+I0808 12:55:02.424355 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 45
+I0808 12:55:03.900587 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 46
+I0808 12:55:05.404623 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 47
+I0808 12:55:06.887351 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 48
+I0808 12:55:08.354633 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 5
+I0808 12:55:09.857721 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 6
+I0808 12:55:11.368368 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 7
+I0808 12:55:12.868819 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 8
+I0808 12:55:14.387275 22847513429824 evaluation_fromsample.py:67] evaluation -- ckpt: 40, round: 9
+I0808 12:55:27.935923 22847513429824 evaluation_fromsample.py:105] ckpt-40 --- FID: 3.795288e+00

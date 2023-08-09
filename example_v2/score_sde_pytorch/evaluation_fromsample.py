@@ -46,7 +46,7 @@ def evaluate(config,
 
   begin_ckpt = config.eval.begin_ckpt
   logging.info("begin checkpoint: %d" % (begin_ckpt,))
-  for ckpt in range(begin_ckpt, config.eval.end_ckpt + 1):
+  for ckpt in range(begin_ckpt, config.eval.end_ckpt + 1,config.eval.ckpt_freq):
 
     # Generate samples and compute IS/FID/KID when enabled
     logging.info(eval_dir)

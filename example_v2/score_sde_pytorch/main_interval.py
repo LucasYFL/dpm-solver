@@ -54,12 +54,9 @@ config_flags.DEFINE_config_file(
   "config", None, "Training configuration.", lock_config=True)
 config_flags.DEFINE_config_file(
   "config1", None, "Training configuration.", lock_config=True)
-# config_flags.DEFINE_config_file(
-#   "config2", None, "Training configuration.", lock_config=True)
 flags.DEFINE_string("workdir", None, "Work directory.")
 flags.DEFINE_string("m1", None, "Model 1 directory.")
 flags.DEFINE_string("m2", None, "Model 2  directory.")
-# flags.DEFINE_string("m3", None, "Model 3 directory.")
 flags.DEFINE_string("eval_folder", "eval",
                     "The folder name for storing evaluation results")
 flags.mark_flags_as_required(["workdir", "config", 'm1'])
@@ -140,7 +137,7 @@ def evaluate(config,
   begin_ckpt = config.eval.begin_ckpt
   if local_rank == 0:
     logging.info("begin checkpoint: %d" % (begin_ckpt,))
-  for ckpt in range(begin_ckpt, config.eval.end_ckpt + 1):
+  for ckpt in range(begin_ckpt, config.eval.end_ckpt + 1,config.eval.ckpt_freq):
     for i in range(len(checkpoint_dirs)):
       if config.eval.t_converge[i]:
         logging.info("{} is converged model".format(i))

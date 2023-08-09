@@ -12,7 +12,7 @@ from models.ema import ExponentialMovingAverage
 import datasets
 import torch
 
-from configs.vp import cifar10_ddpmpp_deep_continuous as configs
+from configs.vp import cifar10_ddpmpp_continuous as configs
 from torchstat import stat
 
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
