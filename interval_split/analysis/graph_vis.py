@@ -4,120 +4,152 @@ import gurobipy as gp
 from gurobipy import GRB
 import numpy as np
 import math
+import argparse
 
-def calculated_distance_files(t1, t2, distancefunc, root):
+
+parser = argparse.ArgumentParser(description='Process some integers.')
+parser.add_argument('--nodes', type=int, default=201)
+parser.add_argument('--eps', type=float, default=1e-3)
+parser.add_argument('--root', type=str, default="/scratch/qingqu_root/qingqu1/shared_data/multistage/interval_split_graph_exp_v2")
+parser.add_argument('--distance_func', type=str, default="l2_distance")
+parser.add_argument('--pixel_threshold', type=int, default=1)
+parser.add_argument('--interval_num', type=int, default=3)
+args = parser.parse_args()
+
+nodes= args.nodes
+eps = args.eps
+root = args.root
+l = torch.cat((torch.range(eps, 1, 0.005), torch.tensor([1])))
+
+assert args.distance_func in ["l2_distance"]
+exp_file_path = os.path.join(root, f"{args.distance_func}.npy")
+
+
+
+def solve_tryall(nodes, similarity, interval_list = l, interval_num = 3, type = "mean"):
+    def generate_graph(idx_ts, nodes):
+        graph = np.zeros((nodes, nodes, len(idx_ts) - 1))
+        for idx in range(len(idx_ts) - 1):
+            graph[idx_ts[idx]:idx_ts[idx + 1], idx_ts[idx]:idx_ts[idx + 1], idx] = 1
+        return graph
+    
+    def calculate_objective(similarity, connected_graph, type = type):
+        object = 0
+        for idx in range(connected_graph.shape[2]):
+            if type == "mean":
+                object += (similarity * connected_graph[:, :, idx]).sum() / connected_graph[:, :, idx].sum()
+            elif type == "sum":
+                object += (similarity * connected_graph[:, :, idx]).sum()
+        return object
+    
+    objective_max = -torch.inf
+    t_optimal_idx = None
+    if interval_num == 2:
+        idx_t1 = 0
+        idx_t3 = nodes
+        for idx_t2, t2 in enumerate(interval_list):
+            if idx_t2 > idx_t1 and idx_t2 < idx_t3:
+                connected_graph = generate_graph((idx_t1, idx_t2, idx_t3), nodes)
+                objective = calculate_objective(similarity, connected_graph)
+                if objective > objective_max:
+                    t_optimal_idx = (idx_t1, idx_t2, idx_t3)
+                    objective_max = objective
+    
+    elif interval_num == 3:
+        idx_t1 = 0
+        idx_t4 = nodes
+        for idx_t2, t2 in enumerate(interval_list):
+            for idx_t3, t3 in enumerate(interval_list):
+                if idx_t2 > idx_t1 and idx_t3 > idx_t2 and idx_t4 > idx_t3:
+                    connected_graph = generate_graph((idx_t1, idx_t2, idx_t3, idx_t4), nodes)
+                    objective = calculate_objective(similarity, connected_graph)
+                    if objective > objective_max:
+                        t_optimal_idx = (idx_t1, idx_t2, idx_t3, idx_t4)
+                        objective_max = objective        
+
+    elif interval_num == 4:
+        idx_t1 = 0
+        idx_t5 = nodes
+        for idx_t2, t2 in enumerate(interval_list):
+            for idx_t3, t3 in enumerate(interval_list):
+                for idx_t4, t4 in enumerate(interval_list):
+                    if idx_t2 > idx_t1 and idx_t3 > idx_t2 and idx_t4 > idx_t3 and idx_t5 > idx_t4:
+                        connected_graph = generate_graph((idx_t1, idx_t2, idx_t3, idx_t4, idx_t5), nodes)
+                        objective = calculate_objective(similarity, connected_graph)
+                        if objective > objective_max:
+                            t_optimal_idx = (idx_t1, idx_t2, idx_t3, idx_t4, idx_t5)
+                            objective_max = objective     
+    elif interval_num == 5:
+        idx_t1 = 0
+        idx_t6 = nodes
+        for idx_t2, t2 in enumerate(interval_list):
+            for idx_t3, t3 in enumerate(interval_list):
+                for idx_t4, t4 in enumerate(interval_list):
+                    for idx_t5, t5 in enumerate(interval_list):
+                        if idx_t2 > idx_t1 and idx_t3 > idx_t2 and idx_t4 > idx_t3 and idx_t5 > idx_t4 and idx_t6 > idx_t5:
+                            connected_graph = generate_graph((idx_t1, idx_t2, idx_t3, idx_t4, idx_t5, idx_t6), nodes)
+                            objective = calculate_objective(similarity, connected_graph)
+                            if objective > objective_max:
+                                t_optimal_idx = (idx_t1, idx_t2, idx_t3, idx_t4, idx_t5, idx_t6)
+                                objective_max = objective    
+                                   
+    idx = 1
+    print(f"The {idx}th is from [0, {interval_list[t_optimal_idx [idx]- 1] + 0.025})")
+    for idx in range(2, interval_num):
+        print(f"The {idx}th is from [{interval_list[t_optimal_idx [idx-1] - 1] + 0.025}, {interval_list[t_optimal_idx [idx] - 1] + 0.025})")
+    idx = interval_num
+    print(f"The {idx}th is from [{interval_list[t_optimal_idx [idx - 1]- 1] + 0.025}, 1)")                
+    return t_optimal_idx
+
+def calculated_distance_files(distancefunc, root):
     pkgs = os.listdir(root)
-    distance = 0
-    num = 0
+    sample = []
     for pkg in pkgs:
-        data_path = os.path.join(root, pkg, f"0_{t1:.4f}_{t2:.4f}.pth")
+        data_path = os.path.join(root, pkg, f"0.pth")
         if os.path.exists(data_path):
             datas = torch.load(data_path)
-            distance += distancefunc(datas['optimal_solutiont1s'], datas['optimal_solutiont2s'])
-            num += datas['optimal_solutiont1s'].shape[0]
-    return distance/num
+            sample.append(datas['optimal_solutions'])
+    sample = torch.cat(sample, dim=0)
+    total_num = sample.shape[0]
+    print(f"There are {total_num} sample in total")
+    similarity = torch.zeros(l.shape[0], l.shape[0])
+    for idx_ti, ti in enumerate(l):
+        for idx_tj, tj in enumerate(l):
+            print(ti, tj)
+            if idx_ti != idx_tj:
+                similarity[idx_ti, idx_tj] = distancefunc(sample[:, idx_ti], sample[:, idx_tj])
+            else:
+                similarity[idx_ti, idx_tj] = -0.0
+    return similarity
 
-def similarityfunc(f1, f2):
-    p = 1
+def l2_distance(f1, f2):
     num = f1.shape[0]
-    similar = torch.abs(f1 - f2) < (2 * p / 256)
-    similar = similar.reshape((num, -1))
+    f1_copy = f1.reshape(num, -1)
+    f2_copy = f2.reshape(num, -1)
+    similar = torch.pow(f1_copy - f2_copy, 2)
+    similar = similar.reshape((num, -1)).to(torch.float32)
     pixel_num = similar.shape[1]
-    return (similar.to(torch.float32).sum(dim=1)/pixel_num).sum()
+    return -(similar[torch.logical_not(similar.isnan())].mean())
 
-def solve(nodes, similarity, interval_list, interval_num = 3):
-    m = gp.Model()
-    m.reset()
-    connect_interval_state = m.addVars(nodes, nodes, interval_num, name="connect_interval_state", vtype=GRB.BINARY)
-    interval_state = m.addVars(nodes, interval_num, name="interval_state", vtype=GRB.BINARY)
-    interval = m.addVars(nodes, name="interval", vtype=GRB.INTEGER)
-    interval_quantity = m.addVars(interval_num, name="1 / (total number for each state)")
+def vis_similarity(similarity):
+    string = ''
+    for idx1, t1 in enumerate(l):
+        for idx2, t2 in enumerate(l):    
+            string += f"{similarity[idx1, idx2]:.2f} "
+        string += "\n"
+    print(string)
+
+
+
+if os.path.exists(exp_file_path):
+    similarity = np.load(exp_file_path)
+else:
+    similarity = calculated_distance_files(eval(args.distance_func), root)
+    np.save(exp_file_path, similarity)
     
-    m.setObjective(gp.quicksum(similarity[i, j] * connect_interval_state[i, j, k] * interval_quantity[k]  for i in range(nodes) for j in range(nodes) for k in range(interval_num)), GRB.MAXIMIZE)
-    # m.setObjective(gp.quicksum(similarity[i, j] * connect_interval_state[i, j, k]  for i in range(nodes) for j in range(nodes) for k in range(interval_num)), GRB.MINIMIZE)
-
-
-    m.addConstr(interval[0] == 1)
-    m.addConstr(interval[nodes - 1] == interval_num)
-    m.addConstrs((interval[i + 1] >= interval[i]) for i in range(nodes - 1))
-    m.addConstrs((interval[i + 1] <= interval[i] + 1) for i in range(nodes - 1))
-
-    
-    m.addConstrs((gp.quicksum(interval_state[i, k] for k in range(interval_num)) == 1) for i in range(nodes))
-    m.addConstrs((interval_state[i, k] * (interval[i] - k - 1) == 0) for k in range(interval_num) for i in range(nodes))
-    
-    m.addConstrs((connect_interval_state[i, j, k] == interval_state[i, k] * interval_state[j, k])  for i in range(nodes) for j in range(nodes) for k in range(interval_num))
-    
-    m.addConstrs((interval_quantity[k] * gp.quicksum(connect_interval_state[(i, j, k)] for i in range(nodes) for j in range(nodes)) == 1) for k in range(interval_num))
-    
-    # Specify how to format the output
-    # Don't forget: Python indexes from 0!
-    def printSolution():
-        if m.status == GRB.OPTIMAL:
-            print('\nOptimal value: %g' % m.objVal)
-            print('\nThe connective graph looks like this:')
-            for k in range(interval_num):
-                S = ""
-                print(f"The {k}th interval")
-                for i in range(nodes):
-                    for j in range(nodes):
-                        S += f"{int(connect_interval_state[(i, j, k)].X)} "    
-                    S += "\n"
-                print(S) 
-            print('\nThe interval status looks like this:')
-            S = ""
-            for i in range(nodes):
-                S += f"{interval[i].X} "    
-            S += "\n"
-            print(S) 
-            print(f"The interval_state looks like this")
-            
-            for i in range(nodes):
-                for k in range(interval_num):
-                    S += f"{int(interval_state[(i, k)].X)} "    
-                S += "\n"
-            print(S) 
-
-            print(f"The interval_quality looks like this")
-            for k in range(interval_num):
-                S += f"{interval_quantity[(k)].X} "    
-            S += "\n"
-            print(S)
-            i_list = [] 
-            for i in range(nodes):
-                i_list.append(interval[i].X)
-            i_list = np.array(i_list)
-            idx = 1
-            print(f"The {idx}th is from [0, {interval_list[np.where(i_list == idx)[0].max()] + 0.025})")
-            for idx in range(2, interval_num):
-                print(f"The {idx}th is from [{interval_list[np.where(i_list == idx)[0].min()] - 0.025}, {interval_list[np.where(i_list == idx)[0].max()] + 0.025})")
-            idx = interval_num
-            print(f"The {idx}th is from [{interval_list[np.where(i_list == idx)[0].min()] - 0.025}, 1)")
-        else:
-            print('Optimization ended with status %d' % m.status)
-    # Solve
-    # To look at the formulation uncomment the line below
-    # m.write("out.lp")
-    m.setParam('TimeLimit', 5*60)
-    m.optimize()
-    printSolution()
-    
-nodes=21
-eps = 1e-3
-root = "/scratch/qingqu_root/qingqu1/shared_data/dpm_experiments/interval_split_graph_exp/"
-similarity = np.zeros((nodes, nodes))
-
-l = torch.cat((torch.range(eps, 1, 0.05), torch.tensor([1])))
-
-for idx1, t1 in enumerate(l):
-    for idx2, t2 in enumerate(l):
-        if t1 != t2:
-            print(f"process {t1:.4f}_{t2:.4f}")
-            similarity[idx1, idx2] = calculated_distance_files(t1, t2, similarityfunc, root)
-        else:
-            similarity[idx1, idx2] = 1.0
-
-solve(nodes, similarity, interval_list = l, interval_num = 4)
+# vis_similarity(similarity)
+# solve(nodes, similarity, interval_list = l, interval_num = 3)
+solve_tryall(nodes, similarity, interval_list = l, interval_num = args.interval_num, type = "sum")
             
             
         

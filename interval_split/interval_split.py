@@ -32,6 +32,7 @@ def get_exp_bias(x, y_batch, s, std):
   return (-(((x - s * y_batch)**2).view(bs, -1).sum(dim=1)/std**2)/2).max()
 
 def get_optimal_sol(batch, z, sde, t, dataloader, config):
+
     s, sigma = sde.transform_prob(torch.tensor([t]))
     std = s * sigma
     x = s * batch + s * sigma[:, None, None, None] * z
@@ -95,21 +96,33 @@ def main(argv):
                         beta_max=config.sde.beta_max, 
                         N=config.sde.num_scales)
     eps = 1e-3
+    t_list = torch.cat((torch.range(eps, 1, 0.005), torch.tensor([1])))
   elif config.sde.type.lower() == 'subvpsde':
     sde = sde_lib.subVPSDE(beta_min=config.sde.beta_min, 
                            beta_max=config.sde.beta_max, 
                            N=config.sde.num_scales)
     eps = 1e-3
+    raise NotImplementedError
   elif config.sde.type.lower() == 'vesde':
     sde = sde_lib.VESDE(sigma_min=config.sde.sigma_min, 
                         sigma_max=config.sde.sigma_max, 
                         N=config.sde.num_scales)
     eps = 1e-5
+    raise NotImplementedError
+  elif config.sde.type.lower() == 'edm':
+    sde = sde_lib.EDMSDE(sigma_min=config.sde.sigma_min, 
+                         sigma_max=config.sde.sigma_max,
+                         sigma_data=config.sde.sigma_data,)
+    eps = 1e-5
+    t_list = torch.cat((torch.range(config.sde.sigma_min, config.sde.sigma_max, 0.005 * 80), torch.tensor([config.sde.sigma_max])))
+  else:
+    raise NotImplementedError
+  
   dataloader = torch.utils.data.DataLoader(dataset, 
                                            batch_size=config.data.batch_size, 
                                            shuffle=True, 
                                            num_workers=4)
-  t_list = torch.cat((torch.range(eps, 1, 0.005), torch.tensor([1])))
+  
   generate_sample(dataset, config, t_list, dataloader, sde)
 
 

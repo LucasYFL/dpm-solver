@@ -263,3 +263,24 @@ class VESDE(SDE):
     f = torch.zeros_like(x)
     G = torch.sqrt(sigma ** 2 - adjacent_sigma ** 2)
     return f, G
+  
+
+class EDMSDE():
+  def __init__(self, sigma_min=0.002, sigma_max=80, sigma_data=0.5):
+    """Construct a Variance Preserving SDE.
+
+    Args:
+      beta_min: value of beta(0)
+      beta_max: value of beta(1)
+      N: number of discretization steps
+    """
+    self.sigma_min = sigma_min
+    self.sigma_max = sigma_max
+    self.sigma_data = sigma_data
+  
+  def transform_prob(self, t):
+    sigma = t
+    s = torch.ones_like(t)
+    c_skip = self.sigma_data**2/(sigma**2 + self.sigma_data**2)
+    c_out = self.sigma_data*sigma/torch.sqrt(sigma**2 + self.sigma_data**2)
+    return s, sigma
