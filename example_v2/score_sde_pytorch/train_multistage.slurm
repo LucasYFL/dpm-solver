@@ -1,16 +1,16 @@
 #!/bin/bash
 # The interpreter used to execute the script
 #“#SBATCH” directives that convey submission options:
-#SBATCH --job-name=new_int
+#SBATCH --job-name=uvit
 #SBATCH --nodes=1
 #SBATCH --mem=40GB
 #SBATCH --time=05-00:00:00
 #SBATCH --account=qingqu1
-#SBATCH --partition=spgpu
-#SBATCH --gpus=a40:2
-#SBATCH --output=i2_double.out
+#SBATCH --partition=gpu
+#SBATCH --gpus=v100:2
+#SBATCH --output=uvit.out
 #SBATCH --cpus-per-task=8
-#SBATCH --export=ALL,EXP_FEWER_STEPS=4
+#SBATCH --export=ALL
 echo $EXP_FEWER_STEPS
 module purge
 module load cuda/11.7.1 cudnn/11.7-v8.7.0
@@ -22,4 +22,4 @@ cd /home/yifulu/work/dpm-solver/example_v2/score_sde_pytorch
 #torchrun --nproc_per_node=2 --master_port=29600 main.py --config ./configs/vp/cifar10_ncsnpp_multistage_deep_continuous_compare.py --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage/one_stage --mode train --config.training.batch_size=128 
 #torchrun --nproc_per_node=2 --master_port=29600 main.py --config ./configs/vp/cifar10_ncsnpp_multistage_deep_continuous_3stage_uniform.py --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage/uniform_intervalv2 --mode train --config.training.batch_size=128 
 #torchrun --nproc_per_node=2 --master_port=29600 main.py --config ./configs/vp/cifar10_ncsnpp_multistage_serial_deep_continuous.py --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage/serial --mode train --config.training.batch_size=128 
-torchrun --nproc_per_node=2 --master_port=29600 main.py --config ./configs/vp/cifar10_ddpmpp_deep_continuous.py --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage/new_interval/dpm_deep_I2_d --mode train --config.training.t0=0.6308 --config.training.t1=1 --config.model.nf=160 --config.training.batch_size=128 --config.training.snapshot_freq=10000
+torchrun --nproc_per_node=2 --master_port=29600 main.py --config ./configs/UViT/cifar10_UViT_mul.py --workdir /scratch/qingqu_root/qingqu1/shared_data/multistage/UViT/multistage --mode train --config.training.batch_size=128 --config.training.snapshot_freq=10000

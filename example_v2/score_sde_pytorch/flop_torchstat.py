@@ -5,19 +5,21 @@ import time
 import sys
 sys.path.append("../")
 # Keep the import below for registering all model definitions
-from models import ddpm,ncsnpp,ncsnpp_multistage
+from models import ddpm,ncsnpp,ncsnpp_multistage,UViT
 import losses
 from models import utils as mutils
 from models.ema import ExponentialMovingAverage
 import datasets
 import torch
 
-from configs.vp import cifar10_ddpmpp_continuous as configs
+from configs.UViT import cifar10_UViT_mul as configs
+# from configs.vp import cifar10_ddpmpp_deep_continuous as configs
 from torchstat import stat
 
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 config=configs.get_config()
 config.eval.batch_size = 1
+config.device = torch.device('cpu')
 sampling_eps = 1e-3
 # Build data pipeline
 train_ds, eval_ds = datasets.get_dataset(config,
@@ -41,6 +43,8 @@ batch = torch.rand(sampling_shape).to(config.device)
 batch = scaler(batch)
 lst_steps=torch.tensor([0.8])*1000
 t = lst_steps.to('cpu')#.repeat(batch.shape[0])
+score_model = score_model.to('cpu')
+print(score_model(batch,t))
 class mfn(torch.nn.Module):
     def __init__(self,m):
         super().__init__()

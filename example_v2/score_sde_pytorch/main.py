@@ -28,7 +28,7 @@ import logging
 import torch
 torch.cuda.set_device(local_rank)
 torch.distributed.init_process_group(backend='nccl')
-
+os.environ['CUDA_LAUNCH_BLOCKING'] = "1"
 FLAGS = flags.FLAGS
 
 

@@ -1,0 +1,170 @@
+
+WARNING:torch.distributed.run:
+*****************************************
+Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed. 
+*****************************************
+attention mode is flashattention mode is flash
+
+2023-08-31 18:00:28.737739: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-08-31 18:00:28.737740: I tensorflow/core/platform/cpu_feature_guard.cc:193] This TensorFlow binary is optimized with oneAPI Deep Neural Network Library (oneDNN) to use the following CPU instructions in performance-critical operations:  AVX2 AVX512F FMA
+To enable them in other operations, rebuild TensorFlow with the appropriate compiler flags.
+2023-08-31 18:00:41.085381: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-08-31 18:00:41.085379: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer.so.7'; dlerror: libnvinfer.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-08-31 18:00:41.088411: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-08-31 18:00:41.088411: W tensorflow/compiler/xla/stream_executor/platform/default/dso_loader.cc:64] Could not load dynamic library 'libnvinfer_plugin.so.7'; dlerror: libnvinfer_plugin.so.7: cannot open shared object file: No such file or directory; LD_LIBRARY_PATH: /sw/pkgs/arc/cudnn/11.7-v8.7.0/lib64:/sw/pkgs/arc/cuda/11.7.1/lib64
+2023-08-31 18:00:41.088433: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+2023-08-31 18:00:41.088448: W tensorflow/compiler/tf2tensorrt/utils/py_utils.cc:38] TF-TRT Warning: Cannot dlopen some TensorRT libraries. If you would like to use Nvidia GPU with TensorRT, please make sure the missing libraries mentioned above are installed properly.
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:98: UserWarning: unable to load libtensorflow_io_plugins.so: unable to open file: libtensorflow_io_plugins.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so: undefined symbol: _ZN3tsl6StatusC1EN10tensorflow5error4CodeESt17basic_string_viewIcSt11char_traitsIcEENS_18SourceLocationImplE']
+  warnings.warn(f"unable to load libtensorflow_io_plugins.so: {e}")
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:98: UserWarning: unable to load libtensorflow_io_plugins.so: unable to open file: libtensorflow_io_plugins.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io_plugins.so: undefined symbol: _ZN3tsl6StatusC1EN10tensorflow5error4CodeESt17basic_string_viewIcSt11char_traitsIcEENS_18SourceLocationImplE']
+  warnings.warn(f"unable to load libtensorflow_io_plugins.so: {e}")
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:104: UserWarning: file system plugins are not loaded: unable to open file: libtensorflow_io.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so: undefined symbol: _ZTVN3tsl13GcsFileSystemE']
+  warnings.warn(f"file system plugins are not loaded: {e}")
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/__init__.py:104: UserWarning: file system plugins are not loaded: unable to open file: libtensorflow_io.so, from paths: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so']
+caused by: ['/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/tensorflow_io/python/ops/libtensorflow_io.so: undefined symbol: _ZTVN3tsl13GcsFileSystemE']
+  warnings.warn(f"file system plugins are not loaded: {e}")
+I0831 18:01:05.181363 23414089348928 main.py:66] data:
+  centered: false
+  dataset: CIFAR10
+  image_size: 32
+  normalize: true
+  num_channels: 3
+  random_flip: true
+  uniform_dequantization: false
+device: !!python/object/apply:torch.device
+- cuda
+eval:
+  batch_size: 2048
+  begin_ckpt: 1
+  bpd_dataset: test
+  ckpt_freq: 1
+  converge_epoch: 40
+  enable_bpd: false
+  enable_loss: false
+  enable_sampling: true
+  end_ckpt: 24
+  num_samples: 50000
+  t_converge: !!python/tuple
+  - 0
+  - 0
+  - 0
+  t_tuples: !!python/tuple
+  - 0.442
+  - 0.6308
+model:
+  beta_max: 20.0
+  beta_min: 0.1
+  conv: true
+  de_nfs:
+  - 768
+  - 512
+  - 128
+  depth: 12
+  dropout: 0.1
+  ema_rate: 0.9999
+  embed_dim: 512
+  embedding_type: fourier
+  group: 32
+  in_chans: 3
+  mlp_ratio: 4.0
+  mlp_time_embed: false
+  name: UViT_multimodel
+  norm_layer: !!python/name:torch.nn.modules.normalization.LayerNorm ''
+  num_classes: -1
+  num_heads: 8
+  num_scales: 1000
+  patch_size: 2
+  qk_scale: null
+  qkv_bias: false
+  sigma_max: 50
+  sigma_min: 0.01
+  skip: true
+  stage_interval:
+  - - - 0
+      - 0.442
+  - - - 0.442
+      - 0.6308
+  - - - 0.6308
+      - 1
+  stage_num: 3
+  use_checkpoint: false
+optim:
+  beta1: 0.99
+  eps: 1.0e-08
+  grad_clip: -1.0
+  lr: 0.0002
+  optimizer: adamw
+  warmup: 2500
+  weight_decay: 0.03
+sampling:
+  algorithm_type: dpmsolver
+  dpm_solver_method: singlestep
+  dpm_solver_order: 3
+  eps: 0.001
+  method: dpm_solver
+  n_steps_each: 1
+  noise_removal: false
+  probability_flow: false
+  rtol: 0.05
+  skip_type: time_uniform
+  snr: 0.16
+  steps: 20
+  thresholding: false
+seed: 42
+training:
+  batch_size: 64
+  continuous: true
+  eval_freq: 100
+  fewer_step: false
+  likelihood_weighting: false
+  log_freq: 50
+  n_iters: 500000
+  reduce_mean: true
+  sde: vpsde
+  snapshot_freq: 10000
+  snapshot_freq_for_preemption: 10000
+  snapshot_sampling: false
+  t0: 0.0
+  t1: 1.0
+
+I0831 18:01:07.549384 23166691460928 UViT.py:318] For stage 1, the total params are 70275584
+I0831 18:01:07.551212 23166691460928 UViT.py:318] For stage 2, the total params are 44109824
+I0831 18:01:07.551526 23166691460928 UViT.py:318] For stage 3, the total params are 23784704
+I0831 18:01:07.551577 23166691460928 UViT.py:319] Encoder params are 22055936
+I0831 18:01:07.552546 23166691460928 UViT.py:321] Total params are 94216312
+94216312
+22055936
+I0831 18:01:07.555632 23414089348928 UViT.py:318] For stage 1, the total params are 70275584
+I0831 18:01:07.556129 23414089348928 UViT.py:318] For stage 2, the total params are 44109824
+I0831 18:01:07.556495 23414089348928 UViT.py:318] For stage 3, the total params are 23784704
+I0831 18:01:07.556576 23414089348928 UViT.py:319] Encoder params are 22055936
+I0831 18:01:07.557719 23414089348928 UViT.py:321] Total params are 94216312
+94216312
+22055936
+W0831 18:01:23.790308 23166691460928 utils.py:10] No checkpoint found at /scratch/qingqu_root/qingqu1/shared_data/multistage/UViT/multistage/checkpoints-meta/checkpoint.pth. Returned the same state as input
+W0831 18:01:23.790299 23414089348928 utils.py:10] No checkpoint found at /scratch/qingqu_root/qingqu1/shared_data/multistage/UViT/multistage/checkpoints-meta/checkpoint.pth. Returned the same state as input
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/torchvision/transforms/functional.py:1603: UserWarning: The default value of the antialias parameter of all the resizing transforms (Resize(), RandomResizedCrop(), etc.) will change from None to True in v0.17, in order to be consistent across the PIL and Tensor backends. To suppress this warning, directly pass antialias=True (recommended, future default), antialias=None (current default, which means False for Tensors and True for PIL), or antialias=False (only works on Tensors - PIL will still use antialiasing). This also applies if you are using the inference transforms from the models weights: update the call to weights.transforms(antialias=True).
+  warnings.warn(
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/torchvision/transforms/functional.py:1603: UserWarning: The default value of the antialias parameter of all the resizing transforms (Resize(), RandomResizedCrop(), etc.) will change from None to True in v0.17, in order to be consistent across the PIL and Tensor backends. To suppress this warning, directly pass antialias=True (recommended, future default), antialias=None (current default, which means False for Tensors and True for PIL), or antialias=False (only works on Tensors - PIL will still use antialiasing). This also applies if you are using the inference transforms from the models weights: update the call to weights.transforms(antialias=True).
+  warnings.warn(
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/torchvision/transforms/functional.py:1603: UserWarning: The default value of the antialias parameter of all the resizing transforms (Resize(), RandomResizedCrop(), etc.) will change from None to True in v0.17, in order to be consistent across the PIL and Tensor backends. To suppress this warning, directly pass antialias=True (recommended, future default), antialias=None (current default, which means False for Tensors and True for PIL), or antialias=False (only works on Tensors - PIL will still use antialiasing). This also applies if you are using the inference transforms from the models weights: update the call to weights.transforms(antialias=True).
+  warnings.warn(
+/home/yifulu/.conda/envs/dpm2/lib/python3.8/site-packages/torchvision/transforms/functional.py:1603: UserWarning: The default value of the antialias parameter of all the resizing transforms (Resize(), RandomResizedCrop(), etc.) will change from None to True in v0.17, in order to be consistent across the PIL and Tensor backends. To suppress this warning, directly pass antialias=True (recommended, future default), antialias=None (current default, which means False for Tensors and True for PIL), or antialias=False (only works on Tensors - PIL will still use antialiasing). This also applies if you are using the inference transforms from the models weights: update the call to weights.transforms(antialias=True).
+  warnings.warn(
+I0831 18:01:27.532485 23166691460928 run_lib.py:125] Starting training loop at step 0.
+I0831 18:01:27.532504 23414089348928 run_lib.py:125] Starting training loop at step 0.
+I0831 18:01:33.432972 23414089348928 run_lib.py:141] step: 0, training_loss: 1.03728e+00
+I0831 18:01:33.555066 23414089348928 run_lib.py:162] step: 0, eval_loss: 1.01825e+00
+I0831 18:02:08.823902 23414089348928 run_lib.py:141] step: 50, training_loss: 8.38430e-01
+I0831 18:02:43.917433 23414089348928 run_lib.py:141] step: 100, training_loss: 9.27765e-01
+I0831 18:02:44.162876 23414089348928 run_lib.py:162] step: 100, eval_loss: 8.05855e-01
+I0831 18:03:19.351672 23414089348928 run_lib.py:141] step: 150, training_loss: 8.39762e-01
+I0831 18:03:55.358223 23414089348928 run_lib.py:141] step: 200, training_loss: 7.73802e-01
+I0831 18:03:55.604725 23414089348928 run_lib.py:162] step: 200, eval_loss: 7.32130e-01
+I0831 18:04:33.437363 23414089348928 run_lib.py:141] step: 250, training_loss: 7.19826e-01
+I0831 18:05:09.978956 23414089348928 run_lib.py:141] step: 300, training_loss: 7.13778e-01
+I0831 18:05:10.226108 23414089348928 run_lib.py:162] step: 300, eval_loss: 7.23158e-01

@@ -26,7 +26,7 @@ import numpy as np
 # import tensorflow_gan as tfgan
 import logging
 # Keep the import below for registering all model definitions
-from models import ddpm, ncsnv2, ncsnpp, ncsnpp_multistage
+from models import ddpm, ncsnv2, ncsnpp, ncsnpp_multistage,UViT
 import losses
 import sampling
 from models import utils as mutils
@@ -68,7 +68,6 @@ def train(config, workdir):
   ema = ExponentialMovingAverage(score_model.parameters(), decay=config.model.ema_rate)
   optimizer = losses.get_optimizer(config, score_model.parameters())
   state = dict(optimizer=optimizer, model=score_model, ema=ema, step=0)
-
   # Create checkpoints directory
   checkpoint_dir = os.path.join(workdir, "checkpoints")
   # Intermediate checkpoints to resume training after pre-emption in cloud environments
