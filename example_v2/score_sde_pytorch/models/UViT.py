@@ -238,7 +238,112 @@ class UViT(nn.Module):
         x = self.final_layer(x)
         return x
     
+@utils.register_model(name='UViT_one_hot')
+class UViT_one_hot(nn.Module):
+    def __init__(self, config):
+        super().__init__()
+        m = config.model
+        self.num_features = self.embed_dim = m.embed_dim  # num_features for consistency with other models
+        self.num_classes = m.num_classes
+        self.in_chans = m.in_chans
 
+        self.patch_embed = PatchEmbed(patch_size=m.patch_size, in_chans=m.in_chans, embed_dim=m.embed_dim)
+        num_patches = (config.data.image_size // m.patch_size) ** 2
+
+        self.time_embed = nn.Sequential(
+            nn.Linear(m.embed_dim, 4 * m.embed_dim),
+            nn.SiLU(),
+            nn.Linear(4 * m.embed_dim, m.embed_dim),
+        ) if m.mlp_time_embed else nn.Identity()
+
+        if self.num_classes > 0:
+            self.label_emb =nn.Sequential( 
+                nn.Linear(in_features=self.num_classes, out_features=4*m.embed_dim),
+                nn.SiLU(),
+                nn.Linear(in_features=4*m.embed_dim, out_features=m.embed_dim),
+            )
+            self.extras = 2
+        else:
+            self.extras = 1
+
+        self.pos_embed = nn.Parameter(torch.zeros(1, self.extras + num_patches, m.embed_dim))
+
+        self.in_blocks = nn.ModuleList([
+            Block(
+                dim=m.embed_dim, num_heads=m.num_heads, mlp_ratio=m.mlp_ratio, qkv_bias=m.qkv_bias, qk_scale=m.qk_scale,
+                norm_layer=m.norm_layer, use_checkpoint=m.use_checkpoint)
+            for _ in range(m.depth // 2)])
+
+        self.mid_block = Block(
+                dim=m.embed_dim, num_heads=m.num_heads, mlp_ratio=m.mlp_ratio, qkv_bias=m.qkv_bias, qk_scale=m.qk_scale,
+                norm_layer=m.norm_layer, use_checkpoint=m.use_checkpoint)
+
+        self.out_blocks = nn.ModuleList([
+            Block(
+                dim=m.embed_dim, num_heads=m.num_heads, mlp_ratio=m.mlp_ratio, qkv_bias=m.qkv_bias, qk_scale=m.qk_scale,
+                norm_layer=m.norm_layer, skip=m.skip, use_checkpoint=m.use_checkpoint)
+            for _ in range(m.depth // 2)])
+
+        self.norm = m.norm_layer(m.embed_dim)
+        self.patch_dim = m.patch_size ** 2 * m.in_chans
+        self.decoder_pred = nn.Linear(m.embed_dim, self.patch_dim, bias=True)
+        self.final_layer = nn.Conv2d(self.in_chans, self.in_chans, 3, padding=1) if m.conv else nn.Identity()
+
+        trunc_normal_(self.pos_embed, std=.02)
+        self.apply(self._init_weights)
+        self._log_param()
+        self.I = torch.eye(self.num_classes).to(config.device)
+    def _log_param(self):
+        import logging
+        logging.info('init')
+        print('init')
+        total_params = sum(p.numel() for p in self.parameters())  
+        logging.info(f"Total params are {total_params}")  
+        print(total_params)
+    def _init_weights(self, m):
+        if isinstance(m, nn.Linear):
+            trunc_normal_(m.weight, std=.02)
+            if isinstance(m, nn.Linear) and m.bias is not None:
+                nn.init.constant_(m.bias, 0)
+        elif isinstance(m, nn.LayerNorm):
+            nn.init.constant_(m.bias, 0)
+            nn.init.constant_(m.weight, 1.0)
+
+    @torch.jit.ignore
+    def no_weight_decay(self):
+        return {'pos_embed'}
+
+    def forward(self, x, timesteps, y=None):
+        x = self.patch_embed(x)
+        B, L, D = x.shape
+
+        time_token = self.time_embed(timestep_embedding(timesteps, self.embed_dim))
+        time_token = time_token.unsqueeze(dim=1)
+        x = torch.cat((time_token, x), dim=1)
+        if y is not None:
+            y = self.I[y]
+            label_emb = self.label_emb(y)
+            label_emb = label_emb.unsqueeze(dim=1)
+            x = torch.cat((label_emb, x), dim=1)
+        x = x + self.pos_embed
+
+        skips = []
+        for blk in self.in_blocks:
+            x = blk(x)
+            skips.append(x)
+
+        x = self.mid_block(x)
+
+        for blk in self.out_blocks:
+            x = blk(x, skips.pop())
+
+        x = self.norm(x)
+        x = self.decoder_pred(x)
+        assert x.size(1) == self.extras + L
+        x = x[:, self.extras:, :]
+        x = unpatchify(x, self.in_chans)
+        x = self.final_layer(x)
+        return x
     
 @utils.register_model(name='UViT_multimodel')
 class UViT_multimodel(nn.Module):

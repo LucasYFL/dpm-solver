@@ -28,8 +28,6 @@ def get_data_scaler(config):
     if config.data.centered:
         # Rescale to [-1, 1]
         return lambda x: x * 2. - 1.
-    elif config.data.normalize:
-        return TF.Normalize(0.5, 0.5)
     else:
         return lambda x: x
 
@@ -110,6 +108,8 @@ def get_dataset(config, uniform_dequantization=False, evaluation=False):
             TF.Resize((config.data.image_size, config.data.image_size)),
             # TF.Normalize(0.5, 0.5)
         ]
+        if config.data.normalize:
+            train_transforms.append(TF.Normalize(0.5, 0.5))
         eval_trainforms = train_transforms.copy()
         if config.data.random_flip:
             train_transforms.append(TF.RandomHorizontalFlip())
