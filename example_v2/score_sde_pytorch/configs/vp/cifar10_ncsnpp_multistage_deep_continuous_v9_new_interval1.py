@@ -75,10 +75,10 @@ def get_config():
   model.init_scale = 0.0
   model.conv_size = 3
   model.en_nf = 128
-  model.de_nfs = [192, 128, 16]
+  model.de_nfs = [192, 144, 16]
   model.stage_num = 3
   model.stage_interval = [
-    [[0, 0.4410]], [[0.4410, 0.6610]], [[0.6610, 1]]
+    [[0, 0.4260]], [[0.4260, 0.6260]], [[0.6260, 1]]
   ]
   model.group = 16
   return config

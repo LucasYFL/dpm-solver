@@ -19,8 +19,10 @@ args = parser.parse_args()
 nodes= args.nodes
 eps = args.eps
 root = args.root
-l = torch.cat((torch.range(eps, 1, 0.005), torch.tensor([1])))
 
+l = torch.cat((torch.range(0.002, 80, 0.005 * 80), torch.tensor([80])))
+# l = torch.cat((torch.range(eps, 1, 0.005), torch.tensor([1])))
+print(l)
 assert args.distance_func in ["l2_distance"]
 exp_file_path = os.path.join(root, f"{args.distance_func}.npy")
 
@@ -94,11 +96,12 @@ def solve_tryall(nodes, similarity, interval_list = l, interval_num = 3, type = 
                                 objective_max = objective    
                                    
     idx = 1
-    print(f"The {idx}th is from [0, {interval_list[t_optimal_idx [idx]- 1] + 0.025})")
+    interval = interval_list[1] - interval_list[0]
+    print(f"The {idx}th is from [{l[0]}, {interval_list[t_optimal_idx [idx]- 1] + interval/2})")
     for idx in range(2, interval_num):
-        print(f"The {idx}th is from [{interval_list[t_optimal_idx [idx-1] - 1] + 0.025}, {interval_list[t_optimal_idx [idx] - 1] + 0.025})")
+        print(f"The {idx}th is from [{interval_list[t_optimal_idx [idx-1] - 1] + interval/2}, {interval_list[t_optimal_idx [idx] - 1] + interval/2})")
     idx = interval_num
-    print(f"The {idx}th is from [{interval_list[t_optimal_idx [idx - 1]- 1] + 0.025}, 1)")                
+    print(f"The {idx}th is from [{interval_list[t_optimal_idx [idx - 1]- 1] + interval/2}, {l[-1]})")                
     return t_optimal_idx
 
 def calculated_distance_files(distancefunc, root):
