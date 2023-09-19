@@ -51,9 +51,12 @@ config_flags.DEFINE_config_file(
     "config", None, "Training configuration.", lock_config=True)
 config_flags.DEFINE_config_file(
     "config1", None, "Training configuration.", lock_config=True)
+config_flags.DEFINE_config_file(
+    "config2", None, "Training configuration.", lock_config=True)
 flags.DEFINE_string("workdir", None, "Work directory.")
 flags.DEFINE_string("m1", None, "Model 1 directory.")
 flags.DEFINE_string("m2", None, "Model 2  directory.")
+flags.DEFINE_string("m3", None, "Model 2  directory.")
 flags.DEFINE_string("eval_folder", "eval",
                     "The folder name for storing evaluation results")
 flags.mark_flags_as_required(["workdir", "config", 'm1'])
@@ -66,7 +69,7 @@ torch.distributed.init_process_group(backend='nccl')
 
 
 def evaluate(config,
-             workdir, m1, m2=None, config1=None,
+             workdir, m1, m2=None, m3=None,config1=None,config2=None,
              eval_folder="eval"):
     """Evaluate trained models.
 
@@ -97,10 +100,10 @@ def evaluate(config,
     optimizers = []
     emas = []
     states = []
-    mdir = (m1, m2)
+    mdir = (m1, m2,m3)
     checkpoint_dirs = []
     logging.info(config.eval.t_tuples)
-    configs = (config,)*3 if config1 is None else (config, config1)
+    configs = (config,)*3 if config1 is None else (config, config1,config2)
 
     # Setup SDEs
     if config.training.sde.lower() == 'vpsde':
@@ -164,7 +167,7 @@ def evaluate(config,
             if local_rank == 0:
                 logging.info(eval_dir)
             num_sampling_rounds = config.eval.num_samples // config.eval.batch_size + 1
-            for r in range(num_sampling_rounds):
+            for r in range(num_sampling_rounds,2*num_sampling_rounds):
                 if local_rank == 0:
                     logging.info("sampling -- ckpt: %d, round: %d" % (ckpt, r))
 
@@ -203,7 +206,7 @@ def main(argv):
     config1 = FLAGS.config1
     # Run the evaluation pipeline
     evaluate(FLAGS.config, FLAGS.workdir, FLAGS.m1,
-             FLAGS.m2, FLAGS.config1, FLAGS.eval_folder)
+             FLAGS.m2, FLAGS.m3,FLAGS.config1, FLAGS.config2,FLAGS.eval_folder)
 
 
 if __name__ == "__main__":

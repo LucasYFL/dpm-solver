@@ -1,0 +1,3 @@
+i0 double epoch 20
+i1 epoch 20
+i2 quart epoch 4
