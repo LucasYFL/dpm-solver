@@ -120,7 +120,7 @@ def evaluate(config,
         sampling_eps = 1e-5
     else:
         raise NotImplementedError(f"SDE {config.training.sde} unknown.")
-    temp_model = [mutils.create_model(con, local_rank) for con in configs]
+    temp_model = [mutils.create_model(con, local_rank) for con in configs if con]
     for i in range(len(config.eval.t_tuples)+1):
         conv = config.eval.t_converge[i]
         s = temp_model[conv]
