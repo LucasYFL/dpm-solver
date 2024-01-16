@@ -46,7 +46,7 @@ def get_config():
   model.ema_rate = 0.9999
   model.normalization = 'GroupNorm'
   model.nonlinearity = 'swish'
-  model.nf = 128
+  model.nf = 80
   model.ch_mult = (1, 2, 2, 2)
   model.num_res_blocks = 8
   model.attn_resolutions = (16,)
@@ -63,5 +63,5 @@ def get_config():
   model.embedding_type = 'positional'
   model.init_scale = 0.0
   model.conv_size = 3
-
+  model.group=16
   return config

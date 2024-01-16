@@ -12,8 +12,8 @@ from models.ema import ExponentialMovingAverage
 import datasets
 import torch
 
-from configs.UViT import cifar10_UViT_mul as configs
-# from configs.vp import cifar10_ddpmpp_deep_continuous as configs
+from configs.vp import cifar10_ddpmpp_deep_continuous as configs
+# from configs.vp import cifar10_ncsnpp_multistage_deep_continuous_v7 as configs
 from torchstat import stat
 
 os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
@@ -41,7 +41,7 @@ sampling_shape = (config.eval.batch_size,
 
 batch = torch.rand(sampling_shape).to(config.device)
 batch = scaler(batch)
-lst_steps=torch.tensor([0.8])*1000
+lst_steps=torch.tensor([0.1])*1000
 t = lst_steps.to('cpu')#.repeat(batch.shape[0])
 score_model = score_model.to('cpu')
 print(score_model(batch,t))

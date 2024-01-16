@@ -97,21 +97,35 @@ def evaluate(config,
     # Load pre-computed dataset statistics.
     data_stats = evaluation.load_dataset_stats(config)
     data_pools = data_stats["pool_3"]
-    for i in range(5):
-      idx = np.random.choice(len(all_pools),config.eval.num_samples , replace=False)
-      fid = tfgan.eval.frechet_classifier_distance_from_activations(
-        data_pools, all_pools[idx])
+    # for i in range(5):
+    #   idx = np.random.choice(len(all_pools),config.eval.num_samples , replace=False)
+    #   fid = tfgan.eval.frechet_classifier_distance_from_activations(
+    #     data_pools, all_pools[idx])
 
 
-      logging.info(
-        "ckpt-%d --- FID: %.6e" % (
-          ckpt, fid))
-      tf.io.gfile.makedirs(os.path.join(eval_dir,f"trial{i}"))
-      with tf.io.gfile.GFile(os.path.join(eval_dir,f"trial{i}", f"report_{ckpt}.npz"),
-                              "wb") as f:
-        io_buffer = io.BytesIO()
-        np.savez_compressed(io_buffer, fid=fid)
-        f.write(io_buffer.getvalue())
+    #   logging.info(
+    #     "ckpt-%d --- FID: %.6e" % (
+    #       ckpt, fid))
+    #   tf.io.gfile.makedirs(os.path.join(eval_dir,f"trial{i}"))
+    #   with tf.io.gfile.GFile(os.path.join(eval_dir,f"trial{i}", f"report_{ckpt}.npz"),
+    #                           "wb") as f:
+    #     io_buffer = io.BytesIO()
+    #     np.savez_compressed(io_buffer, fid=fid)
+    #     f.write(io_buffer.getvalue())
+    fid = tfgan.eval.frechet_classifier_distance_from_activations(
+      data_pools, all_pools)
+
+
+    logging.info(
+      "ckpt-%d --- FID: %.6e" % (
+        ckpt, fid))
+
+    with tf.io.gfile.GFile(os.path.join(eval_dir, f"report_{ckpt}.npz"),
+                            "wb") as f:
+      io_buffer = io.BytesIO()
+      np.savez_compressed(io_buffer, fid=fid)
+      f.write(io_buffer.getvalue())
+
 
 
 def main(argv):

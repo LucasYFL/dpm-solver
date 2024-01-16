@@ -168,7 +168,7 @@ def evaluate(config,
             if local_rank == 0:
                 logging.info(eval_dir)
             num_sampling_rounds = config.eval.num_samples // config.eval.batch_size + 1
-            for r in range(0,2*num_sampling_rounds):
+            for r in range(num_sampling_rounds):
                 if local_rank == 0:
                     logging.info("sampling -- ckpt: %d, round: %d" % (ckpt, r))
 
