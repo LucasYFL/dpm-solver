@@ -19,7 +19,7 @@ def get_default_configs():
   training.continuous = True
   training.reduce_mean = False
   training.t0 = 0.0
-  training.t1 = 0.0
+  training.t1 = 1.0
   training.objective_weight = "eps"
   training.dt = 0.1
   # sampling

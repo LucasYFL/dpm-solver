@@ -18,6 +18,7 @@
 """
 from . import layers
 from . import up_or_down_sampling
+from . inception_transformer import Mixer
 import torch.nn as nn
 import torch
 import torch.nn.functional as F
@@ -114,7 +115,7 @@ class Upsample(nn.Module):
   def forward(self, x):
     B, C, H, W = x.shape
     if not self.fir:
-      h = F.interpolate(x, (H * 2, W * 2), 'nearest')
+      h = F.interpolate(x, (H * 2, W * 2), mode='nearest')
       if self.with_conv:
         h = self.Conv_0(h)
     else:
@@ -193,6 +194,54 @@ class ResnetBlockDDPMpp(nn.Module):
   def forward(self, x, temb=None):
     h = self.act(self.GroupNorm_0(x))
     h = self.Conv_0(h)
+    if temb is not None:
+      h += self.Dense_0(self.act(temb))[:, :, None, None]
+    h = self.act(self.GroupNorm_1(h))
+    h = self.Dropout_0(h)
+    h = self.Conv_1(h)
+    if x.shape[1] != self.out_ch:
+      if self.conv_shortcut:
+        x = self.Conv_2(x)
+      else:
+        x = self.NIN_0(x)
+    if not self.skip_rescale:
+      return x + h
+    else:
+      return (x + h) / np.sqrt(2.)
+    
+
+class MEMEiFormerblock(nn.Module):
+  """ResBlock adapted from DDPM."""
+
+  def __init__(self, act, in_ch, num_heads, attention_head, pool_size, out_ch=None, temb_dim=None, conv_shortcut=False,
+               dropout=0.1, skip_rescale=False, init_scale=0.,):
+    super().__init__()
+    out_ch = out_ch if out_ch else in_ch
+    self.GroupNorm_0 = nn.GroupNorm(num_groups=min(in_ch // 4, 32), num_channels=in_ch, eps=1e-6)
+
+    self.Mixer = Mixer(in_ch, num_heads=num_heads, qkv_bias=False, attn_drop=0., proj_drop=0., attention_head=attention_head, pool_size=pool_size)
+    if temb_dim is not None:
+      self.Dense_0 = nn.Linear(temb_dim, out_ch)
+      self.Dense_0.weight.data = default_init()(self.Dense_0.weight.data.shape)
+      nn.init.zeros_(self.Dense_0.bias)
+    self.GroupNorm_1 = nn.GroupNorm(num_groups=min(out_ch // 4, 32), num_channels=out_ch, eps=1e-6)
+    self.Dropout_0 = nn.Dropout(dropout)
+    self.Conv_1 = conv3x3(out_ch, out_ch, init_scale=init_scale)
+    if in_ch != out_ch:
+      if conv_shortcut:
+        self.Conv_2 = conv3x3(in_ch, out_ch)
+      else:
+        self.NIN_0 = NIN(in_ch, out_ch)
+
+    self.skip_rescale = skip_rescale
+    self.act = act
+    self.out_ch = out_ch
+    self.conv_shortcut = conv_shortcut
+
+  def forward(self, x, temb=None):
+    h = self.act(self.GroupNorm_0(x))
+    h = self.Mixer(h.permute(0, 2, 3, 1)).permute(0, 3, 1, 2)
+    # h = self.Conv_0(h)
     if temb is not None:
       h += self.Dense_0(self.act(temb))[:, :, None, None]
     h = self.act(self.GroupNorm_1(h))
