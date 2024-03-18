@@ -15,7 +15,7 @@ import tensorflow as tf
 import tensorflow_gan as tfgan
 import logging
 # Keep the import below for registering all model definitions
-from models import ddpm, ncsnv2, ncsnpp
+from models import ddpm, ncsnv2, ncsnpp,iUNet
 import losses
 import sampling
 from models import utils as mutils
@@ -39,10 +39,14 @@ config_flags.DEFINE_config_file(
   "config1", None, "Training configuration.", lock_config=True)
 config_flags.DEFINE_config_file(
   "config2", None, "Training configuration.", lock_config=True)
+config_flags.DEFINE_config_file(
+  "config3", None, "Training configuration.", lock_config=True)
 flags.DEFINE_string("workdir", None, "Work directory.")
 flags.DEFINE_string("m1", None, "Model 1 directory.")
 flags.DEFINE_string("m2", None, "Model 2  directory.")
 flags.DEFINE_string("m3", None, "Model 3 directory.")
+flags.DEFINE_string("m4", None, "Model 3 directory.")
+
 flags.DEFINE_string("eval_folder", "eval",
                     "The folder name for storing evaluation results")
 flags.mark_flags_as_required(["workdir", "config", 'm1','m2'])
@@ -54,7 +58,7 @@ total_rank = int(os.environ['LOCAL_WORLD_SIZE'])
 torch.cuda.set_device(local_rank)
 torch.distributed.init_process_group(backend='nccl')
 def evaluate(config,
-             workdir,m1,m2,m3=None,config1=None,config2=None,
+             workdir,m1,m2,m3,m4=None,config1=None,config2=None,config3=None,
              eval_folder="eval"):
   """Evaluate trained models.
 
@@ -79,11 +83,11 @@ def evaluate(config,
   optimizers = []
   emas = []
   states = []
-  mdir = (m1,m2,m3)
+  mdir = (m1,m2,m3,m4)
   checkpoint_dirs = []
   objectives = []
   logging.info(config.eval.t_tuples)
-  configs = (config,)*3 if config1 is None else (config,config1,config2)
+  configs = (config,)*4 if config1 is None else (config,config1,config2,config3)
   
   # Setup SDEs
   if config.training.sde.lower() == 'vpsde':
@@ -245,7 +249,7 @@ def main(argv):
   config_fewer = FLAGS.config
   config1 = FLAGS.config1
   # Run the evaluation pipeline
-  evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,FLAGS.m3,config1,FLAGS.config2, FLAGS.eval_folder)
+  evaluate(FLAGS.config, FLAGS.workdir,FLAGS.m1,FLAGS.m2,FLAGS.m3,FLAGS.m4,config1,FLAGS.config2,FLAGS.config3, FLAGS.eval_folder)
  
 if __name__ == "__main__":
   app.run(main)

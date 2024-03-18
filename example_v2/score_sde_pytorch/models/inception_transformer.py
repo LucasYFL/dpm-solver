@@ -652,4 +652,4 @@ def iformer_large_384(pretrained=False, **kwargs):
 if __name__ == "__main__":
     mixer = Mixer(dim=256, num_heads=8, qkv_bias=False, attn_drop=0., proj_drop=0., attention_head=1, pool_size=2).cuda()
     x = torch.randn((64, 32, 32, 256)).cuda()
-    mixer(x).sum()
+    mixer(x).sum().backward()

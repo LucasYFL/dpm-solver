@@ -27,21 +27,25 @@ def get_config():
   training.continuous = True
   training.reduce_mean = True
   training.n_iters = 950001
-
+  training.snapshot_freq = 10000
   # sampling
   sampling = config.sampling
   # sampling.method = 'pc'
   # sampling.predictor = 'euler_maruyama'
   # sampling.corrector = 'none'
-
-  sampling.eps = 1e-3
+  evaluate = config.eval
+  evaluate.t_tuples = (0.25,0.5,0.75) #intervals
+  evaluate.t_converge = (0,0,0,0) #num models 1 more than intervals, if the model is converged.
+  evaluate.batch_size=1024
+  evaluate.objectives = ("eps","eps","eps","eps")
+  sampling.eps = 1e-4
   sampling.method = 'dpm_solver'
   sampling.dpm_solver_method = 'singlestep'
   sampling.dpm_solver_order = 3
   sampling.algorithm_type = 'dpmsolver'
   sampling.thresholding = False
   sampling.noise_removal = False
-  sampling.steps = 10
+  sampling.steps = 20
   sampling.skip_type = 'logSNR'
   sampling.rtol = 0.05
 
@@ -62,7 +66,7 @@ def get_config():
   model.ema_rate = 0.9999
   model.normalization = 'GroupNorm'
   model.nonlinearity = 'swish'
-  model.nf = 128
+  model.nf = 160
   model.ch_mult = (1, 2, 3, 4)
   model.num_res_blocks = 2
   model.attn_resolutions = (16,)
@@ -80,6 +84,6 @@ def get_config():
   model.embedding_type = 'positional'
   model.fourier_scale = 16
   model.conv_size = 3
-  model.stage_num = 3
+  model.stage_num = 0
 
   return config

@@ -174,23 +174,23 @@ def train(config, workdir):
       save_checkpoint(os.path.join(checkpoint_dir, f'checkpoint_{save_step}.pth'), state)
 
       # Generate and save samples
-      if config.training.snapshot_sampling:
-        ema.store(score_model.parameters())
-        ema.copy_to(score_model.parameters())
-        sample, n = sampling_fn(score_model)
-        ema.restore(score_model.parameters())
-        this_sample_dir = os.path.join(sample_dir, "iter_{}".format(step))
-        os.makedirs(this_sample_dir, exist_ok=True)
-        nrow = int(np.sqrt(sample.shape[0]))
-        image_grid = make_grid(sample, nrow, padding=2)
-        sample = np.clip(sample.permute(0, 2, 3, 1).cpu().numpy() * 255, 0, 255).astype(np.uint8)
-        with open(
-            os.path.join(this_sample_dir, "sample.np"), "wb") as fout:
-          np.save(fout, sample)
+      # if config.training.snapshot_sampling:
+      #   ema.store(score_model.parameters())
+      #   ema.copy_to(score_model.parameters())
+      #   sample, n = sampling_fn(score_model)
+      #   ema.restore(score_model.parameters())
+      #   this_sample_dir = os.path.join(sample_dir, "iter_{}".format(step))
+      #   os.makedirs(this_sample_dir, exist_ok=True)
+      #   nrow = int(np.sqrt(sample.shape[0]))
+      #   image_grid = make_grid(sample, nrow, padding=2)
+      #   sample = np.clip(sample.permute(0, 2, 3, 1).cpu().numpy() * 255, 0, 255).astype(np.uint8)
+      #   with open(
+      #       os.path.join(this_sample_dir, "sample.np"), "wb") as fout:
+      #     np.save(fout, sample)
 
-        with open(
-            os.path.join(this_sample_dir, "sample.png"), "wb") as fout:
-          save_image(image_grid, fout)
+      #   with open(
+      #       os.path.join(this_sample_dir, "sample.png"), "wb") as fout:
+      #     save_image(image_grid, fout)
 
 
 def evaluate(config,

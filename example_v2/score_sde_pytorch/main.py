@@ -30,7 +30,7 @@ print(local_rank)
 print(total_rank)
 torch.cuda.set_device(local_rank)
 torch.distributed.init_process_group(backend='nccl')
-
+import json
 FLAGS = flags.FLAGS
 
 
@@ -61,7 +61,12 @@ def main(argv):
       logger = logging.getLogger()
       logger.addHandler(handler)
       logger.setLevel('INFO')
-      logging.info("Conditional: {}".format(FLAGS.config.model.conditional))
+      out_file = open(os.path.join(FLAGS.workdir,"train_config.json"), "w")
+  
+      json.dump(FLAGS.config.to_json_best_effort(), out_file, indent = 6,separators=(',\n', ': '))
+        
+      out_file.close()
+      logger.info(FLAGS.config)
     # Run the training pipeline
     run_lib.train(FLAGS.config, FLAGS.workdir)
   elif FLAGS.mode == "eval":
