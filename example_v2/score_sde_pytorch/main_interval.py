@@ -157,8 +157,8 @@ def evaluate(config,
   for ckpt in range(begin_ckpt, config.eval.end_ckpt + 1, config.eval.ckpt_interval):
     for i in range(len(checkpoint_dirs)):
       if config.eval.t_converge[i]:
-        logging.info("{} is converged model".format(i))
-        ckpt_path = os.path.join(checkpoint_dirs[i], "checkpoint_{}.pth".format(config.eval.converge_epoch))
+        logging.info("{} is converged model, epoch {}".format(i, config.eval.t_converge[i]))
+        ckpt_path = os.path.join(checkpoint_dirs[i], "checkpoint_{}.pth".format(config.eval.t_converge[i]))
       else:
         ckpt_path = os.path.join(checkpoint_dirs[i], "checkpoint_{}.pth".format(ckpt))
       logging.info(ckpt_path)
