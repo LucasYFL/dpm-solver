@@ -20,7 +20,8 @@ os.environ['TF_FORCE_GPU_ALLOW_GROWTH'] = 'true'
 config=configs.get_config()
 config.eval.batch_size = 1
 config.device = torch.device('cpu')
-config.model.stage_num=0
+config.model.stage_num=3
+config.model.nf=192
 sampling_eps = 1e-3
 # Build data pipeline
 train_ds, eval_ds = datasets.get_dataset(config,

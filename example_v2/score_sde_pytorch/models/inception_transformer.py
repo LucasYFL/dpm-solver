@@ -262,7 +262,9 @@ class LowMixer(nn.Module):
         xa = self.pool(x)
         xa = xa.permute(0, 2, 3, 1).view(B, -1, self.dim)
         B, N, C = xa.shape
-        qkv = self.qkv(xa).reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
+        qkv = self.qkv(xa)
+        # print(qkv.shape)
+        qkv = qkv.reshape(B, N, 3, self.num_heads, C // self.num_heads).permute(2, 0, 3, 1, 4)
         q, k, v = qkv.unbind(0)   # make torchscript happy (cannot use tensor as tuple)
         xa = self.att_fun(q, k, v, B, N, C)
         xa = xa.view(B, C, int(N**0.5), int(N**0.5))#.permute(0, 3, 1, 2)
